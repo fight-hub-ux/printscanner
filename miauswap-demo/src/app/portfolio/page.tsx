@@ -130,7 +130,7 @@ export default function PortfolioPage() {
     <div className="max-w-7xl mx-auto space-y-6 pb-20 lg:pb-6">
       {/* ── Page Title ──────────────────────── */}
       <div className="space-y-1">
-        <h1 className="text-2xl lg:text-3xl font-extrabold text-white">
+        <h1 className="text-2xl lg:text-3xl font-extrabold text-miau-white">
           Your Portfolio
         </h1>
         <p className="text-sm text-miau-muted">
@@ -154,7 +154,7 @@ export default function PortfolioPage() {
             <Wallet size={16} />
             <span className="text-xs font-medium">Total Portfolio Value</span>
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-miau-white">
             {portfolioSummary.totalValue.toLocaleString()}{' '}
             <span className="text-sm font-normal text-miau-muted">MIAU</span>
           </p>
@@ -175,7 +175,7 @@ export default function PortfolioPage() {
             <TrendingUp size={16} />
             <span className="text-xs font-medium">Total ETH Earned</span>
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-miau-white">
             {portfolioSummary.totalETHReceived}{' '}
             <span className="text-sm font-normal text-miau-muted">ETH</span>
           </p>
@@ -217,7 +217,7 @@ export default function PortfolioPage() {
             <Wallet size={16} />
             <span className="text-xs font-medium">MIAU Balance</span>
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-miau-white">
             {portfolioSummary.miauBalance.toLocaleString()}{' '}
             <span className="text-sm font-normal text-miau-muted">MIAU</span>
           </p>
@@ -236,7 +236,7 @@ export default function PortfolioPage() {
             <Lock size={16} />
             <span className="text-xs font-medium">Staking Status</span>
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-miau-white">
             {portfolioSummary.stakingTier}
           </p>
           <div className="space-y-1 text-xs text-miau-muted">
@@ -264,7 +264,7 @@ export default function PortfolioPage() {
         className="bg-miau-dark-card border border-miau-dark-border rounded-2xl shadow-card overflow-hidden"
       >
         <div className="px-5 py-4 border-b border-miau-dark-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <h2 className="font-bold text-lg text-white">
+          <h2 className="font-bold text-lg text-miau-white">
             Your Holdings
           </h2>
           <div className="flex items-center gap-2">
@@ -274,8 +274,8 @@ export default function PortfolioPage() {
                 onClick={() => setEditionFilter(filter)}
                 className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
                   editionFilter === filter
-                    ? 'bg-miau-pink text-white shadow-glow'
-                    : 'bg-miau-dark-card border border-miau-dark-border text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                    ? 'bg-miau-pink text-miau-white shadow-glow'
+                    : 'bg-miau-dark-card border border-miau-dark-border text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                 }`}
               >
                 {filter}
@@ -314,10 +314,10 @@ export default function PortfolioPage() {
                       idx % 2 === 0 ? 'bg-miau-dark-card' : 'bg-miau-dark-surface'
                     }`}
                   >
-                    <td className="px-5 py-3 font-medium text-white whitespace-nowrap">
+                    <td className="px-5 py-3 font-medium text-miau-white whitespace-nowrap">
                       {holding.creatorName}
                     </td>
-                    <td className="px-3 py-3 font-mono text-white whitespace-nowrap">
+                    <td className="px-3 py-3 font-mono text-miau-white whitespace-nowrap">
                       {holding.catSymbol}
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap">
@@ -327,19 +327,19 @@ export default function PortfolioPage() {
                             ? 'bg-yellow-100 text-yellow-800'
                             : holding.edition === 'Limited'
                               ? 'bg-miau-pink/15 text-miau-pink'
-                              : 'bg-miau-dark-surface text-white'
+                              : 'bg-miau-dark-surface text-miau-white'
                         }`}
                       >
                         {holding.edition}
                       </span>
                     </td>
-                    <td className="px-3 py-3 text-right font-mono text-white">
+                    <td className="px-3 py-3 text-right font-mono text-miau-white">
                       {holding.catsHeld}
                     </td>
-                    <td className="px-3 py-3 text-right font-mono text-white">
+                    <td className="px-3 py-3 text-right font-mono text-miau-white">
                       {holding.avgBuyPrice.toFixed(2)} MIAU
                     </td>
-                    <td className="px-3 py-3 text-right font-mono text-white">
+                    <td className="px-3 py-3 text-right font-mono text-miau-white">
                       {holding.currentPrice.toFixed(2)} MIAU
                     </td>
                     <td className="px-3 py-3 text-right whitespace-nowrap">
@@ -360,21 +360,21 @@ export default function PortfolioPage() {
                         {holding.pnlPercent.toFixed(1)}%)
                       </span>
                     </td>
-                    <td className="px-3 py-3 text-right font-mono text-white">
+                    <td className="px-3 py-3 text-right font-mono text-miau-white">
                       {holding.weeklyETHYield.toFixed(4)} ETH
                     </td>
                     <td className="px-5 py-3">
                       <div className="flex items-center justify-center gap-2">
                         <Link
                           href="/trade"
-                          className="flex items-center gap-1 text-xs font-medium text-miau-pink hover:text-white transition-colors"
+                          className="flex items-center gap-1 text-xs font-medium text-miau-pink hover:text-miau-white transition-colors"
                         >
                           <ArrowRightLeft size={12} />
                           Trade
                         </Link>
                         <Link
                           href={`/creator/${holding.creatorSlug}`}
-                          className="flex items-center gap-1 text-xs font-medium text-miau-muted hover:text-white transition-colors"
+                          className="flex items-center gap-1 text-xs font-medium text-miau-muted hover:text-miau-white transition-colors"
                         >
                           <Eye size={12} />
                           View
@@ -401,7 +401,7 @@ export default function PortfolioPage() {
       >
         <div className="px-5 py-4 border-b border-miau-dark-border space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <h2 className="font-bold text-lg text-white">
+            <h2 className="font-bold text-lg text-miau-white">
               Weekly Earnings
             </h2>
             <p className="text-xs text-miau-muted">
@@ -415,8 +415,8 @@ export default function PortfolioPage() {
                 onClick={() => setDistCreatorFilter(filter)}
                 className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
                   distCreatorFilter === filter
-                    ? 'bg-miau-pink text-white shadow-glow'
-                    : 'bg-miau-dark-card border border-miau-dark-border text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                    ? 'bg-miau-pink text-miau-white shadow-glow'
+                    : 'bg-miau-dark-card border border-miau-dark-border text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                 }`}
               >
                 {filter}
@@ -452,11 +452,11 @@ export default function PortfolioPage() {
                       idx % 2 === 0 ? 'bg-miau-dark-card' : 'bg-miau-dark-surface'
                     }`}
                   >
-                    <td className="px-5 py-3 text-white whitespace-nowrap">
+                    <td className="px-5 py-3 text-miau-white whitespace-nowrap">
                       {dist.weekOf}
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap">
-                      <span className="font-medium text-white">{dist.creatorName}</span>
+                      <span className="font-medium text-miau-white">{dist.creatorName}</span>
                       <span className="text-xs text-miau-muted ml-1.5 font-mono">
                         {dist.catSymbol}
                       </span>
@@ -468,13 +468,13 @@ export default function PortfolioPage() {
                             ? 'bg-yellow-100 text-yellow-800'
                             : dist.edition === 'Limited'
                               ? 'bg-miau-pink/15 text-miau-pink'
-                              : 'bg-miau-dark-surface text-white'
+                              : 'bg-miau-dark-surface text-miau-white'
                         }`}
                       >
                         {dist.edition}
                       </span>
                     </td>
-                    <td className="px-3 py-3 text-right font-mono font-medium text-white">
+                    <td className="px-3 py-3 text-right font-mono font-medium text-miau-white">
                       {dist.totalETH.toFixed(5)} ETH
                     </td>
                     <td className="px-3 py-3 text-right font-mono text-miau-muted">
@@ -507,7 +507,7 @@ export default function PortfolioPage() {
           className="lg:col-span-4 bg-miau-dark-card border border-miau-dark-border rounded-2xl shadow-card overflow-hidden"
         >
           <div className="px-5 py-4 border-b border-miau-dark-border">
-            <h2 className="font-bold text-lg text-white">
+            <h2 className="font-bold text-lg text-miau-white">
               Portfolio Allocation
             </h2>
           </div>
@@ -559,7 +559,7 @@ export default function PortfolioPage() {
                         className="w-3 h-3 rounded-full shrink-0"
                         style={{ backgroundColor: creatorPieColors[entry.name] || '#D4A0B0' }}
                       />
-                      <span className="text-white font-medium">{entry.name}</span>
+                      <span className="text-miau-white font-medium">{entry.name}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-mono text-miau-muted">
@@ -585,7 +585,7 @@ export default function PortfolioPage() {
           className="lg:col-span-8 bg-miau-dark-card border border-miau-dark-border rounded-2xl shadow-card overflow-hidden"
         >
           <div className="px-5 py-4 border-b border-miau-dark-border flex items-center justify-between">
-            <h2 className="font-bold text-lg text-white">
+            <h2 className="font-bold text-lg text-miau-white">
               Portfolio Performance
             </h2>
             <span className="text-xs text-miau-muted">Last 3 months</span>
@@ -703,7 +703,7 @@ export default function PortfolioPage() {
         className="bg-miau-dark-card border border-miau-dark-border rounded-2xl shadow-card overflow-hidden"
       >
         <div className="px-5 py-4 border-b border-miau-dark-border flex items-center justify-between">
-          <h2 className="font-bold text-lg text-white">
+          <h2 className="font-bold text-lg text-miau-white">
             Open Orders
           </h2>
           <span className="text-xs text-miau-muted font-mono">
@@ -738,7 +738,7 @@ export default function PortfolioPage() {
                     >
                       {order.side}
                     </span>
-                    <span className="text-sm font-medium text-white">{order.pair}</span>
+                    <span className="text-sm font-medium text-miau-white">{order.pair}</span>
                     <span className="text-[10px] text-miau-muted bg-miau-dark-surface px-1.5 py-0.5 rounded">
                       {order.type}
                     </span>
@@ -765,25 +765,25 @@ export default function PortfolioPage() {
                 <div className="grid grid-cols-4 gap-4 text-xs">
                   <div>
                     <span className="text-miau-muted block text-[10px]">Price</span>
-                    <span className="font-mono font-medium text-white">
+                    <span className="font-mono font-medium text-miau-white">
                       {order.price.toFixed(2)} MIAU
                     </span>
                   </div>
                   <div>
                     <span className="text-miau-muted block text-[10px]">Quantity</span>
-                    <span className="font-mono font-medium text-white">
+                    <span className="font-mono font-medium text-miau-white">
                       {order.quantity}
                     </span>
                   </div>
                   <div>
                     <span className="text-miau-muted block text-[10px]">Filled</span>
-                    <span className="font-mono font-medium text-white">
+                    <span className="font-mono font-medium text-miau-white">
                       {order.filled}/{order.quantity}
                     </span>
                   </div>
                   <div>
                     <span className="text-miau-muted block text-[10px]">Total</span>
-                    <span className="font-mono font-medium text-white">
+                    <span className="font-mono font-medium text-miau-white">
                       {(order.price * order.quantity).toLocaleString()} MIAU
                     </span>
                   </div>
@@ -813,7 +813,7 @@ export default function PortfolioPage() {
                         </span>
                         <button
                           onClick={() => handleCancelOrder(order.id)}
-                          className="text-xs bg-miau-error text-white px-3 py-1 rounded-lg font-medium hover:bg-miau-error/90 transition-colors"
+                          className="text-xs bg-miau-error text-miau-white px-3 py-1 rounded-lg font-medium hover:bg-miau-error/90 transition-colors"
                         >
                           Confirm
                         </button>

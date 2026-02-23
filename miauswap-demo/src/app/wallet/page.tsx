@@ -79,7 +79,7 @@ function txTypeBadge(type: string) {
     case 'USDC Staking Reward':
       return 'bg-purple-900/30 text-purple-400';
     default:
-      return 'bg-miau-dark-surface text-white';
+      return 'bg-miau-dark-surface text-miau-white';
   }
 }
 
@@ -170,7 +170,7 @@ export default function WalletPage() {
     <div className="max-w-7xl mx-auto space-y-6 pb-20 lg:pb-6">
       {/* Page Header */}
       <div className="space-y-1">
-        <h1 className="text-2xl lg:text-3xl font-extrabold text-white">
+        <h1 className="text-2xl lg:text-3xl font-extrabold text-miau-white">
           Wallet
         </h1>
         <p className="text-sm text-miau-muted">
@@ -184,7 +184,7 @@ export default function WalletPage() {
       <div className="glass-card rounded-2xl overflow-hidden">
         <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
           <Wallet size={18} className="text-miau-pink" />
-          <h2 className="font-bold text-white">Wallet Connection</h2>
+          <h2 className="font-bold text-miau-white">Wallet Connection</h2>
         </div>
         <div className="p-5">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -192,10 +192,10 @@ export default function WalletPage() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-miau-success animate-pulse-soft" />
-                <span className="text-sm font-medium text-white">Connected</span>
+                <span className="text-sm font-medium text-miau-white">Connected</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-mono text-sm text-white bg-miau-dark-surface px-3 py-1.5 rounded-xl">
+                <span className="font-mono text-sm text-miau-white bg-miau-dark-surface px-3 py-1.5 rounded-xl">
                   {walletAddress}
                 </span>
                 <button
@@ -210,7 +210,7 @@ export default function WalletPage() {
                 </button>
               </div>
               <p className="text-xs text-miau-muted">
-                Network: <span className="font-medium text-white">Base (Mainnet)</span>
+                Network: <span className="font-medium text-miau-white">Base (Mainnet)</span>
               </p>
             </div>
 
@@ -232,14 +232,14 @@ export default function WalletPage() {
       <div className="glass-card rounded-2xl overflow-hidden">
         <div className="px-5 py-4 border-b border-miau-dark-border/60 flex items-center gap-2">
           <Coins size={18} className="text-miau-pink" />
-          <h2 className="font-bold text-white">MIAU Token Balance</h2>
+          <h2 className="font-bold text-miau-white">MIAU Token Balance</h2>
         </div>
         <div className="p-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Wallet Balance */}
             <div className="bg-miau-dark-surface/70 rounded-xl p-4">
               <p className="text-xs text-miau-muted mb-1">Wallet Balance</p>
-              <p className="text-2xl font-bold text-white font-mono">
+              <p className="text-2xl font-bold text-miau-white font-mono">
                 {miauBalance.toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -251,7 +251,7 @@ export default function WalletPage() {
             {/* Staked Amount */}
             <div className="bg-miau-dark-surface/70 rounded-xl p-4">
               <p className="text-xs text-miau-muted mb-1">Staked Amount</p>
-              <p className="text-2xl font-bold text-white font-mono">
+              <p className="text-2xl font-bold text-miau-white font-mono">
                 {stakedAmount.toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -263,7 +263,7 @@ export default function WalletPage() {
             {/* Total */}
             <div className="bg-miau-dark-surface/70 rounded-xl p-4">
               <p className="text-xs text-miau-muted mb-1">Total MIAU</p>
-              <p className="text-2xl font-bold text-white font-mono">
+              <p className="text-2xl font-bold text-miau-white font-mono">
                 {totalMiau.toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -321,7 +321,7 @@ export default function WalletPage() {
       <div className="glass-card rounded-2xl overflow-hidden">
         <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
           <Shield size={18} className="text-miau-pink" />
-          <h2 className="font-bold text-white">Staking Tiers</h2>
+          <h2 className="font-bold text-miau-white">Staking Tiers</h2>
         </div>
 
         {/* Tiers table */}
@@ -367,24 +367,24 @@ export default function WalletPage() {
                                 : 'bg-yellow-400'
                           }`}
                         />
-                        <span className="font-semibold text-white">{tier.name}</span>
+                        <span className="font-semibold text-miau-white">{tier.name}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 font-mono text-white">
+                    <td className="px-5 py-3.5 font-mono text-miau-white">
                       {tier.minStake.toLocaleString()} MIAU
                     </td>
-                    <td className="px-5 py-3.5 text-white">
+                    <td className="px-5 py-3.5 text-miau-white">
                       {tier.lockDays} days
                     </td>
-                    <td className="px-5 py-3.5 text-white">
+                    <td className="px-5 py-3.5 text-miau-white">
                       {tier.feeDiscount === 0 ? 'None' : `${tier.feeDiscount}%`}
                     </td>
-                    <td className="px-5 py-3.5 font-mono text-white">
+                    <td className="px-5 py-3.5 font-mono text-miau-white">
                       {tier.multiplier}
                     </td>
                     <td className="px-5 py-3.5">
                       {isCurrentTier ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-miau-pink text-white">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-miau-pink text-miau-white">
                           <CheckCircle2 size={12} />
                           YOUR TIER
                         </span>
@@ -417,7 +417,7 @@ export default function WalletPage() {
         <div className="px-5 py-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <button
             onClick={() => setShowStakeModal(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-miau-pink text-white rounded-xl text-sm font-semibold hover:bg-miau-pink/80 transition-colors"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-miau-pink text-miau-white rounded-xl text-sm font-semibold hover:bg-miau-pink/80 transition-colors"
           >
             <Lock size={16} />
             Stake More MIAU
@@ -456,7 +456,7 @@ export default function WalletPage() {
               <div className="px-5 py-4 border-b border-miau-dark-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Lock size={18} className="text-miau-pink" />
-                  <h3 className="font-bold text-white">Stake MIAU</h3>
+                  <h3 className="font-bold text-miau-white">Stake MIAU</h3>
                 </div>
                 <button
                   onClick={() => setShowStakeModal(false)}
@@ -480,7 +480,7 @@ export default function WalletPage() {
                     max={miauBalance}
                     value={stakeAmount}
                     onChange={(e) => setStakeAmount(e.target.value)}
-                    className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-white focus:outline-none focus:border-miau-pink transition-colors"
+                    className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink transition-colors"
                     placeholder="0"
                   />
                   <p className="text-[10px] text-miau-muted/60 mt-1">
@@ -500,7 +500,7 @@ export default function WalletPage() {
                         onClick={() => setStakeLockPeriod(days)}
                         className={`py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                           stakeLockPeriod === days
-                            ? 'bg-miau-pink text-white shadow-glow'
+                            ? 'bg-miau-pink text-miau-white shadow-glow'
                             : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover'
                         }`}
                       >
@@ -519,7 +519,7 @@ export default function WalletPage() {
                   >
                     <div className="flex justify-between">
                       <span className="text-miau-muted">New Staked Total</span>
-                      <span className="font-mono text-white font-medium">
+                      <span className="font-mono text-miau-white font-medium">
                         {previewStakedTotal.toLocaleString()} MIAU
                       </span>
                     </div>
@@ -529,7 +529,7 @@ export default function WalletPage() {
                         className={`font-semibold ${
                           previewTier !== stakingTier
                             ? 'text-miau-success'
-                            : 'text-white'
+                            : 'text-miau-white'
                         }`}
                       >
                         {previewTier}
@@ -538,7 +538,7 @@ export default function WalletPage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-miau-muted">Est. Monthly USDC Rewards</span>
-                      <span className="font-mono text-white font-medium">
+                      <span className="font-mono text-miau-white font-medium">
                         ${estimatedMonthlyRewards.toFixed(2)}
                       </span>
                     </div>
@@ -549,7 +549,7 @@ export default function WalletPage() {
                 <button
                   onClick={handleStake}
                   disabled={parsedStakeAmount <= 0 || parsedStakeAmount > miauBalance}
-                  className="w-full py-3 rounded-xl font-semibold text-sm bg-miau-pink text-white hover:bg-miau-pink/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-xl font-semibold text-sm bg-miau-pink text-miau-white hover:bg-miau-pink/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Confirm Stake
                 </button>
@@ -583,7 +583,7 @@ export default function WalletPage() {
               <div className="px-5 py-4 border-b border-miau-dark-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Unlock size={18} className="text-miau-pink" />
-                  <h3 className="font-bold text-white">Unstake MIAU</h3>
+                  <h3 className="font-bold text-miau-white">Unstake MIAU</h3>
                 </div>
                 <button
                   onClick={() => setShowUnstakeModal(false)}
@@ -599,17 +599,17 @@ export default function WalletPage() {
                 <div className="bg-miau-dark-surface/60 rounded-xl p-4 space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Current Staked Amount</span>
-                    <span className="font-mono font-semibold text-white">
+                    <span className="font-mono font-semibold text-miau-white">
                       {stakedAmount.toLocaleString()} MIAU
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Current Tier</span>
-                    <span className="font-semibold text-white">{stakingTier}</span>
+                    <span className="font-semibold text-miau-white">{stakingTier}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Lock Expiry Date</span>
-                    <span className="font-mono font-semibold text-white">{lockExpiryDate}</span>
+                    <span className="font-mono font-semibold text-miau-white">{lockExpiryDate}</span>
                   </div>
                 </div>
 
@@ -629,7 +629,7 @@ export default function WalletPage() {
                 {/* Confirm button (disabled because lock is active) */}
                 <button
                   disabled={lockActive}
-                  className="w-full py-3 rounded-xl font-semibold text-sm bg-miau-error text-white hover:bg-miau-error/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-xl font-semibold text-sm bg-miau-error text-miau-white hover:bg-miau-error/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {lockActive
                     ? `Locked until ${lockExpiryDate}`
@@ -656,7 +656,7 @@ export default function WalletPage() {
         <div className="glass-card rounded-2xl overflow-hidden">
           <div className="px-5 py-4 border-b border-miau-dark-border/60 flex items-center gap-2">
             <Calculator size={18} className="text-miau-pink" />
-            <h2 className="font-bold text-white">Fee Calculator</h2>
+            <h2 className="font-bold text-miau-white">Fee Calculator</h2>
           </div>
           <div className="p-5 space-y-4">
             {/* Trade size input */}
@@ -670,7 +670,7 @@ export default function WalletPage() {
                 min="0"
                 value={tradeSize}
                 onChange={(e) => setTradeSize(e.target.value)}
-                className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-white focus:outline-none focus:border-miau-pink transition-colors"
+                className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink transition-colors"
                 placeholder="1000"
               />
             </div>
@@ -680,7 +680,7 @@ export default function WalletPage() {
               <div className="bg-miau-dark-surface/70 rounded-xl p-4 space-y-2.5 text-sm">
                 <div className="flex justify-between">
                   <span className="text-miau-muted">Standard Fee (0.25%)</span>
-                  <span className="font-mono text-white">{standardFee.toFixed(2)} MIAU</span>
+                  <span className="font-mono text-miau-white">{standardFee.toFixed(2)} MIAU</span>
                 </div>
                 {feeDiscount > 0 && (
                   <div className="flex justify-between">
@@ -697,7 +697,7 @@ export default function WalletPage() {
                   <span className="text-miau-muted">
                     Your Rate ({(discountedFeeRate * 100).toFixed(3)}%)
                   </span>
-                  <span className="font-mono font-semibold text-white">
+                  <span className="font-mono font-semibold text-miau-white">
                     {discountedFee.toFixed(2)} MIAU
                   </span>
                 </div>
@@ -717,7 +717,7 @@ export default function WalletPage() {
             {/* Example text */}
             <p className="text-xs text-miau-muted leading-relaxed bg-miau-dark-surface/50 rounded-xl px-3 py-2.5">
               On a {parsedTradeSize > 0 ? parsedTradeSize.toLocaleString() : '1,000'} MIAU trade, you pay{' '}
-              <span className="font-mono font-semibold text-white">
+              <span className="font-mono font-semibold text-miau-white">
                 {(parsedTradeSize > 0 ? discountedFee : 2.25).toFixed(2)} MIAU
               </span>{' '}
               instead of{' '}
@@ -734,14 +734,14 @@ export default function WalletPage() {
         <div className="glass-card rounded-2xl overflow-hidden">
           <div className="px-5 py-4 border-b border-miau-dark-border/60 flex items-center gap-2">
             <TrendingUp size={18} className="text-miau-pink" />
-            <h2 className="font-bold text-white">MIAU Token Stats</h2>
+            <h2 className="font-bold text-miau-white">MIAU Token Stats</h2>
           </div>
           <div className="p-5 space-y-4">
             {/* Stats grid */}
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-miau-dark-surface/70 rounded-xl p-3">
                 <p className="text-[10px] text-miau-muted uppercase tracking-wide">Price</p>
-                <p className="text-lg font-bold text-white font-mono">
+                <p className="text-lg font-bold text-miau-white font-mono">
                   ${miauTokenStats.price.toFixed(2)}
                 </p>
               </div>
@@ -763,13 +763,13 @@ export default function WalletPage() {
               </div>
               <div className="bg-miau-dark-surface/70 rounded-xl p-3">
                 <p className="text-[10px] text-miau-muted uppercase tracking-wide">Market Cap</p>
-                <p className="text-lg font-bold text-white font-mono">
+                <p className="text-lg font-bold text-miau-white font-mono">
                   ${(miauTokenStats.marketCap / 1000000000).toFixed(0)}B
                 </p>
               </div>
               <div className="bg-miau-dark-surface/70 rounded-xl p-3">
                 <p className="text-[10px] text-miau-muted uppercase tracking-wide">Circulating</p>
-                <p className="text-lg font-bold text-white font-mono">
+                <p className="text-lg font-bold text-miau-white font-mono">
                   {(miauTokenStats.circulatingSupply / 1000000).toFixed(0)}M
                 </p>
               </div>
@@ -781,7 +781,7 @@ export default function WalletPage() {
                 <Flame size={16} className="text-miau-error" />
                 <span className="text-xs text-miau-muted font-medium">Total Burned</span>
               </div>
-              <span className="font-mono text-sm font-bold text-white">
+              <span className="font-mono text-sm font-bold text-miau-white">
                 {(miauTokenStats.totalBurned / 1000000).toFixed(1)}M MIAU
               </span>
             </div>
@@ -836,7 +836,7 @@ export default function WalletPage() {
           <div className="flex items-center gap-2">
             <Settings size={18} className="text-miau-pink" />
             <div>
-              <h3 className="text-sm font-semibold text-white">Demo: Show CDEX Access Warning</h3>
+              <h3 className="text-sm font-semibold text-miau-white">Demo: Show CDEX Access Warning</h3>
               <p className="text-xs text-miau-muted">
                 Turn the access warning banner on or off.
               </p>
@@ -864,7 +864,7 @@ export default function WalletPage() {
         <div className="px-5 py-4 border-b border-miau-dark-border flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Clock size={18} className="text-miau-pink" />
-            <h2 className="font-bold text-white">Recent Transactions</h2>
+            <h2 className="font-bold text-miau-white">Recent Transactions</h2>
           </div>
           <span className="text-xs text-miau-muted font-mono">
             {walletTransactions.length} transactions
@@ -891,7 +891,7 @@ export default function WalletPage() {
                     index % 2 === 0 ? 'bg-miau-dark-card' : 'bg-miau-dark-surface/30'
                   }`}
                 >
-                  <td className="px-5 py-3 text-xs text-white whitespace-nowrap">
+                  <td className="px-5 py-3 text-xs text-miau-white whitespace-nowrap">
                     {tx.date}
                   </td>
                   <td className="px-5 py-3">
@@ -903,10 +903,10 @@ export default function WalletPage() {
                       {tx.type}
                     </span>
                   </td>
-                  <td className="px-5 py-3 font-mono text-xs text-white whitespace-nowrap">
+                  <td className="px-5 py-3 font-mono text-xs text-miau-white whitespace-nowrap">
                     {tx.amount}
                   </td>
-                  <td className="px-5 py-3 text-xs text-white whitespace-nowrap">
+                  <td className="px-5 py-3 text-xs text-miau-white whitespace-nowrap">
                     {tx.pair}
                   </td>
                   <td className="px-5 py-3 font-mono text-xs text-miau-muted whitespace-nowrap">

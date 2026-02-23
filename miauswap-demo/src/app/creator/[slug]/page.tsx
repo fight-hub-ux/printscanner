@@ -42,7 +42,7 @@ import {
 } from 'lucide-react';
 import {
   creators,
-  nellaDistributions,
+  getCreatorDistributions,
   generatePriceData,
   askOrders,
   bidOrders,
@@ -65,9 +65,9 @@ const timeRanges = [
 function tierBadge(tier: 'Platinum' | 'Gold' | 'Silver') {
   switch (tier) {
     case 'Platinum':
-      return 'bg-gradient-to-r from-indigo-400 to-purple-500 text-white';
+      return 'bg-gradient-to-r from-indigo-400 to-purple-500 text-miau-white';
     case 'Gold':
-      return 'bg-gradient-to-r from-amber-400 to-yellow-500 text-white';
+      return 'bg-gradient-to-r from-amber-400 to-yellow-500 text-miau-white';
     case 'Silver':
       return 'bg-gradient-to-r from-gray-300 to-gray-400 text-gray-800';
   }
@@ -131,6 +131,8 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
     return generatePriceData(creator.currentPrice, range.days, 0.06);
   }, [creator, activeRange]);
 
+  const distributions = useMemo(() => getCreatorDistributions(creator), [creator]);
+
   /* ── Creator View: Modal state ───────────── */
   const [showOfferingModal, setShowOfferingModal] = useState(false);
   const [offeringSubmitted, setOfferingSubmitted] = useState(false);
@@ -183,7 +185,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
       <div className="flex justify-end">
         <button
           onClick={() => setIsCreatorView(!isCreatorView)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-miau-dark-card border border-miau-dark-border rounded-2xl text-xs font-semibold text-white hover:bg-miau-dark-hover transition-colors shadow-card"
+          className="flex items-center gap-2 px-5 py-2.5 bg-miau-dark-card border border-miau-dark-border rounded-2xl text-xs font-semibold text-miau-white hover:bg-miau-dark-hover transition-colors shadow-card"
         >
           <Eye size={14} />
           {isCreatorView ? 'Switch to Investor View' : 'Switch to Creator View'}
@@ -209,14 +211,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
         <div className="relative px-6 py-8 md:px-10 md:py-10">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Avatar */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-miau-dark-card/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-2xl md:text-3xl shadow-lg border border-white/20">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-miau-dark-card/20 backdrop-blur-sm flex items-center justify-center text-miau-white font-bold text-2xl md:text-3xl shadow-lg border border-white/20">
               {creator.initials}
             </div>
 
             {/* Info */}
             <div className="flex-1 space-y-3">
               <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-2xl md:text-3xl font-extrabold text-white">
+                <h1 className="text-2xl md:text-3xl font-extrabold text-miau-white">
                   {creator.name}
                 </h1>
                 {/* Miau Creator Score Badge */}
@@ -254,7 +256,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                 </Link>
                 <button
                   onClick={() => showToast(`${creator.catSymbol} added to your watchlist!`)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-miau-dark-card/20 backdrop-blur-sm text-white rounded-xl text-sm font-semibold hover:bg-miau-dark-card/30 transition-colors border border-white/20"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-miau-dark-card/20 backdrop-blur-sm text-miau-white rounded-xl text-sm font-semibold hover:bg-miau-dark-card/30 transition-colors border border-white/20"
                 >
                   <Bookmark size={14} />
                   Add to Watchlist
@@ -282,7 +284,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
             <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl p-5">
               <p className="text-xs text-miau-muted mb-1 font-medium">Current CAT Price</p>
               <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-white">{creator.currentPrice} MIAU</span>
+                <span className="text-2xl font-bold text-miau-white">{creator.currentPrice} MIAU</span>
                 <span
                   className={`text-xs font-semibold flex items-center gap-0.5 mb-1 ${
                     creator.priceChange24h >= 0 ? 'text-miau-success' : 'text-miau-error'
@@ -299,7 +301,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
             <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl p-5">
               <p className="text-xs text-miau-muted mb-1 font-medium">Weekly Distribution / CAT</p>
               <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-white">{creator.weeklyDistributionETH} ETH</span>
+                <span className="text-2xl font-bold text-miau-white">{creator.weeklyDistributionETH} ETH</span>
               </div>
               <p className="text-xs text-miau-muted mt-1">~${weeklyDistUSD.toFixed(2)}</p>
             </div>
@@ -318,7 +320,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
             <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl p-5">
               <p className="text-xs text-miau-muted mb-1 font-medium">Total Revenue (90 days)</p>
               <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-white">${totalRevenue90d.toLocaleString()}</span>
+                <span className="text-2xl font-bold text-miau-white">${totalRevenue90d.toLocaleString()}</span>
               </div>
               <p className="text-xs text-miau-muted mt-1">${creator.monthlyRevenue.toLocaleString()}/mo avg</p>
             </div>
@@ -327,7 +329,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           {/* ─── Section 3: Price Chart ──────── */}
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border flex items-center justify-between flex-wrap gap-2">
-              <h2 className="font-bold text-lg text-white">
+              <h2 className="font-bold text-lg text-miau-white">
                 {creator.catSymbol} Price Chart
               </h2>
               <div className="flex items-center gap-1">
@@ -337,7 +339,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     onClick={() => setActiveRange(r.label)}
                     className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
                       activeRange === r.label
-                        ? 'bg-miau-pink text-white'
+                        ? 'bg-miau-pink text-miau-white'
                         : 'text-miau-muted hover:bg-miau-dark-hover'
                     }`}
                   >
@@ -400,20 +402,20 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
           {/* ─── Section 4: CAT Edition Breakdown ── */}
           <div>
-            <h2 className="font-bold text-lg text-white mb-4">CAT Edition Breakdown</h2>
+            <h2 className="font-bold text-lg text-miau-white mb-4">CAT Edition Breakdown</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Founders Edition */}
               <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-r from-amber-400 to-yellow-500 px-5 py-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-white">Founders Edition</h3>
+                    <h3 className="font-extrabold text-miau-white">Founders Edition</h3>
                     <Award size={18} className="text-white/80" />
                   </div>
                 </div>
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Issued</span>
-                    <span className="font-semibold text-white">{creator.foundersIssued}</span>
+                    <span className="font-semibold text-miau-white">{creator.foundersIssued}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Remaining</span>
@@ -423,10 +425,10 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Floor Price</span>
-                    <span className="font-semibold text-white">280 MIAU</span>
+                    <span className="font-semibold text-miau-white">280 MIAU</span>
                   </div>
                   <div className="border-t border-miau-dark-border pt-3 space-y-2">
-                    <p className="text-xs font-semibold text-white">Features:</p>
+                    <p className="text-xs font-semibold text-miau-white">Features:</p>
                     <ul className="space-y-1.5">
                       {['1-of-1 artwork', 'Private channel access', 'OG badge', 'Personal creator message'].map((f, i) => (
                         <li key={i} className="flex items-center gap-2 text-xs text-miau-muted">
@@ -443,14 +445,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
               <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-r from-miau-rose to-miau-dark px-5 py-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-white">Limited Edition</h3>
+                    <h3 className="font-extrabold text-miau-white">Limited Edition</h3>
                     <Star size={18} className="text-white/80" />
                   </div>
                 </div>
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Issued</span>
-                    <span className="font-semibold text-white">{creator.limitedIssued}</span>
+                    <span className="font-semibold text-miau-white">{creator.limitedIssued}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Remaining</span>
@@ -460,10 +462,10 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Floor Price</span>
-                    <span className="font-semibold text-white">140 MIAU</span>
+                    <span className="font-semibold text-miau-white">140 MIAU</span>
                   </div>
                   <div className="border-t border-miau-dark-border pt-3 space-y-2">
-                    <p className="text-xs font-semibold text-white">Features:</p>
+                    <p className="text-xs font-semibold text-miau-white">Features:</p>
                     <ul className="space-y-1.5">
                       {['Themed art set', 'Bonus content access', 'Early access to new releases'].map((f, i) => (
                         <li key={i} className="flex items-center gap-2 text-xs text-miau-muted">
@@ -480,14 +482,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
               <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-r from-miau-pink to-miau-rose px-5 py-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-white">Standard Edition</h3>
+                    <h3 className="font-extrabold text-miau-white">Standard Edition</h3>
                     <Users size={18} className="text-white/80" />
                   </div>
                 </div>
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Issued</span>
-                    <span className="font-semibold text-white">{creator.standardIssued}</span>
+                    <span className="font-semibold text-miau-white">{creator.standardIssued}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Remaining</span>
@@ -497,10 +499,10 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-miau-muted">Floor Price</span>
-                    <span className="font-semibold text-white">100 MIAU</span>
+                    <span className="font-semibold text-miau-white">100 MIAU</span>
                   </div>
                   <div className="border-t border-miau-dark-border pt-3 space-y-2">
-                    <p className="text-xs font-semibold text-white">Features:</p>
+                    <p className="text-xs font-semibold text-miau-white">Features:</p>
                     <ul className="space-y-1.5">
                       {['Creator branding', 'Revenue claim rights'].map((f, i) => (
                         <li key={i} className="flex items-center gap-2 text-xs text-miau-muted">
@@ -521,7 +523,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           {/* ─── Section 5: Weekly Revenue Distribution History ── */}
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border">
-              <h2 className="font-bold text-lg text-white">
+              <h2 className="font-bold text-lg text-miau-white">
                 Weekly Revenue Distribution History
               </h2>
             </div>
@@ -538,19 +540,19 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   </tr>
                 </thead>
                 <tbody>
-                  {nellaDistributions.map(dist => (
+                  {distributions.map(dist => (
                     <tr key={dist.id} className="border-b border-miau-dark-border/30 hover:bg-miau-dark-hover/30 transition-colors">
-                      <td className="px-5 py-3 font-medium text-white">{dist.weekOf}</td>
-                      <td className="px-5 py-3 text-right font-mono text-white">
+                      <td className="px-5 py-3 font-medium text-miau-white">{dist.weekOf}</td>
+                      <td className="px-5 py-3 text-right font-mono text-miau-white">
                         ${dist.grossRevenue.toLocaleString()}
                       </td>
-                      <td className="px-5 py-3 text-right font-mono text-white">
+                      <td className="px-5 py-3 text-right font-mono text-miau-white">
                         ${dist.netRevenue.toLocaleString()}
                       </td>
-                      <td className="px-5 py-3 text-right font-mono text-white">
+                      <td className="px-5 py-3 text-right font-mono text-miau-white">
                         {dist.distributionPerCAT.toFixed(5)}
                       </td>
-                      <td className="px-5 py-3 text-right font-mono text-white">
+                      <td className="px-5 py-3 text-right font-mono text-miau-white">
                         {dist.totalETH.toFixed(3)}
                       </td>
                       <td className="px-5 py-3 text-center">
@@ -576,27 +578,27 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           {/* ─── Section 6: CAT Offering Details ── */}
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border">
-              <h2 className="font-bold text-lg text-white">CAT Offering Details</h2>
+              <h2 className="font-bold text-lg text-miau-white">CAT Offering Details</h2>
             </div>
             <div className="p-5 space-y-5">
               {/* Structure info grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="bg-miau-dark-surface rounded-xl p-4">
                   <p className="text-xs text-miau-muted mb-1">Total Revenue % Offered</p>
-                  <p className="text-xl font-bold text-white">12%</p>
+                  <p className="text-xl font-bold text-miau-white">12%</p>
                   <p className="text-xs text-miau-muted mt-1">Across {creator.catsIssued} CATs (0.1% each)</p>
                 </div>
                 <div className="bg-miau-dark-surface rounded-xl p-4">
                   <p className="text-xs text-miau-muted mb-1">Initial Prices</p>
                   <div className="space-y-1">
-                    <p className="text-sm font-semibold text-white">Founders: 250 MIAU</p>
-                    <p className="text-sm font-semibold text-white">Limited: 120 MIAU</p>
-                    <p className="text-sm font-semibold text-white">Standard: 80 MIAU</p>
+                    <p className="text-sm font-semibold text-miau-white">Founders: 250 MIAU</p>
+                    <p className="text-sm font-semibold text-miau-white">Limited: 120 MIAU</p>
+                    <p className="text-sm font-semibold text-miau-white">Standard: 80 MIAU</p>
                   </div>
                 </div>
                 <div className="bg-miau-dark-surface rounded-xl p-4">
                   <p className="text-xs text-miau-muted mb-1">Offering Date</p>
-                  <p className="text-xl font-bold text-white">Sep 2025</p>
+                  <p className="text-xl font-bold text-miau-white">Sep 2025</p>
                   <p className="text-xs text-miau-muted mt-1">Round 1 of 4</p>
                 </div>
               </div>
@@ -604,7 +606,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
               {/* Score progression */}
               <div className="bg-miau-dark-card rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold text-white">Miau Creator Score Progression</p>
+                  <p className="text-sm font-semibold text-miau-white">Miau Creator Score Progression</p>
                   <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${tierBadge(creator.scoreTier)}`}>
                     Current: {creator.score}
                   </span>
@@ -621,7 +623,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-mono font-bold text-white">{creator.score}</span>
+                    <span className="text-sm font-mono font-bold text-miau-white">{creator.score}</span>
                     <span className="text-xs text-miau-muted/60">(Current)</span>
                   </div>
                 </div>
@@ -632,12 +634,12 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                 <div className="bg-miau-dark-surface rounded-xl p-4">
                   <p className="text-xs text-miau-muted mb-2">Contract Address</p>
                   <div className="flex items-center gap-2">
-                    <code className="text-sm font-mono text-white bg-miau-dark-card px-3 py-1.5 rounded-lg border border-miau-dark-border">
+                    <code className="text-sm font-mono text-miau-white bg-miau-dark-card px-3 py-1.5 rounded-lg border border-miau-dark-border">
                       0x7a3b...f91c
                     </code>
                     <button
                       onClick={() => showToast('Contract address copied!')}
-                      className="text-xs text-miau-pink hover:text-white transition-colors"
+                      className="text-xs text-miau-pink hover:text-miau-white transition-colors"
                     >
                       <ExternalLink size={14} />
                     </button>
@@ -652,7 +654,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       'Platform content policy compliant',
                       'Smart contract audited',
                     ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-white">
+                      <div key={i} className="flex items-center gap-2 text-xs text-miau-white">
                         <CheckCircle2 size={13} className="text-miau-success shrink-0" />
                         {item}
                       </div>
@@ -666,7 +668,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           {/* ─── Section 7: Fan Staking Benefits ── */}
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border">
-              <h2 className="font-bold text-lg text-white">Fan Staking Benefits</h2>
+              <h2 className="font-bold text-lg text-miau-white">Fan Staking Benefits</h2>
               <p className="text-xs text-miau-muted mt-1">
                 Stake MIAU to unlock exclusive fan benefits from {creator.name}
               </p>
@@ -685,16 +687,16 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     <tr key={idx} className="border-b border-miau-dark-border/30 hover:bg-miau-dark-hover/30 transition-colors">
                       <td className="px-5 py-3">
                         <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                          tier.name === 'Diamond' ? 'bg-gradient-to-r from-blue-400 to-cyan-400 text-white' :
-                          tier.name === 'Platinum' ? 'bg-gradient-to-r from-indigo-400 to-purple-500 text-white' :
-                          tier.name === 'Gold' ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-white' :
+                          tier.name === 'Diamond' ? 'bg-gradient-to-r from-blue-400 to-cyan-400 text-miau-white' :
+                          tier.name === 'Platinum' ? 'bg-gradient-to-r from-indigo-400 to-purple-500 text-miau-white' :
+                          tier.name === 'Gold' ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-miau-white' :
                           tier.name === 'Silver' ? 'bg-gradient-to-r from-gray-300 to-gray-400 text-gray-800' :
-                          'bg-gradient-to-r from-amber-600 to-amber-700 text-white'
+                          'bg-gradient-to-r from-amber-600 to-amber-700 text-miau-white'
                         }`}>
                           {tier.name}
                         </span>
                       </td>
-                      <td className="px-5 py-3 font-mono font-semibold text-white">{tier.amount}</td>
+                      <td className="px-5 py-3 font-mono font-semibold text-miau-white">{tier.amount}</td>
                       <td className="px-5 py-3">
                         <ul className="space-y-1">
                           {tier.benefits.map((b, i) => (
@@ -717,7 +719,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
             {/* Asks (Sell orders) */}
             <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
               <div className="px-5 py-3 border-b border-miau-dark-border flex items-center justify-between">
-                <h3 className="font-bold text-white">Top 5 Asks (Sell Orders)</h3>
+                <h3 className="font-bold text-miau-white">Top 5 Asks (Sell Orders)</h3>
                 <span className="text-xs text-miau-muted font-mono">{creator.catSymbol}/MIAU</span>
               </div>
               <div className="grid grid-cols-3 px-5 py-2 text-[11px] text-miau-muted font-medium border-b border-miau-dark-border/50">
@@ -736,7 +738,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       style={{ width: `${(order.quantity / maxAskQty) * 100}%` }}
                     />
                     <span className="relative text-miau-error font-medium">{order.price.toFixed(1)}</span>
-                    <span className="relative text-right text-white">{order.quantity}</span>
+                    <span className="relative text-right text-miau-white">{order.quantity}</span>
                     <span className="relative text-right text-miau-muted">{order.total.toLocaleString()}</span>
                   </div>
                 ))}
@@ -746,7 +748,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
             {/* Bids (Buy orders) */}
             <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
               <div className="px-5 py-3 border-b border-miau-dark-border flex items-center justify-between">
-                <h3 className="font-bold text-white">Top 5 Bids (Buy Orders)</h3>
+                <h3 className="font-bold text-miau-white">Top 5 Bids (Buy Orders)</h3>
                 <span className="text-xs text-miau-muted font-mono">{creator.catSymbol}/MIAU</span>
               </div>
               <div className="grid grid-cols-3 px-5 py-2 text-[11px] text-miau-muted font-medium border-b border-miau-dark-border/50">
@@ -765,7 +767,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       style={{ width: `${(order.quantity / maxBidQty) * 100}%` }}
                     />
                     <span className="relative text-miau-success font-medium">{order.price.toFixed(1)}</span>
-                    <span className="relative text-right text-white">{order.quantity}</span>
+                    <span className="relative text-right text-miau-white">{order.quantity}</span>
                     <span className="relative text-right text-miau-muted">{order.total.toLocaleString()}</span>
                   </div>
                 ))}
@@ -776,7 +778,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           {/* ─── Section 9: Holder Distribution ── */}
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border">
-              <h2 className="font-bold text-lg text-white">Holder Distribution</h2>
+              <h2 className="font-bold text-lg text-miau-white">Holder Distribution</h2>
             </div>
             <div className="p-5">
               <div className="flex flex-col md:flex-row items-center gap-8">
@@ -821,14 +823,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                         style={{ backgroundColor: entry.color }}
                       />
                       <div className="flex-1 flex items-center justify-between">
-                        <span className="text-sm text-white">{entry.name}</span>
-                        <span className="text-sm font-mono font-semibold text-white">{entry.value} CATs</span>
+                        <span className="text-sm text-miau-white">{entry.name}</span>
+                        <span className="text-sm font-mono font-semibold text-miau-white">{entry.value} CATs</span>
                       </div>
                     </div>
                   ))}
                   <div className="border-t border-miau-dark-border pt-3 flex items-center justify-between">
-                    <span className="text-sm font-semibold text-white">Total Issued</span>
-                    <span className="text-sm font-mono font-bold text-white">{creator.catsIssued} CATs</span>
+                    <span className="text-sm font-semibold text-miau-white">Total Issued</span>
+                    <span className="text-sm font-mono font-bold text-miau-white">{creator.catsIssued} CATs</span>
                   </div>
                 </div>
               </div>
@@ -852,18 +854,18 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
               <BarChart3 size={18} className="text-miau-pink" />
-              <h2 className="font-bold text-lg text-white">Revenue & CAT Performance</h2>
+              <h2 className="font-bold text-lg text-miau-white">Revenue & CAT Performance</h2>
             </div>
             <div className="p-5 space-y-5">
               {/* Revenue summary cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-miau-dark-card rounded-xl p-4">
                   <p className="text-xs text-miau-muted mb-1">This Week Revenue</p>
-                  <p className="text-2xl font-bold text-white">${thisWeekRevenue.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-miau-white">${thisWeekRevenue.toLocaleString()}</p>
                 </div>
                 <div className="bg-miau-dark-surface rounded-xl p-4">
                   <p className="text-xs text-miau-muted mb-1">Net After {platformFeePercent}% Platform Fee</p>
-                  <p className="text-2xl font-bold text-white">${netAfterPlatformFee.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-miau-white">${netAfterPlatformFee.toLocaleString()}</p>
                 </div>
                 <div className="bg-miau-dark-surface rounded-xl p-4">
                   <p className="text-xs text-miau-muted mb-1">Creator Share ({creatorSharePercent}%)</p>
@@ -877,23 +879,23 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
               {/* Distribution details */}
               <div className="bg-miau-cream rounded-xl p-5 space-y-3">
-                <h3 className="font-semibold text-sm text-white">Distribution Details</h3>
+                <h3 className="font-semibold text-sm text-miau-white">Distribution Details</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-miau-muted">Distribution frequency</span>
-                    <span className="font-medium text-white">Weekly (every Monday)</span>
+                    <span className="font-medium text-miau-white">Weekly (every Monday)</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-miau-muted">Distribution currency</span>
-                    <span className="font-medium text-white">ETH</span>
+                    <span className="font-medium text-miau-white">ETH</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-miau-muted">Next distribution date</span>
-                    <span className="font-medium text-white">Mon 24 Feb 2026</span>
+                    <span className="font-medium text-miau-white">Mon 24 Feb 2026</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-miau-muted">Estimated per CAT</span>
-                    <span className="font-mono font-medium text-white">{estimatedPerCAT} ETH</span>
+                    <span className="font-mono font-medium text-miau-white">{estimatedPerCAT} ETH</span>
                   </div>
                 </div>
                 <div className="bg-miau-dark-surface/60 rounded-lg p-3 flex items-start gap-2 mt-2">
@@ -911,7 +913,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
               <RefreshCw size={18} className="text-miau-pink" />
-              <h2 className="font-bold text-lg text-white">Buyback Options</h2>
+              <h2 className="font-bold text-lg text-miau-white">Buyback Options</h2>
             </div>
             <div className="p-5 space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -921,7 +923,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     <div className="w-8 h-8 rounded-lg bg-miau-dark/10 flex items-center justify-center">
                       <DollarSign size={16} className="text-miau-pink" />
                     </div>
-                    <h3 className="font-semibold text-sm text-white">Open Market Buyback</h3>
+                    <h3 className="font-semibold text-sm text-miau-white">Open Market Buyback</h3>
                   </div>
                   <p className="text-xs text-miau-muted leading-relaxed">
                     Purchase your own CATs on the open market at current market prices. No restrictions,
@@ -929,7 +931,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   </p>
                   <div className="bg-miau-dark-card rounded-lg p-3">
                     <p className="text-xs text-miau-muted">Current estimated cost (all {creator.catsIssued} CATs)</p>
-                    <p className="text-lg font-bold text-white">~{(creator.catsIssued * creator.currentPrice).toLocaleString()} MIAU</p>
+                    <p className="text-lg font-bold text-miau-white">~{(creator.catsIssued * creator.currentPrice).toLocaleString()} MIAU</p>
                   </div>
                 </div>
 
@@ -939,7 +941,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     <div className="w-8 h-8 rounded-lg bg-miau-dark/10 flex items-center justify-center">
                       <Shield size={16} className="text-miau-pink" />
                     </div>
-                    <h3 className="font-semibold text-sm text-white">Structured Buyback Programme</h3>
+                    <h3 className="font-semibold text-sm text-miau-white">Structured Buyback Programme</h3>
                   </div>
                   <p className="text-xs text-miau-muted leading-relaxed">
                     Available after 12 months from initial offering. Allows you to repurchase all outstanding
@@ -961,7 +963,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   </div>
                   <div className="bg-miau-dark-card rounded-lg p-3">
                     <p className="text-xs text-miau-muted">Current buyback cost estimate</p>
-                    <p className="text-lg font-bold text-white">~12,000 MIAU</p>
+                    <p className="text-lg font-bold text-miau-white">~12,000 MIAU</p>
                     <p className="text-xs text-miau-muted/60">for all {creator.catsIssued} outstanding CATs</p>
                   </div>
                 </div>
@@ -973,14 +975,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
             <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
               <Plus size={18} className="text-miau-pink" />
-              <h2 className="font-bold text-lg text-white">Issue New CATs</h2>
+              <h2 className="font-bold text-lg text-miau-white">Issue New CATs</h2>
             </div>
             <div className="p-5 space-y-5">
               {/* Status banner */}
               <div className="bg-miau-success/10 border border-miau-success/20 rounded-xl p-4 flex items-start gap-3">
                 <CheckCircle2 size={18} className="text-miau-success shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm font-semibold text-white">Round 1 Complete</p>
+                  <p className="text-sm font-semibold text-miau-white">Round 1 Complete</p>
                   <p className="text-xs text-miau-muted mt-1">
                     {creator.catsIssued} CATs issued representing {catHolderPercent}% of revenue. All Founders edition sold out.
                   </p>
@@ -991,24 +993,24 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-miau-dark-surface rounded-xl p-4 text-center">
                   <p className="text-xs text-miau-muted mb-1">Remaining Capacity</p>
-                  <p className="text-2xl font-bold text-white">80 CATs</p>
+                  <p className="text-2xl font-bold text-miau-white">80 CATs</p>
                   <p className="text-xs text-miau-muted">8% additional revenue</p>
                 </div>
                 <div className="bg-miau-dark-surface rounded-xl p-4 text-center">
                   <p className="text-xs text-miau-muted mb-1">Rounds Remaining</p>
-                  <p className="text-2xl font-bold text-white">3 of 4</p>
+                  <p className="text-2xl font-bold text-miau-white">3 of 4</p>
                   <p className="text-xs text-miau-muted">Max 20% total</p>
                 </div>
                 <div className="bg-miau-dark-surface rounded-xl p-4 text-center">
                   <p className="text-xs text-miau-muted mb-1">Next Eligible</p>
-                  <p className="text-2xl font-bold text-white">Jun 2026</p>
+                  <p className="text-2xl font-bold text-miau-white">Jun 2026</p>
                   <p className="text-xs text-miau-muted">6-month cooling period</p>
                 </div>
               </div>
 
               {/* Edition structure selector */}
               <div className="bg-miau-cream rounded-xl p-5 space-y-4">
-                <h3 className="font-semibold text-sm text-white">Edition Structure (Next Round)</h3>
+                <h3 className="font-semibold text-sm text-miau-white">Edition Structure (Next Round)</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-xs text-miau-muted mb-1.5 font-medium">
@@ -1020,7 +1022,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       max="10"
                       value={offeringFounders}
                       onChange={e => setOfferingFounders(e.target.value)}
-                      className="w-full bg-miau-dark-card border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-white focus:outline-none focus:border-miau-pink transition-colors"
+                      className="w-full bg-miau-dark-card border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink transition-colors"
                     />
                   </div>
                   <div>
@@ -1033,7 +1035,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       max="40"
                       value={offeringLimited}
                       onChange={e => setOfferingLimited(e.target.value)}
-                      className="w-full bg-miau-dark-card border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-white focus:outline-none focus:border-miau-pink transition-colors"
+                      className="w-full bg-miau-dark-card border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink transition-colors"
                     />
                   </div>
                   <div>
@@ -1052,24 +1054,24 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
               {/* Pricing guidance */}
               <div className="bg-miau-dark-surface rounded-xl p-5 space-y-3">
-                <h3 className="font-semibold text-sm text-white">Pricing Guidance</h3>
+                <h3 className="font-semibold text-sm text-miau-white">Pricing Guidance</h3>
                 <p className="text-xs text-miau-muted leading-relaxed">
                   Based on your current revenue metrics and score progression, the suggested pricing for Round 2 is:
                 </p>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="bg-miau-dark-card rounded-lg p-3 text-center">
                     <p className="text-xs text-miau-muted">Founders</p>
-                    <p className="text-lg font-bold text-white">300 MIAU</p>
+                    <p className="text-lg font-bold text-miau-white">300 MIAU</p>
                     <p className="text-[10px] text-miau-success">+20% vs Round 1</p>
                   </div>
                   <div className="bg-miau-dark-card rounded-lg p-3 text-center">
                     <p className="text-xs text-miau-muted">Limited</p>
-                    <p className="text-lg font-bold text-white">150 MIAU</p>
+                    <p className="text-lg font-bold text-miau-white">150 MIAU</p>
                     <p className="text-[10px] text-miau-success">+25% vs Round 1</p>
                   </div>
                   <div className="bg-miau-dark-card rounded-lg p-3 text-center">
                     <p className="text-xs text-miau-muted">Standard</p>
-                    <p className="text-lg font-bold text-white">110 MIAU</p>
+                    <p className="text-lg font-bold text-miau-white">110 MIAU</p>
                     <p className="text-[10px] text-miau-success">+37% vs Round 1</p>
                   </div>
                 </div>
@@ -1077,7 +1079,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
               {/* Listing tier selector */}
               <div className="space-y-3">
-                <h3 className="font-semibold text-sm text-white">Listing Tier</h3>
+                <h3 className="font-semibold text-sm text-miau-white">Listing Tier</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {listingTiers.map(tier => (
                     <button
@@ -1090,7 +1092,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold text-sm text-white">{tier.name}</span>
+                        <span className="font-semibold text-sm text-miau-white">{tier.name}</span>
                         <span className="font-mono font-bold text-sm text-miau-pink">{tier.price}</span>
                       </div>
                       <p className="text-xs text-miau-muted">{tier.description}</p>
@@ -1101,19 +1103,19 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
               {/* Estimated raise calculator */}
               <div className="bg-gradient-to-r from-miau-blush to-miau-pale rounded-xl p-5">
-                <h3 className="font-semibold text-sm text-white mb-3">Estimated Raise Calculator</h3>
+                <h3 className="font-semibold text-sm text-miau-white mb-3">Estimated Raise Calculator</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-center">
                   <div>
                     <p className="text-xs text-miau-muted">Founders ({parsedFounders} x 280)</p>
-                    <p className="font-mono font-bold text-white">{(parsedFounders * 280).toLocaleString()} MIAU</p>
+                    <p className="font-mono font-bold text-miau-white">{(parsedFounders * 280).toLocaleString()} MIAU</p>
                   </div>
                   <div>
                     <p className="text-xs text-miau-muted">Limited ({parsedLimited} x 140)</p>
-                    <p className="font-mono font-bold text-white">{(parsedLimited * 140).toLocaleString()} MIAU</p>
+                    <p className="font-mono font-bold text-miau-white">{(parsedLimited * 140).toLocaleString()} MIAU</p>
                   </div>
                   <div>
                     <p className="text-xs text-miau-muted">Standard ({Math.max(0, parsedStandard)} x 100)</p>
-                    <p className="font-mono font-bold text-white">{(Math.max(0, parsedStandard) * 100).toLocaleString()} MIAU</p>
+                    <p className="font-mono font-bold text-miau-white">{(Math.max(0, parsedStandard) * 100).toLocaleString()} MIAU</p>
                   </div>
                   <div className="bg-miau-dark-card rounded-lg p-3">
                     <p className="text-xs text-miau-muted">Total Estimated</p>
@@ -1128,7 +1130,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   setShowOfferingModal(true);
                   setOfferingSubmitted(false);
                 }}
-                className="w-full py-3.5 bg-miau-dark text-white rounded-xl font-semibold text-sm hover:bg-miau-brown transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-miau-dark text-miau-white rounded-xl font-semibold text-sm hover:bg-miau-brown transition-colors flex items-center justify-center gap-2"
               >
                 <FileText size={16} />
                 Submit New Offering for Review
@@ -1157,7 +1159,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   {/* Modal header */}
                   <div className="px-6 py-5 border-b border-miau-dark-border flex items-center justify-between sticky top-0 bg-miau-dark-card rounded-t-3xl z-10">
                     <div>
-                      <h2 className="font-bold text-lg text-white">
+                      <h2 className="font-bold text-lg text-miau-white">
                         CAT Offering Application
                       </h2>
                       <p className="text-xs text-miau-muted mt-0.5">
@@ -1168,7 +1170,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       onClick={() => setShowOfferingModal(false)}
                       className="w-8 h-8 rounded-lg bg-miau-dark-surface flex items-center justify-center hover:bg-miau-dark-hover transition-colors"
                     >
-                      <X size={16} className="text-white" />
+                      <X size={16} className="text-miau-white" />
                     </button>
                   </div>
 
@@ -1176,13 +1178,13 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     <div className="p-6 space-y-5">
                       {/* Round info */}
                       <div className="bg-miau-dark-surface rounded-xl p-4 flex items-center justify-between">
-                        <span className="text-sm font-medium text-white">Round</span>
+                        <span className="text-sm font-medium text-miau-white">Round</span>
                         <span className="font-semibold text-miau-pink">Round 2 of 4</span>
                       </div>
 
                       {/* Edition split inputs */}
                       <div className="space-y-3">
-                        <h3 className="text-sm font-semibold text-white">Edition Split</h3>
+                        <h3 className="text-sm font-semibold text-miau-white">Edition Split</h3>
                         <div className="grid grid-cols-3 gap-3">
                           <div>
                             <label className="block text-xs text-miau-muted mb-1">Founders (max 10)</label>
@@ -1192,7 +1194,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                               max="10"
                               value={offeringFounders}
                               onChange={e => setOfferingFounders(e.target.value)}
-                              className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-3 py-2 font-mono text-sm text-white focus:outline-none focus:border-miau-pink"
+                              className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-3 py-2 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink"
                             />
                           </div>
                           <div>
@@ -1203,7 +1205,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                               max="40"
                               value={offeringLimited}
                               onChange={e => setOfferingLimited(e.target.value)}
-                              className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-3 py-2 font-mono text-sm text-white focus:outline-none focus:border-miau-pink"
+                              className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-3 py-2 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink"
                             />
                           </div>
                           <div>
@@ -1220,26 +1222,26 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
                       {/* Suggested pricing */}
                       <div className="bg-miau-dark-card rounded-xl p-4 space-y-2">
-                        <h3 className="text-sm font-semibold text-white">Suggested Pricing</h3>
+                        <h3 className="text-sm font-semibold text-miau-white">Suggested Pricing</h3>
                         <div className="grid grid-cols-3 gap-3 text-center text-xs">
                           <div>
                             <span className="text-miau-muted">Founders</span>
-                            <p className="font-mono font-bold text-white">300 MIAU</p>
+                            <p className="font-mono font-bold text-miau-white">300 MIAU</p>
                           </div>
                           <div>
                             <span className="text-miau-muted">Limited</span>
-                            <p className="font-mono font-bold text-white">150 MIAU</p>
+                            <p className="font-mono font-bold text-miau-white">150 MIAU</p>
                           </div>
                           <div>
                             <span className="text-miau-muted">Standard</span>
-                            <p className="font-mono font-bold text-white">110 MIAU</p>
+                            <p className="font-mono font-bold text-miau-white">110 MIAU</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Listing tier radio buttons */}
                       <div className="space-y-3">
-                        <h3 className="text-sm font-semibold text-white">Listing Tier</h3>
+                        <h3 className="text-sm font-semibold text-miau-white">Listing Tier</h3>
                         <div className="space-y-2">
                           {listingTiers.map(tier => (
                             <label
@@ -1260,7 +1262,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                               />
                               <div className="flex-1">
                                 <div className="flex items-center justify-between">
-                                  <span className="text-sm font-medium text-white">{tier.name}</span>
+                                  <span className="text-sm font-medium text-miau-white">{tier.name}</span>
                                   <span className="font-mono text-sm font-bold text-miau-pink">{tier.price}</span>
                                 </div>
                                 <p className="text-xs text-miau-muted">{tier.description}</p>
@@ -1272,27 +1274,27 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
                       {/* Capital use textarea */}
                       <div>
-                        <label className="block text-sm font-semibold text-white mb-1.5">
+                        <label className="block text-sm font-semibold text-miau-white mb-1.5">
                           Intended Use of Capital
                         </label>
                         <textarea
                           value={capitalUse}
                           onChange={e => setCapitalUse(e.target.value)}
                           placeholder="Describe how you plan to use the raised capital to grow your platform and content..."
-                          className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 text-sm text-white placeholder:text-miau-muted/60 focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
+                          className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 text-sm text-miau-white placeholder:text-miau-muted/60 focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
                         />
                       </div>
 
                       {/* Growth projections textarea */}
                       <div>
-                        <label className="block text-sm font-semibold text-white mb-1.5">
+                        <label className="block text-sm font-semibold text-miau-white mb-1.5">
                           Growth Projections
                         </label>
                         <textarea
                           value={growthProjections}
                           onChange={e => setGrowthProjections(e.target.value)}
                           placeholder="Outline your subscriber growth and revenue projections for the next 12 months..."
-                          className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 text-sm text-white placeholder:text-miau-muted/60 focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
+                          className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 text-sm text-miau-white placeholder:text-miau-muted/60 focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
                         />
                       </div>
 
@@ -1305,7 +1307,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                           className="mt-0.5 accent-miau-dark"
                         />
                         <div>
-                          <p className="text-sm font-medium text-white">Lock-up Confirmation</p>
+                          <p className="text-sm font-medium text-miau-white">Lock-up Confirmation</p>
                           <p className="text-xs text-miau-muted mt-0.5">
                             I confirm that I understand the 12-month lock-up period during which structured buyback
                             is not available, and that CAT holders have ongoing revenue distribution rights.
@@ -1322,7 +1324,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                           className="mt-0.5 accent-miau-dark"
                         />
                         <div>
-                          <p className="text-sm font-medium text-white">Declaration</p>
+                          <p className="text-sm font-medium text-miau-white">Declaration</p>
                           <p className="text-xs text-miau-muted mt-0.5">
                             I declare that all information provided is accurate and complete. I understand that Miauswap
                             reserves the right to reject this application, and that issuance is subject to platform
@@ -1335,7 +1337,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       <button
                         onClick={() => setOfferingSubmitted(true)}
                         disabled={!lockUpConfirmed || !declarationConfirmed}
-                        className="w-full py-3.5 bg-miau-dark text-white rounded-xl font-semibold text-sm hover:bg-miau-brown transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full py-3.5 bg-miau-dark text-miau-white rounded-xl font-semibold text-sm hover:bg-miau-brown transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       >
                         <ArrowUpRight size={16} />
                         Submit Application
@@ -1354,7 +1356,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                         </div>
                       </motion.div>
                       <div>
-                        <h3 className="text-xl font-extrabold text-white">
+                        <h3 className="text-xl font-extrabold text-miau-white">
                           Application Submitted
                         </h3>
                         <p className="text-sm text-miau-muted mt-2 max-w-md mx-auto leading-relaxed">
@@ -1364,15 +1366,15 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       </div>
                       <div className="bg-miau-dark-surface rounded-xl p-4 inline-block">
                         <p className="text-xs text-miau-muted">Typical review time</p>
-                        <p className="text-lg font-bold text-white">7 -- 14 days</p>
+                        <p className="text-lg font-bold text-miau-white">7 -- 14 days</p>
                       </div>
                       <div className="space-y-2 text-xs text-miau-muted">
                         <p>You will receive an email notification when your application status changes.</p>
-                        <p>Application reference: <span className="font-mono font-medium text-white">APP-{creator.id}-R2-{Date.now().toString(36).toUpperCase().slice(0, 6)}</span></p>
+                        <p>Application reference: <span className="font-mono font-medium text-miau-white">APP-{creator.id}-R2-{Date.now().toString(36).toUpperCase().slice(0, 6)}</span></p>
                       </div>
                       <button
                         onClick={() => setShowOfferingModal(false)}
-                        className="px-6 py-2.5 bg-miau-dark text-white rounded-xl font-semibold text-sm hover:bg-miau-brown transition-colors"
+                        className="px-6 py-2.5 bg-miau-dark text-miau-white rounded-xl font-semibold text-sm hover:bg-miau-brown transition-colors"
                       >
                         Close
                       </button>

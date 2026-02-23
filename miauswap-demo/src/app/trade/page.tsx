@@ -50,11 +50,11 @@ const timeRanges = [
 function tierBadge(tier: Creator['scoreTier']) {
   switch (tier) {
     case 'Platinum':
-      return 'bg-gradient-to-r from-violet-500 to-purple-600 text-white';
+      return 'bg-gradient-to-r from-violet-500 to-purple-600 text-miau-white';
     case 'Gold':
       return 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black';
     case 'Silver':
-      return 'bg-gradient-to-r from-gray-400 to-gray-500 text-white';
+      return 'bg-gradient-to-r from-gray-400 to-gray-500 text-miau-white';
   }
 }
 
@@ -202,7 +202,7 @@ export default function TradePage() {
           className="w-full md:w-auto flex items-center gap-3 glass-card rounded-2xl px-5 py-3.5 hover:border-miau-pink/30 transition-all"
         >
           <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0"
+            className="w-11 h-11 rounded-xl flex items-center justify-center text-miau-white font-bold text-sm shrink-0"
             style={{
               background: `linear-gradient(135deg, ${selectedCreator.gradientFrom}, ${selectedCreator.gradientTo})`,
             }}
@@ -212,7 +212,7 @@ export default function TradePage() {
 
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-white">
+              <span className="font-bold text-miau-white">
                 {selectedCreator.catSymbol}
               </span>
               <span className="text-sm text-miau-muted">/MIAU</span>
@@ -221,7 +221,7 @@ export default function TradePage() {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-sm font-bold text-white">
+              <span className="font-mono text-sm font-bold text-miau-white">
                 {selectedCreator.currentPrice.toFixed(2)} MIAU
               </span>
               <span
@@ -259,7 +259,7 @@ export default function TradePage() {
                     value={selectorSearch}
                     onChange={e => setSelectorSearch(e.target.value)}
                     placeholder="Search creators..."
-                    className="bg-transparent text-sm text-white placeholder-miau-muted outline-none w-full"
+                    className="bg-transparent text-sm text-miau-white placeholder-miau-muted outline-none w-full"
                     autoFocus
                   />
                   {selectorSearch && (
@@ -283,7 +283,7 @@ export default function TradePage() {
                       }`}
                     >
                       <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-xs shrink-0"
+                        className="w-9 h-9 rounded-lg flex items-center justify-center text-miau-white font-bold text-xs shrink-0"
                         style={{
                           background: `linear-gradient(135deg, ${c.gradientFrom}, ${c.gradientTo})`,
                         }}
@@ -292,7 +292,7 @@ export default function TradePage() {
                       </div>
                       <div className="flex flex-col items-start flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-sm text-white">{c.name}</span>
+                          <span className="font-semibold text-sm text-miau-white">{c.name}</span>
                           <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-bold ${tierBadge(c.scoreTier)}`}>
                             {c.score}
                           </span>
@@ -300,7 +300,7 @@ export default function TradePage() {
                         <span className="text-xs text-miau-muted">{c.catSymbol}/MIAU</span>
                       </div>
                       <div className="flex flex-col items-end shrink-0">
-                        <span className="font-mono text-sm font-bold text-white">
+                        <span className="font-mono text-sm font-bold text-miau-white">
                           {c.currentPrice.toFixed(2)}
                         </span>
                         <span
@@ -331,7 +331,7 @@ export default function TradePage() {
         <div className="lg:col-span-3">
           <div className="glass-card rounded-2xl overflow-hidden">
             <div className="px-4 py-3 border-b border-miau-dark-border flex items-center justify-between">
-              <h2 className="font-bold text-white">Order Book</h2>
+              <h2 className="font-bold text-miau-white">Order Book</h2>
               <span className="text-xs text-miau-muted font-mono">
                 {selectedCreator.catSymbol}/MIAU
               </span>
@@ -368,7 +368,7 @@ export default function TradePage() {
             <div className="px-4 py-2.5 bg-miau-dark-surface/60 border-y border-miau-dark-border/50 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <ArrowUpDown size={14} className="text-miau-muted" />
-                <span className="font-mono font-bold text-base text-white">
+                <span className="font-mono font-bold text-base text-miau-white">
                   {lastTradePrice.toFixed(2)}
                 </span>
                 <span
@@ -415,7 +415,7 @@ export default function TradePage() {
           {/* Price Chart */}
           <div className="glass-card rounded-2xl overflow-hidden">
             <div className="px-5 py-3 border-b border-miau-dark-border flex items-center justify-between flex-wrap gap-2">
-              <h2 className="font-bold text-white">
+              <h2 className="font-bold text-miau-white">
                 {selectedCreator.catSymbol} Price
               </h2>
               <div className="flex items-center gap-1">
@@ -425,8 +425,8 @@ export default function TradePage() {
                     onClick={() => setActiveRange(r.label)}
                     className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                       activeRange === r.label
-                        ? 'bg-miau-pink text-white shadow-glow'
-                        : 'text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                        ? 'bg-miau-pink text-miau-white shadow-glow'
+                        : 'text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                     }`}
                   >
                     {r.label}
@@ -512,7 +512,7 @@ export default function TradePage() {
           {/* Trade Entry Panel */}
           <div className="glass-card rounded-2xl overflow-hidden">
             <div className="px-5 py-3 border-b border-miau-dark-border">
-              <h2 className="font-bold text-white">Place Order</h2>
+              <h2 className="font-bold text-miau-white">Place Order</h2>
             </div>
 
             <div className="p-5 space-y-4">
@@ -523,7 +523,7 @@ export default function TradePage() {
                   className={`py-3 rounded-xl font-bold text-sm transition-all ${
                     tradeSide === 'buy'
                       ? 'bg-miau-success text-black shadow-glow-green'
-                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                   }`}
                 >
                   BUY
@@ -532,8 +532,8 @@ export default function TradePage() {
                   onClick={() => setTradeSide('sell')}
                   className={`py-3 rounded-xl font-bold text-sm transition-all ${
                     tradeSide === 'sell'
-                      ? 'bg-miau-error text-white'
-                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                      ? 'bg-miau-error text-miau-white'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                   }`}
                 >
                   SELL
@@ -547,7 +547,7 @@ export default function TradePage() {
                   className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     orderType === 'limit'
                       ? 'bg-white text-miau-dark'
-                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                   }`}
                 >
                   LIMIT
@@ -557,7 +557,7 @@ export default function TradePage() {
                   className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     orderType === 'market'
                       ? 'bg-white text-miau-dark'
-                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                   }`}
                 >
                   MARKET
@@ -576,7 +576,7 @@ export default function TradePage() {
                     min="0"
                     value={tradePrice}
                     onChange={e => setTradePrice(e.target.value)}
-                    className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-miau-pink/50 focus:ring-1 focus:ring-miau-pink/30 transition-all"
+                    className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink/50 focus:ring-1 focus:ring-miau-pink/30 transition-all"
                     placeholder="0.00"
                   />
                 </div>
@@ -585,7 +585,7 @@ export default function TradePage() {
               {orderType === 'market' && (
                 <div className="bg-miau-dark-surface rounded-xl px-4 py-3 flex items-center justify-between border border-miau-dark-border">
                   <span className="text-xs text-miau-muted font-semibold">Market Price</span>
-                  <span className="font-mono text-sm font-bold text-white">
+                  <span className="font-mono text-sm font-bold text-miau-white">
                     {selectedCreator.currentPrice.toFixed(2)} MIAU
                   </span>
                 </div>
@@ -602,7 +602,7 @@ export default function TradePage() {
                   min="0"
                   value={tradeQuantity}
                   onChange={e => setTradeQuantity(e.target.value)}
-                  className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-miau-pink/50 focus:ring-1 focus:ring-miau-pink/30 transition-all"
+                  className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 font-mono text-sm text-miau-white focus:outline-none focus:border-miau-pink/50 focus:ring-1 focus:ring-miau-pink/30 transition-all"
                   placeholder="0"
                 />
               </div>
@@ -617,7 +617,7 @@ export default function TradePage() {
                 >
                   <div className="flex justify-between">
                     <span className="text-miau-muted">Subtotal</span>
-                    <span className="font-mono text-white font-semibold">
+                    <span className="font-mono text-miau-white font-semibold">
                       {rawTotal.toFixed(2)} MIAU
                     </span>
                   </div>
@@ -631,15 +631,15 @@ export default function TradePage() {
                         </span>
                       )}
                     </span>
-                    <span className="font-mono text-white font-semibold">
+                    <span className="font-mono text-miau-white font-semibold">
                       {feeAmount.toFixed(2)} MIAU
                     </span>
                   </div>
                   <div className="border-t border-miau-dark-border pt-2 flex justify-between font-bold">
-                    <span className="text-white">
+                    <span className="text-miau-white">
                       {tradeSide === 'buy' ? 'Total Cost' : 'You Receive'}
                     </span>
-                    <span className="font-mono text-white">{totalWithFee.toFixed(2)} MIAU</span>
+                    <span className="font-mono text-miau-white">{totalWithFee.toFixed(2)} MIAU</span>
                   </div>
                 </motion.div>
               )}
@@ -647,7 +647,7 @@ export default function TradePage() {
               {/* Balance */}
               <div className="flex items-center justify-between text-xs">
                 <span className="text-miau-muted font-semibold">Available</span>
-                <span className="font-mono font-bold text-white">
+                <span className="font-mono font-bold text-miau-white">
                   {miauBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MIAU
                 </span>
               </div>
@@ -668,7 +668,7 @@ export default function TradePage() {
                 className={`w-full py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed ${
                   tradeSide === 'buy'
                     ? 'bg-miau-success hover:bg-miau-success/90 text-black shadow-glow-green'
-                    : 'bg-miau-error hover:bg-miau-error/90 text-white'
+                    : 'bg-miau-error hover:bg-miau-error/90 text-miau-white'
                 }`}
               >
                 {isSubmitting ? (
@@ -691,7 +691,7 @@ export default function TradePage() {
           {/* Recent Trades */}
           <div className="glass-card rounded-2xl overflow-hidden">
             <div className="px-4 py-3 border-b border-miau-dark-border">
-              <h2 className="font-bold text-white">Recent Trades</h2>
+              <h2 className="font-bold text-miau-white">Recent Trades</h2>
             </div>
 
             <div className="grid grid-cols-4 px-4 py-2 text-[11px] text-miau-muted font-semibold border-b border-miau-dark-border/50">
@@ -735,7 +735,7 @@ export default function TradePage() {
           {/* Open Orders */}
           <div className="glass-card rounded-2xl overflow-hidden">
             <div className="px-4 py-3 border-b border-miau-dark-border flex items-center justify-between">
-              <h2 className="font-bold text-white">My Orders</h2>
+              <h2 className="font-bold text-miau-white">My Orders</h2>
               <span className="text-xs text-miau-muted font-mono">{openOrders.length} active</span>
             </div>
 
@@ -759,7 +759,7 @@ export default function TradePage() {
                         >
                           {order.side}
                         </span>
-                        <span className="text-xs font-semibold text-white">{order.pair}</span>
+                        <span className="text-xs font-semibold text-miau-white">{order.pair}</span>
                         <span className="text-[10px] text-miau-muted bg-miau-dark-surface px-1.5 py-0.5 rounded">
                           {order.type}
                         </span>
@@ -784,17 +784,17 @@ export default function TradePage() {
                     <div className="grid grid-cols-3 gap-2 text-xs">
                       <div>
                         <span className="text-miau-muted block text-[10px]">Price</span>
-                        <span className="font-mono font-semibold text-white">
+                        <span className="font-mono font-semibold text-miau-white">
                           {order.price.toFixed(2)}
                         </span>
                       </div>
                       <div>
                         <span className="text-miau-muted block text-[10px]">Qty</span>
-                        <span className="font-mono font-semibold text-white">{order.quantity}</span>
+                        <span className="font-mono font-semibold text-miau-white">{order.quantity}</span>
                       </div>
                       <div>
                         <span className="text-miau-muted block text-[10px]">Filled</span>
-                        <span className="font-mono font-semibold text-white">
+                        <span className="font-mono font-semibold text-miau-white">
                           {order.filled}/{order.quantity}
                         </span>
                       </div>
@@ -820,7 +820,7 @@ export default function TradePage() {
                             <span className="text-xs text-miau-error font-semibold">Cancel?</span>
                             <button
                               onClick={() => handleCancelOrder(order.id)}
-                              className="text-xs bg-miau-error text-white px-3 py-1 rounded-lg font-bold hover:bg-miau-error/90 transition-colors"
+                              className="text-xs bg-miau-error text-miau-white px-3 py-1 rounded-lg font-bold hover:bg-miau-error/90 transition-colors"
                             >
                               Yes
                             </button>

@@ -33,11 +33,11 @@ function parseMemberSince(memberSince: string): Date {
 function getScoreBadgeClasses(scoreTier: 'Platinum' | 'Gold' | 'Silver'): string {
   switch (scoreTier) {
     case 'Platinum':
-      return 'bg-gradient-to-r from-violet-500 to-purple-600 text-white';
+      return 'bg-gradient-to-r from-violet-500 to-purple-600 text-miau-white';
     case 'Gold':
       return 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black';
     case 'Silver':
-      return 'bg-gradient-to-r from-gray-400 to-gray-500 text-white';
+      return 'bg-gradient-to-r from-gray-400 to-gray-500 text-miau-white';
   }
 }
 
@@ -111,7 +111,7 @@ export default function DiscoverPage() {
       {/* Hero Section */}
       <div className="space-y-6">
         <div className="text-center space-y-3 pt-2">
-          <h1 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl lg:text-4xl font-extrabold text-miau-white tracking-tight">
             Invest in Your Favourite Creators
           </h1>
           <p className="text-base text-miau-muted max-w-xl mx-auto leading-relaxed">
@@ -130,7 +130,7 @@ export default function DiscoverPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search creators..."
-            className="w-full pl-14 pr-5 py-4 bg-miau-dark-card border border-miau-dark-border rounded-2xl text-base text-white placeholder:text-miau-muted focus:outline-none focus:ring-2 focus:ring-miau-pink/40 focus:border-miau-pink/50 transition-all"
+            className="w-full pl-14 pr-5 py-4 bg-miau-dark-card border border-miau-dark-border rounded-2xl text-base text-miau-white placeholder:text-miau-muted focus:outline-none focus:ring-2 focus:ring-miau-pink/40 focus:border-miau-pink/50 transition-all"
           />
         </div>
 
@@ -143,8 +143,8 @@ export default function DiscoverPage() {
                 onClick={() => setActiveFilter(pill)}
                 className={`px-5 py-2 rounded-xl text-sm font-semibold transition-all ${
                   activeFilter === pill
-                    ? 'bg-miau-pink text-white shadow-glow'
-                    : 'bg-miau-dark-card border border-miau-dark-border text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                    ? 'bg-miau-pink text-miau-white shadow-glow'
+                    : 'bg-miau-dark-card border border-miau-dark-border text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                 }`}
               >
                 {pill}
@@ -156,7 +156,7 @@ export default function DiscoverPage() {
           <div className="relative">
             <button
               onClick={() => setShowSortDropdown(!showSortDropdown)}
-              className="flex items-center gap-2 px-5 py-2 bg-miau-dark-card border border-miau-dark-border rounded-xl text-sm font-semibold text-miau-muted hover:bg-miau-dark-hover hover:text-white transition-colors"
+              className="flex items-center gap-2 px-5 py-2 bg-miau-dark-card border border-miau-dark-border rounded-xl text-sm font-semibold text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white transition-colors"
             >
               <Filter size={14} />
               <span>Sort: {sortBy}</span>
@@ -173,7 +173,7 @@ export default function DiscoverPage() {
                     className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors ${
                       sortBy === option
                         ? 'bg-miau-pink/15 text-miau-pink'
-                        : 'text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                        : 'text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                     }`}
                   >
                     {option}
@@ -196,7 +196,7 @@ export default function DiscoverPage() {
         ].map((stat, i) => (
           <div key={i} className="glass-card rounded-2xl p-5 text-center">
             <p className="text-xs text-miau-muted mb-2 font-medium uppercase tracking-wide">{stat.label}</p>
-            <p className="text-2xl font-bold text-white">
+            <p className="text-2xl font-bold text-miau-white">
               {stat.value}
               {stat.suffix && <span className="text-sm font-normal text-miau-muted ml-1">{stat.suffix}</span>}
             </p>
@@ -242,7 +242,7 @@ export default function DiscoverPage() {
                     <div className="flex items-center gap-4">
                       {/* Avatar — bigger, bolder */}
                       <div
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-lg shrink-0 shadow-lg"
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center text-miau-white font-bold text-lg shrink-0 shadow-lg"
                         style={{
                           background: `linear-gradient(135deg, ${creator.gradientFrom}, ${creator.gradientTo})`,
                         }}
@@ -251,7 +251,7 @@ export default function DiscoverPage() {
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <h3 className="font-bold text-base text-white truncate">
+                          <h3 className="font-bold text-base text-miau-white truncate">
                             {creator.name}
                           </h3>
                           {isVerified && (
@@ -281,7 +281,7 @@ export default function DiscoverPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs text-miau-muted mb-1">Price</p>
-                      <p className="text-2xl font-bold text-white">
+                      <p className="text-2xl font-bold text-miau-white">
                         {creator.currentPrice.toLocaleString()}{' '}
                         <span className="text-sm font-normal text-miau-muted">
                           MIAU
@@ -377,14 +377,14 @@ export default function DiscoverPage() {
                   <div className="flex items-center gap-3">
                     <Link
                       href={`/creator/${creator.slug}`}
-                      className="flex-1 text-center px-5 py-3 bg-miau-dark-surface border border-miau-dark-border rounded-xl text-sm font-bold text-miau-light hover:bg-miau-dark-hover hover:text-white transition-all"
+                      className="flex-1 text-center px-5 py-3 bg-miau-dark-surface border border-miau-dark-border rounded-xl text-sm font-bold text-miau-light hover:bg-miau-dark-hover hover:text-miau-white transition-all"
                     >
                       View Profile
                     </Link>
                     <Link
                       href="/trade"
                       onClick={() => setSelectedCreatorSlug(creator.slug)}
-                      className="flex-1 text-center px-5 py-3 bg-miau-pink text-white rounded-xl text-sm font-bold hover:bg-miau-pink-soft transition-all shadow-glow"
+                      className="flex-1 text-center px-5 py-3 bg-miau-pink text-miau-white rounded-xl text-sm font-bold hover:bg-miau-pink-soft transition-all shadow-glow"
                     >
                       Invest Now
                     </Link>

@@ -395,6 +395,40 @@ export const nellaDistributions: WeeklyDistribution[] = [
   { id: 'nd8', weekOf: 'Dec 30', creatorName: 'Nella Rose', catSymbol: 'NellaCAT', edition: 'All', grossRevenue: 9800, netRevenue: 8682, distributionPerCAT: 0.00217, totalETH: 0.260, status: 'Paid' },
 ];
 
+// Deterministic pseudo-random based on a seed (so values are stable across re-renders)
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+// Generate distribution data for any creator based on their metrics
+export function getCreatorDistributions(creator: Creator): WeeklyDistribution[] {
+  const weeks = ['Feb 17', 'Feb 10', 'Feb 3', 'Jan 27', 'Jan 20', 'Jan 13', 'Jan 6', 'Dec 30'];
+  const creatorSeed = parseInt(creator.id, 10) || 1;
+
+  return weeks.map((weekOf, i) => {
+    const variance = 0.85 + seededRandom(creatorSeed * 100 + i) * 0.3; // ±15% variance, deterministic
+    const grossRevenue = Math.round(creator.monthlyRevenue * variance * 0.25); // weekly ≈ 25% of monthly
+    const netRevenue = Math.round(grossRevenue * 0.886); // ~11.4% platform fee
+    const distributionPerCAT =
+      Math.round((netRevenue / creator.catsIssued / 3600) * 100000) / 100000; // convert to ETH-scale
+    const totalETH = Math.round(distributionPerCAT * creator.catsIssued * 1000) / 1000;
+
+    return {
+      id: `${creator.slug}-d${i + 1}`,
+      weekOf,
+      creatorName: creator.name,
+      catSymbol: creator.catSymbol,
+      edition: 'All',
+      grossRevenue,
+      netRevenue,
+      distributionPerCAT,
+      totalETH,
+      status: 'Paid' as const,
+    };
+  });
+}
+
 export const portfolioDistributions: WeeklyDistribution[] = [
   { id: 'pd1', weekOf: 'Mon 17 Feb', creatorName: 'Nella Rose', catSymbol: 'NellaCAT', edition: 'Standard', grossRevenue: 14200, netRevenue: 12586, distributionPerCAT: 0.00315, totalETH: 0.01575, status: 'Paid' },
   { id: 'pd2', weekOf: 'Mon 17 Feb', creatorName: 'Nella Rose', catSymbol: 'NellaCAT', edition: 'Limited', grossRevenue: 14200, netRevenue: 12586, distributionPerCAT: 0.00315, totalETH: 0.00945, status: 'Paid' },

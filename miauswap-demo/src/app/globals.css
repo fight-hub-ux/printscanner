@@ -2,9 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Dark theme (default) ─────────────────── */
 :root {
+  --miau-bg: #0B0B1A;
+  --miau-card: #141428;
+  --miau-surface: #1A1A35;
+  --miau-border: #2A2A4A;
+  --miau-hover: #22223E;
+  --miau-text: #FFFFFF;
+  --miau-text-light: #E0E0F0;
+  --miau-text-muted: #8888AA;
+  --miau-text-dim: #555577;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.4);
+  --glass-bg: linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(26, 26, 53, 0.8));
+  --glass-border: rgba(42, 42, 74, 0.6);
+  --glass-hover-border: rgba(255, 45, 120, 0.3);
+  --glass-hover-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 45, 120, 0.1);
+  --scrollbar-track: #0B0B1A;
+  --scrollbar-thumb: #2A2A4A;
   --background: #0B0B1A;
   --foreground: #FFFFFF;
+}
+
+/* ── Light theme ─────────────────── */
+[data-theme='light'] {
+  --miau-bg: #F8F5F2;
+  --miau-card: #FFFFFF;
+  --miau-surface: #F0EDE8;
+  --miau-border: #E0DBD4;
+  --miau-hover: #EBE6E0;
+  --miau-text: #1A1A2E;
+  --miau-text-light: #333355;
+  --miau-text-muted: #777799;
+  --miau-text-dim: #9999AA;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.12);
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 245, 242, 0.9));
+  --glass-border: rgba(224, 219, 212, 0.8);
+  --glass-hover-border: rgba(255, 45, 120, 0.3);
+  --glass-hover-shadow: 0 8px 40px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 45, 120, 0.08);
+  --scrollbar-track: #F8F5F2;
+  --scrollbar-thumb: #D0CBC4;
+  --background: #F8F5F2;
+  --foreground: #1A1A2E;
 }
 
 body {
@@ -19,11 +60,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0B1A;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2A2A4A;
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
@@ -76,12 +117,12 @@ body {
 
 /* Glass card effect */
 .glass-card {
-  background: linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(26, 26, 53, 0.8));
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(42, 42, 74, 0.6);
+  border: 1px solid var(--glass-border);
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 45, 120, 0.3);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 45, 120, 0.1);
+  border-color: var(--glass-hover-border);
+  box-shadow: var(--glass-hover-shadow);
 }

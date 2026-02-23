@@ -41,6 +41,10 @@ interface AppContextType {
   // Selected CAT for trading
   selectedCreatorSlug: string;
   setSelectedCreatorSlug: (slug: string) => void;
+
+  // Theme
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -55,6 +59,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [showAccessWarning, setShowAccessWarning] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedCreatorSlug, setSelectedCreatorSlug] = useState('nella-rose');
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  // Persist theme and apply to DOM
+  useEffect(() => {
+    const saved = localStorage.getItem('miau-theme') as 'dark' | 'light' | null;
+    if (saved) setTheme(saved);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('miau-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  }, []);
 
   // Calculate staking tier
   const stakingTier = stakedAmount >= 250000 ? 'Gold' : stakedAmount >= 50000 ? 'Silver' : stakedAmount >= 10000 ? 'Bronze' : 'None';
@@ -126,6 +146,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         showToast,
         selectedCreatorSlug,
         setSelectedCreatorSlug,
+        theme,
+        toggleTheme,
       }}
     >
       {children}

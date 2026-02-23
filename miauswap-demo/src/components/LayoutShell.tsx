@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { BarChart3, Search, User, Briefcase, Coins, Bell, Wallet, Menu, X } from 'lucide-react';
+import { BarChart3, Search, Briefcase, Coins, Bell, Wallet, Menu, X, Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
 import { useApp } from '@/context/AppContext';
 import NotificationDrawer from './NotificationDrawer';
@@ -11,14 +11,13 @@ import NotificationDrawer from './NotificationDrawer';
 const navItems = [
   { href: '/trade', label: 'Trade', icon: BarChart3 },
   { href: '/discover', label: 'Discover', icon: Search },
-  { href: '/creator/nella-rose', label: 'Creators', icon: User },
   { href: '/portfolio', label: 'Portfolio', icon: Briefcase },
   { href: '/wallet', label: 'Wallet', icon: Coins },
 ];
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { walletAddress, miauPrice, unreadCount, showNotifications, setShowNotifications, showAccessWarning } = useApp();
+  const { walletAddress, miauPrice, unreadCount, showNotifications, setShowNotifications, showAccessWarning, theme, toggleTheme } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -36,7 +35,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             </button>
             <Link href="/trade" className="flex items-center gap-2">
               <Image
-                src="/MIAU_Logo1_white.png"
+                src={theme === 'dark' ? '/MIAU_Logo1_white.png' : '/MIAU_Logo2_black.png'}
                 alt="MiauSwap"
                 width={140}
                 height={40}
@@ -58,8 +57,21 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             {/* MIAU Price Ticker */}
             <div className="hidden sm:flex items-center gap-2 bg-miau-dark-surface px-4 py-2 rounded-xl border border-miau-dark-border">
               <span className="text-xs text-miau-muted font-medium">MIAU</span>
-              <span className="font-mono text-sm font-bold text-white">${miauPrice.toFixed(3)}</span>
+              <span className="font-mono text-sm font-bold text-miau-white">${miauPrice.toFixed(3)}</span>
             </div>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-xl hover:bg-miau-dark-hover transition-colors"
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? (
+                <Sun size={20} className="text-miau-muted" />
+              ) : (
+                <Moon size={20} className="text-miau-muted" />
+              )}
+            </button>
 
             {/* Notification Bell */}
             <button
@@ -68,7 +80,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             >
               <Bell size={20} className="text-miau-muted" />
               {unreadCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-miau-pink text-white text-xs rounded-full flex items-center justify-center font-bold shadow-glow">
+                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-miau-pink text-miau-white text-xs rounded-full flex items-center justify-center font-bold shadow-glow">
                   {unreadCount}
                 </span>
               )}
@@ -103,7 +115,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                   isActive
                     ? 'bg-miau-pink/15 text-miau-pink border border-miau-pink/20 shadow-glow'
-                    : 'text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                    : 'text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                 }`}
               >
                 <Icon size={18} className={isActive ? 'text-miau-pink' : ''} />
@@ -135,7 +147,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             <div className="p-4 border-b border-miau-dark-border flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Image
-                  src="/MIAU_Logo1_white.png"
+                  src={theme === 'dark' ? '/MIAU_Logo1_white.png' : '/MIAU_Logo2_black.png'}
                   alt="MiauSwap"
                   width={120}
                   height={34}
@@ -158,7 +170,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                       isActive
                         ? 'bg-miau-pink/15 text-miau-pink'
-                        : 'text-miau-muted hover:bg-miau-dark-hover hover:text-white'
+                        : 'text-miau-muted hover:bg-miau-dark-hover hover:text-miau-white'
                     }`}
                   >
                     <Icon size={18} />
