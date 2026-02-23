@@ -27,7 +27,6 @@ import {
   CheckCircle2,
   Loader2,
   XCircle,
-  ExternalLink,
   Eye,
 } from 'lucide-react';
 import {
@@ -35,7 +34,6 @@ import {
   portfolioDistributions,
   portfolioSummary,
   portfolioPerformanceData,
-  type PortfolioHolding,
   type OpenOrder,
 } from '@/lib/dummyData';
 import { useApp } from '@/context/AppContext';

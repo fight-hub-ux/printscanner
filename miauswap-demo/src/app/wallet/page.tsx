@@ -28,8 +28,6 @@ import {
   X,
   ChevronRight,
   Settings,
-  Eye,
-  EyeOff,
 } from 'lucide-react';
 import {
   walletTransactions,
@@ -99,7 +97,6 @@ export default function WalletPage() {
     feeDiscount,
     isVIP,
     hasCDEXAccess,
-    miauPrice,
     showToast,
     showAccessWarning,
     setShowAccessWarning,
@@ -623,7 +620,7 @@ export default function WalletPage() {
                     <div>
                       <p className="text-xs text-miau-warning font-semibold">Lock Period Active</p>
                       <p className="text-xs text-miau-warning/80 mt-0.5 leading-relaxed">
-                        Your MIAU is locked until {lockExpiryDate}. You can't withdraw early -- hang tight!
+                        Your MIAU is locked until {lockExpiryDate}. You can&apos;t withdraw early -- hang tight!
                       </p>
                     </div>
                   </div>

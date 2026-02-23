@@ -60,7 +60,6 @@ function tierBadge(tier: Creator['scoreTier']) {
 
 export default function TradePage() {
   const {
-    walletAddress,
     miauBalance,
     setMiauBalance,
     feeDiscount,
