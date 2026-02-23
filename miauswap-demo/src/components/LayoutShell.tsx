@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { BarChart3, Search, User, Briefcase, Coins, Bell, Wallet, Menu, X } from 'lucide-react';
+import Image from 'next/image';
 import { useApp } from '@/context/AppContext';
 import NotificationDrawer from './NotificationDrawer';
-import MiauLogo from './MiauLogo';
 
 const navItems = [
   { href: '/trade', label: 'Trade', icon: BarChart3 },
@@ -34,11 +34,15 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-            <Link href="/trade" className="flex items-center gap-2.5">
-              <MiauLogo size={36} />
-              <span className="text-xl font-extrabold tracking-tight text-white">
-                miau<span className="text-miau-pink">swap</span>
-              </span>
+            <Link href="/trade" className="flex items-center gap-2">
+              <Image
+                src="/MIAU_Logo1_white.png"
+                alt="MiauSwap"
+                width={140}
+                height={40}
+                className="h-9 w-auto object-contain"
+                priority
+              />
             </Link>
           </div>
 
@@ -130,10 +134,13 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
           <div className="w-72 bg-miau-dark-card h-full shadow-2xl border-r border-miau-dark-border" onClick={e => e.stopPropagation()}>
             <div className="p-4 border-b border-miau-dark-border flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MiauLogo size={28} />
-                <span className="text-lg font-extrabold text-white">
-                  miau<span className="text-miau-pink">swap</span>
-                </span>
+                <Image
+                  src="/MIAU_Logo1_white.png"
+                  alt="MiauSwap"
+                  width={120}
+                  height={34}
+                  className="h-8 w-auto object-contain"
+                />
               </div>
               <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-miau-muted">
                 <X size={20} />
