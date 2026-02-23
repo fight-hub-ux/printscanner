@@ -630,7 +630,6 @@ export default function PortfolioPage() {
                       fontSize: '12px',
                       color: '#FFFFFF',
                       fontFamily: 'monospace',
-                      color: '#FFFFFF',
                     }}
                     labelStyle={{ color: '#8888AA', fontSize: '11px' }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -675,7 +674,6 @@ export default function PortfolioPage() {
                       fontSize: '12px',
                       color: '#FFFFFF',
                       fontFamily: 'monospace',
-                      color: '#FFFFFF',
                     }}
                     labelStyle={{ color: '#8888AA', fontSize: '11px' }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
