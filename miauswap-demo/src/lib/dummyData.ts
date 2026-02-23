@@ -26,6 +26,7 @@ export interface Creator {
   gradientFrom: string;
   gradientTo: string;
   tagline: string;
+  thumbnail: string;
 }
 
 export const creators: Creator[] = [
@@ -55,6 +56,7 @@ export const creators: Creator[] = [
     gradientFrom: '#FFB2D0',
     gradientTo: '#E8739A',
     tagline: 'Lifestyle & Wellness Creator | 3,200 active subscribers | $12,400 avg monthly revenue',
+    thumbnail: '/Nella Rose.png',
   },
   {
     id: '2',
@@ -82,6 +84,7 @@ export const creators: Creator[] = [
     gradientFrom: '#C4456B',
     gradientTo: '#8B6B61',
     tagline: 'Fashion & Beauty Creator | 1,800 active subscribers | $8,200 avg monthly revenue',
+    thumbnail: '/Jade Valentine.png',
   },
   {
     id: '3',
@@ -109,6 +112,7 @@ export const creators: Creator[] = [
     gradientFrom: '#E8739A',
     gradientTo: '#C4456B',
     tagline: 'Fitness & Lifestyle Creator | 5,400 active subscribers | $21,000 avg monthly revenue',
+    thumbnail: '/Mia Storm.png',
   },
   {
     id: '4',
@@ -136,6 +140,7 @@ export const creators: Creator[] = [
     gradientFrom: '#F5EDE8',
     gradientTo: '#FFB2D0',
     tagline: 'Art & Photography Creator | 920 active subscribers | $4,100 avg monthly revenue',
+    thumbnail: '/Luna Skye.png',
   },
   {
     id: '5',
@@ -163,6 +168,7 @@ export const creators: Creator[] = [
     gradientFrom: '#C4456B',
     gradientTo: '#FFB2D0',
     tagline: 'Entertainment & Lifestyle Creator | 8,200 active subscribers | $32,000 avg monthly revenue',
+    thumbnail: '/Coco Blaze.png',
   },
   {
     id: '6',
@@ -190,6 +196,7 @@ export const creators: Creator[] = [
     gradientFrom: '#E8739A',
     gradientTo: '#F5EDE8',
     tagline: 'Music & Dance Creator | 1,400 active subscribers | $6,800 avg monthly revenue',
+    thumbnail: '/Ivy Monroe.png',
   },
   {
     id: '7',
@@ -217,6 +224,7 @@ export const creators: Creator[] = [
     gradientFrom: '#FFB2D0',
     gradientTo: '#C4456B',
     tagline: 'Travel & Adventure Creator | 2,100 active subscribers | $9,500 avg monthly revenue',
+    thumbnail: '/Nova Reign.png',
   },
   {
     id: '8',
@@ -244,6 +252,7 @@ export const creators: Creator[] = [
     gradientFrom: '#FEE8EF',
     gradientTo: '#E8739A',
     tagline: 'Cooking & Food Creator | 620 active subscribers | $2,800 avg monthly revenue',
+    thumbnail: '/Aria Voss.png',
   },
 ];
 

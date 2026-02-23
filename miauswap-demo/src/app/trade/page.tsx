@@ -12,6 +12,7 @@ import {
   BarChart,
   Bar,
 } from 'recharts';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronDown,
@@ -201,13 +202,14 @@ export default function TradePage() {
           onClick={() => setSelectorOpen(!selectorOpen)}
           className="w-full md:w-auto flex items-center gap-3 glass-card rounded-2xl px-5 py-3.5 hover:border-miau-pink/30 transition-all"
         >
-          <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center text-miau-white font-bold text-sm shrink-0"
-            style={{
-              background: `linear-gradient(135deg, ${selectedCreator.gradientFrom}, ${selectedCreator.gradientTo})`,
-            }}
-          >
-            {selectedCreator.initials}
+          <div className="w-11 h-11 rounded-xl shrink-0 overflow-hidden">
+            <Image
+              src={selectedCreator.thumbnail}
+              alt={selectedCreator.name}
+              width={44}
+              height={44}
+              className="w-full h-full object-cover"
+            />
           </div>
 
           <div className="flex flex-col items-start">
@@ -282,13 +284,14 @@ export default function TradePage() {
                         c.slug === selectedCreatorSlug ? 'bg-miau-dark-surface' : ''
                       }`}
                     >
-                      <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center text-miau-white font-bold text-xs shrink-0"
-                        style={{
-                          background: `linear-gradient(135deg, ${c.gradientFrom}, ${c.gradientTo})`,
-                        }}
-                      >
-                        {c.initials}
+                      <div className="w-9 h-9 rounded-lg shrink-0 overflow-hidden">
+                        <Image
+                          src={c.thumbnail}
+                          alt={c.name}
+                          width={36}
+                          height={36}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div className="flex flex-col items-start flex-1 min-w-0">
                         <div className="flex items-center gap-2">

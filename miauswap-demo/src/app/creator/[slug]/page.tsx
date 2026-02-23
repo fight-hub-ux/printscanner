@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   AreaChart,
   Area,
@@ -211,8 +212,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
         <div className="relative px-6 py-8 md:px-10 md:py-10">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Avatar */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-miau-dark-card/20 backdrop-blur-sm flex items-center justify-center text-miau-white font-bold text-2xl md:text-3xl shadow-lg border border-white/20">
-              {creator.initials}
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-lg border border-white/20 overflow-hidden">
+              <Image
+                src={creator.thumbnail}
+                alt={creator.name}
+                width={96}
+                height={96}
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Info */}

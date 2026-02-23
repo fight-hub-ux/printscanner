@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Search, TrendingUp, Star, ArrowUpRight, ArrowDownRight, Filter, Sparkles } from 'lucide-react';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
 import { creators, marketStats, generatePriceData } from '@/lib/dummyData';
@@ -240,14 +241,15 @@ export default function DiscoverPage() {
                   {/* Top: Avatar + Name + Score Badge */}
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-4">
-                      {/* Avatar — bigger, bolder */}
-                      <div
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center text-miau-white font-bold text-lg shrink-0 shadow-lg"
-                        style={{
-                          background: `linear-gradient(135deg, ${creator.gradientFrom}, ${creator.gradientTo})`,
-                        }}
-                      >
-                        {creator.initials}
+                      {/* Creator Thumbnail */}
+                      <div className="w-14 h-14 rounded-2xl shrink-0 shadow-lg overflow-hidden">
+                        <Image
+                          src={creator.thumbnail}
+                          alt={creator.name}
+                          width={56}
+                          height={56}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">

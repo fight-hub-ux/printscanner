@@ -35,13 +35,14 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             </button>
             <Link href="/trade" className="flex items-center gap-2">
               <Image
-                src={theme === 'dark' ? '/MIAU_Logo1_white.png' : '/MIAU_Logo2_black.png'}
+                src="/MIAU_Logo2_App_Icon.png"
                 alt="MiauSwap"
-                width={140}
-                height={40}
-                className="h-9 w-auto object-contain"
+                width={180}
+                height={180}
+                className="h-[45px] w-[45px] object-contain rounded-lg"
                 priority
               />
+              <span className="text-xl font-extrabold tracking-tight text-miau-white">miauswap</span>
             </Link>
           </div>
 
@@ -147,12 +148,13 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
             <div className="p-4 border-b border-miau-dark-border flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Image
-                  src={theme === 'dark' ? '/MIAU_Logo1_white.png' : '/MIAU_Logo2_black.png'}
+                  src="/MIAU_Logo2_App_Icon.png"
                   alt="MiauSwap"
-                  width={120}
-                  height={34}
-                  className="h-8 w-auto object-contain"
+                  width={160}
+                  height={160}
+                  className="h-10 w-10 object-contain rounded-lg"
                 />
+                <span className="text-lg font-extrabold tracking-tight text-miau-white">miauswap</span>
               </div>
               <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-miau-muted">
                 <X size={20} />
