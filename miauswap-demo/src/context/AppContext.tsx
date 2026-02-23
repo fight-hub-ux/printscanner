@@ -152,7 +152,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     >
       {children}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-miau-dark-card border border-miau-dark-border text-white px-6 py-3 rounded-xl shadow-2xl animate-fade-in-up font-semibold text-sm">
+        <div className="fixed bottom-6 right-6 z-50 bg-miau-dark-card border border-miau-dark-border text-miau-white px-6 py-3 rounded-xl shadow-2xl animate-fade-in-up font-semibold text-sm">
           {toastMessage}
         </div>
       )}
@@ -161,7 +161,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           <span className="text-miau-warning font-semibold text-sm">
             Your MIAU balance is low. Below 1,000 MIAU will disable trading. Top up soon.
           </span>
-          <button onClick={() => setShowAccessWarning(false)} className="ml-4 text-miau-warning hover:text-white font-bold text-lg">×</button>
+          <button onClick={() => setShowAccessWarning(false)} className="ml-4 text-miau-warning hover:text-miau-white font-bold text-lg">×</button>
         </div>
       )}
     </AppContext.Provider>
