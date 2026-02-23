@@ -186,7 +186,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
       <div className="flex justify-end">
         <button
           onClick={() => setIsCreatorView(!isCreatorView)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-white border border-miau-taupe rounded-2xl text-xs font-semibold text-miau-brown hover:bg-miau-pale transition-colors shadow-sm"
+          className="flex items-center gap-2 px-5 py-2.5 bg-miau-dark-card border border-miau-dark-border rounded-2xl text-xs font-semibold text-white hover:bg-miau-dark-hover transition-colors shadow-card"
         >
           <Eye size={14} />
           {isCreatorView ? 'Switch to Investor View' : 'Switch to Creator View'}
@@ -206,24 +206,24 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
         }}
       >
         {/* Decorative circles */}
-        <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-white/5" />
+        <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-miau-dark-card/10" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-miau-dark-card/5" />
 
         <div className="relative px-6 py-8 md:px-10 md:py-10">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Avatar */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-2xl md:text-3xl shadow-lg border border-white/20">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-miau-dark-card/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-2xl md:text-3xl shadow-lg border border-white/20">
               {creator.initials}
             </div>
 
             {/* Info */}
             <div className="flex-1 space-y-3">
               <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-2xl md:text-3xl font-serif font-bold text-white">
+                <h1 className="text-2xl md:text-3xl font-extrabold text-white">
                   {creator.name}
                 </h1>
                 {/* Miau Creator Score Badge */}
-                <span className={`text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm ${tierBadge(creator.scoreTier)}`}>
+                <span className={`text-xs font-semibold px-3 py-1.5 rounded-full shadow-card ${tierBadge(creator.scoreTier)}`}>
                   {creator.score} {creator.scoreTier}
                 </span>
               </div>
@@ -250,14 +250,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
               <div className="flex flex-wrap gap-3 pt-1">
                 <Link
                   href="/trade"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-miau-dark rounded-xl text-sm font-semibold hover:bg-miau-cream transition-colors shadow-sm"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-miau-dark-card text-miau-pink rounded-xl text-sm font-semibold hover:bg-miau-cream transition-colors shadow-card"
                 >
                   Trade {creator.catSymbol}
                   <ArrowRight size={14} />
                 </Link>
                 <button
                   onClick={() => showToast(`${creator.catSymbol} added to your watchlist!`)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/20 backdrop-blur-sm text-white rounded-xl text-sm font-semibold hover:bg-white/30 transition-colors border border-white/20"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-miau-dark-card/20 backdrop-blur-sm text-white rounded-xl text-sm font-semibold hover:bg-miau-dark-card/30 transition-colors border border-white/20"
                 >
                   <Bookmark size={14} />
                   Add to Watchlist
@@ -282,10 +282,10 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           {/* ─── Section 2: Key Metrics Row ────── */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Current CAT Price */}
-            <div className="bg-white border border-miau-taupe rounded-2xl p-5">
-              <p className="text-xs text-miau-rose-brown mb-1 font-medium">Current CAT Price</p>
+            <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl p-5">
+              <p className="text-xs text-miau-muted mb-1 font-medium">Current CAT Price</p>
               <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-miau-brown">{creator.currentPrice} MIAU</span>
+                <span className="text-2xl font-bold text-white">{creator.currentPrice} MIAU</span>
                 <span
                   className={`text-xs font-semibold flex items-center gap-0.5 mb-1 ${
                     creator.priceChange24h >= 0 ? 'text-miau-success' : 'text-miau-error'
@@ -299,38 +299,38 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
             </div>
 
             {/* Weekly Distribution per CAT */}
-            <div className="bg-white border border-miau-taupe rounded-2xl p-5">
-              <p className="text-xs text-miau-rose-brown mb-1 font-medium">Weekly Distribution / CAT</p>
+            <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl p-5">
+              <p className="text-xs text-miau-muted mb-1 font-medium">Weekly Distribution / CAT</p>
               <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-miau-brown">{creator.weeklyDistributionETH} ETH</span>
+                <span className="text-2xl font-bold text-white">{creator.weeklyDistributionETH} ETH</span>
               </div>
-              <p className="text-xs text-miau-rose-brown mt-1">~${weeklyDistUSD.toFixed(2)}</p>
+              <p className="text-xs text-miau-muted mt-1">~${weeklyDistUSD.toFixed(2)}</p>
             </div>
 
             {/* Annualised Yield */}
-            <div className="bg-white border border-miau-taupe rounded-2xl p-5">
-              <p className="text-xs text-miau-rose-brown mb-1 font-medium">Annualised Yield</p>
+            <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl p-5">
+              <p className="text-xs text-miau-muted mb-1 font-medium">Annualised Yield</p>
               <div className="flex items-end gap-2">
                 <span className="text-2xl font-bold text-miau-success">{creator.annualYield}%</span>
                 <TrendingUp size={16} className="text-miau-success mb-1" />
               </div>
-              <p className="text-xs text-miau-rose-brown mt-1">Based on current distributions</p>
+              <p className="text-xs text-miau-muted mt-1">Based on current distributions</p>
             </div>
 
             {/* Total Revenue (90 days) */}
-            <div className="bg-white border border-miau-taupe rounded-2xl p-5">
-              <p className="text-xs text-miau-rose-brown mb-1 font-medium">Total Revenue (90 days)</p>
+            <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl p-5">
+              <p className="text-xs text-miau-muted mb-1 font-medium">Total Revenue (90 days)</p>
               <div className="flex items-end gap-2">
-                <span className="text-2xl font-bold text-miau-brown">${totalRevenue90d.toLocaleString()}</span>
+                <span className="text-2xl font-bold text-white">${totalRevenue90d.toLocaleString()}</span>
               </div>
-              <p className="text-xs text-miau-rose-brown mt-1">${creator.monthlyRevenue.toLocaleString()}/mo avg</p>
+              <p className="text-xs text-miau-muted mt-1">${creator.monthlyRevenue.toLocaleString()}/mo avg</p>
             </div>
           </div>
 
           {/* ─── Section 3: Price Chart ──────── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe flex items-center justify-between flex-wrap gap-2">
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border flex items-center justify-between flex-wrap gap-2">
+              <h2 className="font-bold text-lg text-white">
                 {creator.catSymbol} Price Chart
               </h2>
               <div className="flex items-center gap-1">
@@ -341,7 +341,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
                       activeRange === r.label
                         ? 'bg-miau-pink text-white'
-                        : 'text-miau-rose-brown hover:bg-miau-pale'
+                        : 'text-miau-muted hover:bg-miau-dark-hover'
                     }`}
                   >
                     {r.label}
@@ -354,14 +354,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                 <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="creatorPriceGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#FFB2D0" stopOpacity={0.5} />
-                      <stop offset="100%" stopColor="#FFB2D0" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#FF2D78" stopOpacity={0.5} />
+                      <stop offset="100%" stopColor="#FF2D78" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#F5EDE8" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2A2A4A" vertical={false} />
                   <XAxis
                     dataKey="time"
-                    tick={{ fontSize: 10, fill: '#8B6B61' }}
+                    tick={{ fontSize: 10, fill: '#8888AA' }}
                     tickLine={false}
                     axisLine={false}
                     interval="preserveStartEnd"
@@ -369,7 +369,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   />
                   <YAxis
                     domain={['auto', 'auto']}
-                    tick={{ fontSize: 10, fill: '#8B6B61' }}
+                    tick={{ fontSize: 10, fill: '#8888AA' }}
                     tickLine={false}
                     axisLine={false}
                     width={50}
@@ -377,23 +377,25 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   />
                   <Tooltip
                     contentStyle={{
-                      background: '#fff',
-                      border: '1px solid #F5EDE8',
+                      background: '#141428',
+                      border: '1px solid #2A2A4A',
                       borderRadius: '12px',
                       fontSize: '12px',
+                      color: '#FFFFFF',
                       fontFamily: 'monospace',
+                      color: '#FFFFFF',
                     }}
-                    labelStyle={{ color: '#8B6B61', fontSize: '11px' }}
+                    labelStyle={{ color: '#8888AA', fontSize: '11px' }}
                     formatter={(value: any) => [`${(value ?? 0).toFixed(2)} MIAU`, 'Price']}
                   />
                   <Area
                     type="monotone"
                     dataKey="price"
-                    stroke="#C4456B"
+                    stroke="#FF2D78"
                     strokeWidth={2}
                     fill="url(#creatorPriceGradient)"
                     dot={false}
-                    activeDot={{ r: 4, fill: '#C4456B', strokeWidth: 0 }}
+                    activeDot={{ r: 4, fill: '#FF2D78', strokeWidth: 0 }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -402,36 +404,36 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
           {/* ─── Section 4: CAT Edition Breakdown ── */}
           <div>
-            <h2 className="font-serif font-semibold text-lg text-miau-brown mb-4">CAT Edition Breakdown</h2>
+            <h2 className="font-bold text-lg text-white mb-4">CAT Edition Breakdown</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Founders Edition */}
-              <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
+              <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-r from-amber-400 to-yellow-500 px-5 py-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-serif font-bold text-white">Founders Edition</h3>
+                    <h3 className="font-extrabold text-white">Founders Edition</h3>
                     <Award size={18} className="text-white/80" />
                   </div>
                 </div>
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Issued</span>
-                    <span className="font-semibold text-miau-brown">{creator.foundersIssued}</span>
+                    <span className="text-miau-muted">Issued</span>
+                    <span className="font-semibold text-white">{creator.foundersIssued}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Remaining</span>
+                    <span className="text-miau-muted">Remaining</span>
                     <span className="font-semibold text-miau-error">
                       {creator.foundersRemaining === 0 ? 'ALL SOLD' : `${creator.foundersRemaining} left`}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Floor Price</span>
-                    <span className="font-semibold text-miau-brown">280 MIAU</span>
+                    <span className="text-miau-muted">Floor Price</span>
+                    <span className="font-semibold text-white">280 MIAU</span>
                   </div>
-                  <div className="border-t border-miau-taupe pt-3 space-y-2">
-                    <p className="text-xs font-semibold text-miau-brown">Features:</p>
+                  <div className="border-t border-miau-dark-border pt-3 space-y-2">
+                    <p className="text-xs font-semibold text-white">Features:</p>
                     <ul className="space-y-1.5">
                       {['1-of-1 artwork', 'Private channel access', 'OG badge', 'Personal creator message'].map((f, i) => (
-                        <li key={i} className="flex items-center gap-2 text-xs text-miau-rose-brown">
+                        <li key={i} className="flex items-center gap-2 text-xs text-miau-muted">
                           <CheckCircle2 size={12} className="text-miau-success shrink-0" />
                           {f}
                         </li>
@@ -442,33 +444,33 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
               </div>
 
               {/* Limited Edition */}
-              <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
+              <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-r from-miau-rose to-miau-dark px-5 py-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-serif font-bold text-white">Limited Edition</h3>
+                    <h3 className="font-extrabold text-white">Limited Edition</h3>
                     <Star size={18} className="text-white/80" />
                   </div>
                 </div>
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Issued</span>
-                    <span className="font-semibold text-miau-brown">{creator.limitedIssued}</span>
+                    <span className="text-miau-muted">Issued</span>
+                    <span className="font-semibold text-white">{creator.limitedIssued}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Remaining</span>
+                    <span className="text-miau-muted">Remaining</span>
                     <span className={`font-semibold ${creator.limitedRemaining === 0 ? 'text-miau-error' : 'text-miau-warning'}`}>
                       {creator.limitedRemaining === 0 ? 'ALL SOLD' : `${creator.limitedRemaining} remaining`}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Floor Price</span>
-                    <span className="font-semibold text-miau-brown">140 MIAU</span>
+                    <span className="text-miau-muted">Floor Price</span>
+                    <span className="font-semibold text-white">140 MIAU</span>
                   </div>
-                  <div className="border-t border-miau-taupe pt-3 space-y-2">
-                    <p className="text-xs font-semibold text-miau-brown">Features:</p>
+                  <div className="border-t border-miau-dark-border pt-3 space-y-2">
+                    <p className="text-xs font-semibold text-white">Features:</p>
                     <ul className="space-y-1.5">
                       {['Themed art set', 'Bonus content access', 'Early access to new releases'].map((f, i) => (
-                        <li key={i} className="flex items-center gap-2 text-xs text-miau-rose-brown">
+                        <li key={i} className="flex items-center gap-2 text-xs text-miau-muted">
                           <CheckCircle2 size={12} className="text-miau-success shrink-0" />
                           {f}
                         </li>
@@ -479,33 +481,33 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
               </div>
 
               {/* Standard Edition */}
-              <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
+              <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-r from-miau-pink to-miau-rose px-5 py-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-serif font-bold text-white">Standard Edition</h3>
+                    <h3 className="font-extrabold text-white">Standard Edition</h3>
                     <Users size={18} className="text-white/80" />
                   </div>
                 </div>
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Issued</span>
-                    <span className="font-semibold text-miau-brown">{creator.standardIssued}</span>
+                    <span className="text-miau-muted">Issued</span>
+                    <span className="font-semibold text-white">{creator.standardIssued}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Remaining</span>
+                    <span className="text-miau-muted">Remaining</span>
                     <span className={`font-semibold ${creator.standardRemaining === 0 ? 'text-miau-error' : 'text-miau-success'}`}>
                       {creator.standardRemaining === 0 ? 'ALL SOLD' : `${creator.standardRemaining} remaining`}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-miau-rose-brown">Floor Price</span>
-                    <span className="font-semibold text-miau-brown">100 MIAU</span>
+                    <span className="text-miau-muted">Floor Price</span>
+                    <span className="font-semibold text-white">100 MIAU</span>
                   </div>
-                  <div className="border-t border-miau-taupe pt-3 space-y-2">
-                    <p className="text-xs font-semibold text-miau-brown">Features:</p>
+                  <div className="border-t border-miau-dark-border pt-3 space-y-2">
+                    <p className="text-xs font-semibold text-white">Features:</p>
                     <ul className="space-y-1.5">
                       {['Creator branding', 'Revenue claim rights'].map((f, i) => (
-                        <li key={i} className="flex items-center gap-2 text-xs text-miau-rose-brown">
+                        <li key={i} className="flex items-center gap-2 text-xs text-miau-muted">
                           <CheckCircle2 size={12} className="text-miau-success shrink-0" />
                           {f}
                         </li>
@@ -515,44 +517,44 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                 </div>
               </div>
             </div>
-            <p className="text-xs text-miau-rose-brown mt-3 text-center italic">
+            <p className="text-xs text-miau-muted mt-3 text-center italic">
               All editions carry identical 0.1% revenue claim, distributed weekly in ETH.
             </p>
           </div>
 
           {/* ─── Section 5: Weekly Revenue Distribution History ── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe">
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border">
+              <h2 className="font-bold text-lg text-white">
                 Weekly Revenue Distribution History
               </h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-miau-taupe bg-miau-pale/40">
-                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-rose-brown">Week</th>
-                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-rose-brown">Gross Revenue</th>
-                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-rose-brown">Net Revenue</th>
-                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-rose-brown">Dist / CAT (ETH)</th>
-                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-rose-brown">Total ETH Paid</th>
-                    <th className="text-center px-5 py-3 text-xs font-semibold text-miau-rose-brown">Status</th>
+                  <tr className="border-b border-miau-dark-border bg-miau-dark-surface/40">
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-muted">Week</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-muted">Gross Revenue</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-muted">Net Revenue</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-muted">Dist / CAT (ETH)</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-miau-muted">Total ETH Paid</th>
+                    <th className="text-center px-5 py-3 text-xs font-semibold text-miau-muted">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {nellaDistributions.map(dist => (
-                    <tr key={dist.id} className="border-b border-miau-taupe/30 hover:bg-miau-pale/30 transition-colors">
-                      <td className="px-5 py-3 font-medium text-miau-brown">{dist.weekOf}</td>
-                      <td className="px-5 py-3 text-right font-mono text-miau-brown">
+                    <tr key={dist.id} className="border-b border-miau-dark-border/30 hover:bg-miau-dark-hover/30 transition-colors">
+                      <td className="px-5 py-3 font-medium text-white">{dist.weekOf}</td>
+                      <td className="px-5 py-3 text-right font-mono text-white">
                         ${dist.grossRevenue.toLocaleString()}
                       </td>
-                      <td className="px-5 py-3 text-right font-mono text-miau-brown">
+                      <td className="px-5 py-3 text-right font-mono text-white">
                         ${dist.netRevenue.toLocaleString()}
                       </td>
-                      <td className="px-5 py-3 text-right font-mono text-miau-brown">
+                      <td className="px-5 py-3 text-right font-mono text-white">
                         {dist.distributionPerCAT.toFixed(5)}
                       </td>
-                      <td className="px-5 py-3 text-right font-mono text-miau-brown">
+                      <td className="px-5 py-3 text-right font-mono text-white">
                         {dist.totalETH.toFixed(3)}
                       </td>
                       <td className="px-5 py-3 text-center">
@@ -576,45 +578,45 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           </div>
 
           {/* ─── Section 6: CAT Offering Details ── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe">
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">CAT Offering Details</h2>
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border">
+              <h2 className="font-bold text-lg text-white">CAT Offering Details</h2>
             </div>
             <div className="p-5 space-y-5">
               {/* Structure info grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="bg-miau-pale rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-1">Total Revenue % Offered</p>
-                  <p className="text-xl font-bold text-miau-brown">12%</p>
-                  <p className="text-xs text-miau-rose-brown mt-1">Across {creator.catsIssued} CATs (0.1% each)</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-1">Total Revenue % Offered</p>
+                  <p className="text-xl font-bold text-white">12%</p>
+                  <p className="text-xs text-miau-muted mt-1">Across {creator.catsIssued} CATs (0.1% each)</p>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-1">Initial Prices</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-1">Initial Prices</p>
                   <div className="space-y-1">
-                    <p className="text-sm font-semibold text-miau-brown">Founders: 250 MIAU</p>
-                    <p className="text-sm font-semibold text-miau-brown">Limited: 120 MIAU</p>
-                    <p className="text-sm font-semibold text-miau-brown">Standard: 80 MIAU</p>
+                    <p className="text-sm font-semibold text-white">Founders: 250 MIAU</p>
+                    <p className="text-sm font-semibold text-white">Limited: 120 MIAU</p>
+                    <p className="text-sm font-semibold text-white">Standard: 80 MIAU</p>
                   </div>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-1">Offering Date</p>
-                  <p className="text-xl font-bold text-miau-brown">Sep 2025</p>
-                  <p className="text-xs text-miau-rose-brown mt-1">Round 1 of 4</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-1">Offering Date</p>
+                  <p className="text-xl font-bold text-white">Sep 2025</p>
+                  <p className="text-xs text-miau-muted mt-1">Round 1 of 4</p>
                 </div>
               </div>
 
               {/* Score progression */}
-              <div className="bg-miau-blush rounded-xl p-4">
+              <div className="bg-miau-dark-card rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold text-miau-brown">Miau Creator Score Progression</p>
+                  <p className="text-sm font-semibold text-white">Miau Creator Score Progression</p>
                   <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${tierBadge(creator.scoreTier)}`}>
                     Current: {creator.score}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-mono text-miau-rose-brown">74</span>
-                    <span className="text-xs text-miau-grey">(Launch)</span>
+                    <span className="text-sm font-mono text-miau-muted">74</span>
+                    <span className="text-xs text-miau-muted/60">(Launch)</span>
                   </div>
                   <div className="flex-1 h-2 bg-miau-taupe rounded-full relative overflow-hidden">
                     <div
@@ -623,30 +625,30 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-mono font-bold text-miau-brown">{creator.score}</span>
-                    <span className="text-xs text-miau-grey">(Current)</span>
+                    <span className="text-sm font-mono font-bold text-white">{creator.score}</span>
+                    <span className="text-xs text-miau-muted/60">(Current)</span>
                   </div>
                 </div>
               </div>
 
               {/* Contract & verification */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-miau-pale rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-2">Contract Address</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-2">Contract Address</p>
                   <div className="flex items-center gap-2">
-                    <code className="text-sm font-mono text-miau-brown bg-white px-3 py-1.5 rounded-lg border border-miau-taupe">
+                    <code className="text-sm font-mono text-white bg-miau-dark-card px-3 py-1.5 rounded-lg border border-miau-dark-border">
                       0x7a3b...f91c
                     </code>
                     <button
                       onClick={() => showToast('Contract address copied!')}
-                      className="text-xs text-miau-dark hover:text-miau-brown transition-colors"
+                      className="text-xs text-miau-pink hover:text-white transition-colors"
                     >
                       <ExternalLink size={14} />
                     </button>
                   </div>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4 space-y-2">
-                  <p className="text-xs text-miau-rose-brown mb-2">Eligibility Verification</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4 space-y-2">
+                  <p className="text-xs text-miau-muted mb-2">Eligibility Verification</p>
                   <div className="space-y-1.5">
                     {[
                       'Identity verified (KYC)',
@@ -654,7 +656,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       'Platform content policy compliant',
                       'Smart contract audited',
                     ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-miau-brown">
+                      <div key={i} className="flex items-center gap-2 text-xs text-white">
                         <CheckCircle2 size={13} className="text-miau-success shrink-0" />
                         {item}
                       </div>
@@ -666,25 +668,25 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           </div>
 
           {/* ─── Section 7: Fan Staking Benefits ── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe">
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">Fan Staking Benefits</h2>
-              <p className="text-xs text-miau-rose-brown mt-1">
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border">
+              <h2 className="font-bold text-lg text-white">Fan Staking Benefits</h2>
+              <p className="text-xs text-miau-muted mt-1">
                 Stake MIAU to unlock exclusive fan benefits from {creator.name}
               </p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-miau-taupe bg-miau-pale/40">
-                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-rose-brown">Tier</th>
-                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-rose-brown">Minimum Stake</th>
-                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-rose-brown">Benefits</th>
+                  <tr className="border-b border-miau-dark-border bg-miau-dark-surface/40">
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-muted">Tier</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-muted">Minimum Stake</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-miau-muted">Benefits</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stakingTiers.map((tier, idx) => (
-                    <tr key={idx} className="border-b border-miau-taupe/30 hover:bg-miau-pale/30 transition-colors">
+                    <tr key={idx} className="border-b border-miau-dark-border/30 hover:bg-miau-dark-hover/30 transition-colors">
                       <td className="px-5 py-3">
                         <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                           tier.name === 'Diamond' ? 'bg-gradient-to-r from-blue-400 to-cyan-400 text-white' :
@@ -696,11 +698,11 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                           {tier.name}
                         </span>
                       </td>
-                      <td className="px-5 py-3 font-mono font-semibold text-miau-brown">{tier.amount}</td>
+                      <td className="px-5 py-3 font-mono font-semibold text-white">{tier.amount}</td>
                       <td className="px-5 py-3">
                         <ul className="space-y-1">
                           {tier.benefits.map((b, i) => (
-                            <li key={i} className="flex items-center gap-1.5 text-xs text-miau-rose-brown">
+                            <li key={i} className="flex items-center gap-1.5 text-xs text-miau-muted">
                               <CheckCircle2 size={11} className="text-miau-success shrink-0" />
                               {b}
                             </li>
@@ -717,12 +719,12 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           {/* ─── Section 8: Compact Order Book ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Asks (Sell orders) */}
-            <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-              <div className="px-5 py-3 border-b border-miau-taupe flex items-center justify-between">
-                <h3 className="font-serif font-semibold text-miau-brown">Top 5 Asks (Sell Orders)</h3>
-                <span className="text-xs text-miau-rose-brown font-mono">{creator.catSymbol}/MIAU</span>
+            <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+              <div className="px-5 py-3 border-b border-miau-dark-border flex items-center justify-between">
+                <h3 className="font-bold text-white">Top 5 Asks (Sell Orders)</h3>
+                <span className="text-xs text-miau-muted font-mono">{creator.catSymbol}/MIAU</span>
               </div>
-              <div className="grid grid-cols-3 px-5 py-2 text-[11px] text-miau-rose-brown font-medium border-b border-miau-taupe/50">
+              <div className="grid grid-cols-3 px-5 py-2 text-[11px] text-miau-muted font-medium border-b border-miau-dark-border/50">
                 <span>Price (MIAU)</span>
                 <span className="text-right">Qty</span>
                 <span className="text-right">Total</span>
@@ -738,20 +740,20 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       style={{ width: `${(order.quantity / maxAskQty) * 100}%` }}
                     />
                     <span className="relative text-miau-error font-medium">{order.price.toFixed(1)}</span>
-                    <span className="relative text-right text-miau-brown">{order.quantity}</span>
-                    <span className="relative text-right text-miau-rose-brown">{order.total.toLocaleString()}</span>
+                    <span className="relative text-right text-white">{order.quantity}</span>
+                    <span className="relative text-right text-miau-muted">{order.total.toLocaleString()}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Bids (Buy orders) */}
-            <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-              <div className="px-5 py-3 border-b border-miau-taupe flex items-center justify-between">
-                <h3 className="font-serif font-semibold text-miau-brown">Top 5 Bids (Buy Orders)</h3>
-                <span className="text-xs text-miau-rose-brown font-mono">{creator.catSymbol}/MIAU</span>
+            <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+              <div className="px-5 py-3 border-b border-miau-dark-border flex items-center justify-between">
+                <h3 className="font-bold text-white">Top 5 Bids (Buy Orders)</h3>
+                <span className="text-xs text-miau-muted font-mono">{creator.catSymbol}/MIAU</span>
               </div>
-              <div className="grid grid-cols-3 px-5 py-2 text-[11px] text-miau-rose-brown font-medium border-b border-miau-taupe/50">
+              <div className="grid grid-cols-3 px-5 py-2 text-[11px] text-miau-muted font-medium border-b border-miau-dark-border/50">
                 <span>Price (MIAU)</span>
                 <span className="text-right">Qty</span>
                 <span className="text-right">Total</span>
@@ -767,8 +769,8 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       style={{ width: `${(order.quantity / maxBidQty) * 100}%` }}
                     />
                     <span className="relative text-miau-success font-medium">{order.price.toFixed(1)}</span>
-                    <span className="relative text-right text-miau-brown">{order.quantity}</span>
-                    <span className="relative text-right text-miau-rose-brown">{order.total.toLocaleString()}</span>
+                    <span className="relative text-right text-white">{order.quantity}</span>
+                    <span className="relative text-right text-miau-muted">{order.total.toLocaleString()}</span>
                   </div>
                 ))}
               </div>
@@ -776,9 +778,9 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           </div>
 
           {/* ─── Section 9: Holder Distribution ── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe">
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">Holder Distribution</h2>
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border">
+              <h2 className="font-bold text-lg text-white">Holder Distribution</h2>
             </div>
             <div className="p-5">
               <div className="flex flex-col md:flex-row items-center gap-8">
@@ -802,10 +804,11 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       </Pie>
                       <Tooltip
                         contentStyle={{
-                          background: '#fff',
-                          border: '1px solid #F5EDE8',
+                          background: '#141428',
+                          border: '1px solid #2A2A4A',
                           borderRadius: '12px',
                           fontSize: '12px',
+                      color: '#FFFFFF',
                         }}
                         formatter={(value: any) => [`${value ?? 0} CATs`, '']}
                       />
@@ -822,14 +825,14 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                         style={{ backgroundColor: entry.color }}
                       />
                       <div className="flex-1 flex items-center justify-between">
-                        <span className="text-sm text-miau-brown">{entry.name}</span>
-                        <span className="text-sm font-mono font-semibold text-miau-brown">{entry.value} CATs</span>
+                        <span className="text-sm text-white">{entry.name}</span>
+                        <span className="text-sm font-mono font-semibold text-white">{entry.value} CATs</span>
                       </div>
                     </div>
                   ))}
-                  <div className="border-t border-miau-taupe pt-3 flex items-center justify-between">
-                    <span className="text-sm font-semibold text-miau-brown">Total Issued</span>
-                    <span className="text-sm font-mono font-bold text-miau-brown">{creator.catsIssued} CATs</span>
+                  <div className="border-t border-miau-dark-border pt-3 flex items-center justify-between">
+                    <span className="text-sm font-semibold text-white">Total Issued</span>
+                    <span className="text-sm font-mono font-bold text-white">{creator.catsIssued} CATs</span>
                   </div>
                 </div>
               </div>
@@ -850,56 +853,56 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           className="space-y-6"
         >
           {/* ─── Section 1: Revenue & CAT Performance ── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe flex items-center gap-2">
-              <BarChart3 size={18} className="text-miau-dark" />
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">Revenue & CAT Performance</h2>
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
+              <BarChart3 size={18} className="text-miau-pink" />
+              <h2 className="font-bold text-lg text-white">Revenue & CAT Performance</h2>
             </div>
             <div className="p-5 space-y-5">
               {/* Revenue summary cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-miau-blush rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-1">This Week Revenue</p>
-                  <p className="text-2xl font-bold text-miau-brown">${thisWeekRevenue.toLocaleString()}</p>
+                <div className="bg-miau-dark-card rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-1">This Week Revenue</p>
+                  <p className="text-2xl font-bold text-white">${thisWeekRevenue.toLocaleString()}</p>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-1">Net After {platformFeePercent}% Platform Fee</p>
-                  <p className="text-2xl font-bold text-miau-brown">${netAfterPlatformFee.toLocaleString()}</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-1">Net After {platformFeePercent}% Platform Fee</p>
+                  <p className="text-2xl font-bold text-white">${netAfterPlatformFee.toLocaleString()}</p>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-1">Creator Share ({creatorSharePercent}%)</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-1">Creator Share ({creatorSharePercent}%)</p>
                   <p className="text-2xl font-bold text-miau-success">${creatorShare.toLocaleString()}</p>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4">
-                  <p className="text-xs text-miau-rose-brown mb-1">CAT Holder Dist ({catHolderPercent}%)</p>
-                  <p className="text-2xl font-bold text-miau-dark">${catHolderShare.toLocaleString()}</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4">
+                  <p className="text-xs text-miau-muted mb-1">CAT Holder Dist ({catHolderPercent}%)</p>
+                  <p className="text-2xl font-bold text-miau-pink">${catHolderShare.toLocaleString()}</p>
                 </div>
               </div>
 
               {/* Distribution details */}
               <div className="bg-miau-cream rounded-xl p-5 space-y-3">
-                <h3 className="font-semibold text-sm text-miau-brown">Distribution Details</h3>
+                <h3 className="font-semibold text-sm text-white">Distribution Details</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-miau-rose-brown">Distribution frequency</span>
-                    <span className="font-medium text-miau-brown">Weekly (every Monday)</span>
+                    <span className="text-miau-muted">Distribution frequency</span>
+                    <span className="font-medium text-white">Weekly (every Monday)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-miau-rose-brown">Distribution currency</span>
-                    <span className="font-medium text-miau-brown">ETH</span>
+                    <span className="text-miau-muted">Distribution currency</span>
+                    <span className="font-medium text-white">ETH</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-miau-rose-brown">Next distribution date</span>
-                    <span className="font-medium text-miau-brown">Mon 24 Feb 2026</span>
+                    <span className="text-miau-muted">Next distribution date</span>
+                    <span className="font-medium text-white">Mon 24 Feb 2026</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-miau-rose-brown">Estimated per CAT</span>
-                    <span className="font-mono font-medium text-miau-brown">{estimatedPerCAT} ETH</span>
+                    <span className="text-miau-muted">Estimated per CAT</span>
+                    <span className="font-mono font-medium text-white">{estimatedPerCAT} ETH</span>
                   </div>
                 </div>
-                <div className="bg-white/60 rounded-lg p-3 flex items-start gap-2 mt-2">
-                  <Info size={14} className="text-miau-rose-brown shrink-0 mt-0.5" />
-                  <p className="text-xs text-miau-rose-brown leading-relaxed">
+                <div className="bg-miau-dark-surface/60 rounded-lg p-3 flex items-start gap-2 mt-2">
+                  <Info size={14} className="text-miau-muted shrink-0 mt-0.5" />
+                  <p className="text-xs text-miau-muted leading-relaxed">
                     Distributions are automatically converted to ETH and sent to all CAT holder wallets every Monday.
                     The {catHolderPercent}% is split equally across all {creator.catsIssued} CATs regardless of edition.
                   </p>
@@ -909,61 +912,61 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           </div>
 
           {/* ─── Section 2: Buyback Options ──── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe flex items-center gap-2">
-              <RefreshCw size={18} className="text-miau-dark" />
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">Buyback Options</h2>
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
+              <RefreshCw size={18} className="text-miau-pink" />
+              <h2 className="font-bold text-lg text-white">Buyback Options</h2>
             </div>
             <div className="p-5 space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Open Market Buyback */}
-                <div className="bg-miau-pale rounded-xl p-5 space-y-3">
+                <div className="bg-miau-dark-surface rounded-xl p-5 space-y-3">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg bg-miau-dark/10 flex items-center justify-center">
-                      <DollarSign size={16} className="text-miau-dark" />
+                      <DollarSign size={16} className="text-miau-pink" />
                     </div>
-                    <h3 className="font-semibold text-sm text-miau-brown">Open Market Buyback</h3>
+                    <h3 className="font-semibold text-sm text-white">Open Market Buyback</h3>
                   </div>
-                  <p className="text-xs text-miau-rose-brown leading-relaxed">
+                  <p className="text-xs text-miau-muted leading-relaxed">
                     Purchase your own CATs on the open market at current market prices. No restrictions,
                     available at any time. Purchased CATs can be burned (reducing supply) or held in your treasury.
                   </p>
-                  <div className="bg-white rounded-lg p-3">
-                    <p className="text-xs text-miau-rose-brown">Current estimated cost (all {creator.catsIssued} CATs)</p>
-                    <p className="text-lg font-bold text-miau-brown">~{(creator.catsIssued * creator.currentPrice).toLocaleString()} MIAU</p>
+                  <div className="bg-miau-dark-card rounded-lg p-3">
+                    <p className="text-xs text-miau-muted">Current estimated cost (all {creator.catsIssued} CATs)</p>
+                    <p className="text-lg font-bold text-white">~{(creator.catsIssued * creator.currentPrice).toLocaleString()} MIAU</p>
                   </div>
                 </div>
 
                 {/* Structured Buyback Programme */}
-                <div className="bg-miau-blush rounded-xl p-5 space-y-3">
+                <div className="bg-miau-dark-card rounded-xl p-5 space-y-3">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg bg-miau-dark/10 flex items-center justify-center">
-                      <Shield size={16} className="text-miau-dark" />
+                      <Shield size={16} className="text-miau-pink" />
                     </div>
-                    <h3 className="font-semibold text-sm text-miau-brown">Structured Buyback Programme</h3>
+                    <h3 className="font-semibold text-sm text-white">Structured Buyback Programme</h3>
                   </div>
-                  <p className="text-xs text-miau-rose-brown leading-relaxed">
+                  <p className="text-xs text-miau-muted leading-relaxed">
                     Available after 12 months from initial offering. Allows you to repurchase all outstanding
                     CATs at a structured price when certain conditions are met.
                   </p>
                   <div className="space-y-2 text-xs">
-                    <div className="flex items-center gap-2 text-miau-rose-brown">
+                    <div className="flex items-center gap-2 text-miau-muted">
                       <Clock size={12} className="text-miau-warning shrink-0" />
                       <span>Eligibility: After 12 months (Sep 2026)</span>
                     </div>
-                    <div className="flex items-center gap-2 text-miau-rose-brown">
-                      <FileText size={12} className="text-miau-dark shrink-0" />
+                    <div className="flex items-center gap-2 text-miau-muted">
+                      <FileText size={12} className="text-miau-pink shrink-0" />
                       <span>Price conditions: Must meet min. floor price + premium</span>
                     </div>
-                    <div className="flex items-center gap-2 text-miau-rose-brown">
-                      <Calendar size={12} className="text-miau-dark shrink-0" />
+                    <div className="flex items-center gap-2 text-miau-muted">
+                      <Calendar size={12} className="text-miau-pink shrink-0" />
                       <span>30-day notice window required for holders</span>
                     </div>
                   </div>
-                  <div className="bg-white rounded-lg p-3">
-                    <p className="text-xs text-miau-rose-brown">Current buyback cost estimate</p>
-                    <p className="text-lg font-bold text-miau-brown">~12,000 MIAU</p>
-                    <p className="text-xs text-miau-grey">for all {creator.catsIssued} outstanding CATs</p>
+                  <div className="bg-miau-dark-card rounded-lg p-3">
+                    <p className="text-xs text-miau-muted">Current buyback cost estimate</p>
+                    <p className="text-lg font-bold text-white">~12,000 MIAU</p>
+                    <p className="text-xs text-miau-muted/60">for all {creator.catsIssued} outstanding CATs</p>
                   </div>
                 </div>
               </div>
@@ -971,18 +974,18 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
           </div>
 
           {/* ─── Section 3: Issue New CATs ────── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-miau-taupe flex items-center gap-2">
-              <Plus size={18} className="text-miau-dark" />
-              <h2 className="font-serif font-semibold text-lg text-miau-brown">Issue New CATs</h2>
+          <div className="bg-miau-dark-card border border-miau-dark-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-miau-dark-border flex items-center gap-2">
+              <Plus size={18} className="text-miau-pink" />
+              <h2 className="font-bold text-lg text-white">Issue New CATs</h2>
             </div>
             <div className="p-5 space-y-5">
               {/* Status banner */}
               <div className="bg-miau-success/10 border border-miau-success/20 rounded-xl p-4 flex items-start gap-3">
                 <CheckCircle2 size={18} className="text-miau-success shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm font-semibold text-miau-brown">Round 1 Complete</p>
-                  <p className="text-xs text-miau-rose-brown mt-1">
+                  <p className="text-sm font-semibold text-white">Round 1 Complete</p>
+                  <p className="text-xs text-miau-muted mt-1">
                     {creator.catsIssued} CATs issued representing {catHolderPercent}% of revenue. All Founders edition sold out.
                   </p>
                 </div>
@@ -990,29 +993,29 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
               {/* Remaining capacity info */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-miau-pale rounded-xl p-4 text-center">
-                  <p className="text-xs text-miau-rose-brown mb-1">Remaining Capacity</p>
-                  <p className="text-2xl font-bold text-miau-brown">80 CATs</p>
-                  <p className="text-xs text-miau-rose-brown">8% additional revenue</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4 text-center">
+                  <p className="text-xs text-miau-muted mb-1">Remaining Capacity</p>
+                  <p className="text-2xl font-bold text-white">80 CATs</p>
+                  <p className="text-xs text-miau-muted">8% additional revenue</p>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4 text-center">
-                  <p className="text-xs text-miau-rose-brown mb-1">Rounds Remaining</p>
-                  <p className="text-2xl font-bold text-miau-brown">3 of 4</p>
-                  <p className="text-xs text-miau-rose-brown">Max 20% total</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4 text-center">
+                  <p className="text-xs text-miau-muted mb-1">Rounds Remaining</p>
+                  <p className="text-2xl font-bold text-white">3 of 4</p>
+                  <p className="text-xs text-miau-muted">Max 20% total</p>
                 </div>
-                <div className="bg-miau-pale rounded-xl p-4 text-center">
-                  <p className="text-xs text-miau-rose-brown mb-1">Next Eligible</p>
-                  <p className="text-2xl font-bold text-miau-brown">Jun 2026</p>
-                  <p className="text-xs text-miau-rose-brown">6-month cooling period</p>
+                <div className="bg-miau-dark-surface rounded-xl p-4 text-center">
+                  <p className="text-xs text-miau-muted mb-1">Next Eligible</p>
+                  <p className="text-2xl font-bold text-white">Jun 2026</p>
+                  <p className="text-xs text-miau-muted">6-month cooling period</p>
                 </div>
               </div>
 
               {/* Edition structure selector */}
               <div className="bg-miau-cream rounded-xl p-5 space-y-4">
-                <h3 className="font-semibold text-sm text-miau-brown">Edition Structure (Next Round)</h3>
+                <h3 className="font-semibold text-sm text-white">Edition Structure (Next Round)</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs text-miau-rose-brown mb-1.5 font-medium">
+                    <label className="block text-xs text-miau-muted mb-1.5 font-medium">
                       Founders Edition (max 10)
                     </label>
                     <input
@@ -1021,11 +1024,11 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       max="10"
                       value={offeringFounders}
                       onChange={e => setOfferingFounders(e.target.value)}
-                      className="w-full bg-white border border-miau-taupe rounded-xl px-4 py-2.5 font-mono text-sm text-miau-brown focus:outline-none focus:border-miau-pink transition-colors"
+                      className="w-full bg-miau-dark-card border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-white focus:outline-none focus:border-miau-pink transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-miau-rose-brown mb-1.5 font-medium">
+                    <label className="block text-xs text-miau-muted mb-1.5 font-medium">
                       Limited Edition (max 40)
                     </label>
                     <input
@@ -1034,43 +1037,43 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       max="40"
                       value={offeringLimited}
                       onChange={e => setOfferingLimited(e.target.value)}
-                      className="w-full bg-white border border-miau-taupe rounded-xl px-4 py-2.5 font-mono text-sm text-miau-brown focus:outline-none focus:border-miau-pink transition-colors"
+                      className="w-full bg-miau-dark-card border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-white focus:outline-none focus:border-miau-pink transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-miau-rose-brown mb-1.5 font-medium">
+                    <label className="block text-xs text-miau-muted mb-1.5 font-medium">
                       Standard Edition (auto-fill)
                     </label>
                     <input
                       type="number"
                       value={Math.max(0, parsedStandard)}
                       readOnly
-                      className="w-full bg-miau-taupe/30 border border-miau-taupe rounded-xl px-4 py-2.5 font-mono text-sm text-miau-rose-brown cursor-not-allowed"
+                      className="w-full bg-miau-taupe/30 border border-miau-dark-border rounded-xl px-4 py-2.5 font-mono text-sm text-miau-muted cursor-not-allowed"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Pricing guidance */}
-              <div className="bg-miau-pale rounded-xl p-5 space-y-3">
-                <h3 className="font-semibold text-sm text-miau-brown">Pricing Guidance</h3>
-                <p className="text-xs text-miau-rose-brown leading-relaxed">
+              <div className="bg-miau-dark-surface rounded-xl p-5 space-y-3">
+                <h3 className="font-semibold text-sm text-white">Pricing Guidance</h3>
+                <p className="text-xs text-miau-muted leading-relaxed">
                   Based on your current revenue metrics and score progression, the suggested pricing for Round 2 is:
                 </p>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="bg-white rounded-lg p-3 text-center">
-                    <p className="text-xs text-miau-rose-brown">Founders</p>
-                    <p className="text-lg font-bold text-miau-brown">300 MIAU</p>
+                  <div className="bg-miau-dark-card rounded-lg p-3 text-center">
+                    <p className="text-xs text-miau-muted">Founders</p>
+                    <p className="text-lg font-bold text-white">300 MIAU</p>
                     <p className="text-[10px] text-miau-success">+20% vs Round 1</p>
                   </div>
-                  <div className="bg-white rounded-lg p-3 text-center">
-                    <p className="text-xs text-miau-rose-brown">Limited</p>
-                    <p className="text-lg font-bold text-miau-brown">150 MIAU</p>
+                  <div className="bg-miau-dark-card rounded-lg p-3 text-center">
+                    <p className="text-xs text-miau-muted">Limited</p>
+                    <p className="text-lg font-bold text-white">150 MIAU</p>
                     <p className="text-[10px] text-miau-success">+25% vs Round 1</p>
                   </div>
-                  <div className="bg-white rounded-lg p-3 text-center">
-                    <p className="text-xs text-miau-rose-brown">Standard</p>
-                    <p className="text-lg font-bold text-miau-brown">110 MIAU</p>
+                  <div className="bg-miau-dark-card rounded-lg p-3 text-center">
+                    <p className="text-xs text-miau-muted">Standard</p>
+                    <p className="text-lg font-bold text-white">110 MIAU</p>
                     <p className="text-[10px] text-miau-success">+37% vs Round 1</p>
                   </div>
                 </div>
@@ -1078,7 +1081,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
               {/* Listing tier selector */}
               <div className="space-y-3">
-                <h3 className="font-semibold text-sm text-miau-brown">Listing Tier</h3>
+                <h3 className="font-semibold text-sm text-white">Listing Tier</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {listingTiers.map(tier => (
                     <button
@@ -1086,15 +1089,15 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       onClick={() => setListingTier(tier.name)}
                       className={`p-4 rounded-xl border-2 text-left transition-all ${
                         listingTier === tier.name
-                          ? 'border-miau-dark bg-miau-blush'
-                          : 'border-miau-taupe bg-white hover:border-miau-pink'
+                          ? 'border-miau-dark bg-miau-dark-card'
+                          : 'border-miau-dark-border bg-miau-dark-card hover:border-miau-pink'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold text-sm text-miau-brown">{tier.name}</span>
-                        <span className="font-mono font-bold text-sm text-miau-dark">{tier.price}</span>
+                        <span className="font-semibold text-sm text-white">{tier.name}</span>
+                        <span className="font-mono font-bold text-sm text-miau-pink">{tier.price}</span>
                       </div>
-                      <p className="text-xs text-miau-rose-brown">{tier.description}</p>
+                      <p className="text-xs text-miau-muted">{tier.description}</p>
                     </button>
                   ))}
                 </div>
@@ -1102,23 +1105,23 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
               {/* Estimated raise calculator */}
               <div className="bg-gradient-to-r from-miau-blush to-miau-pale rounded-xl p-5">
-                <h3 className="font-semibold text-sm text-miau-brown mb-3">Estimated Raise Calculator</h3>
+                <h3 className="font-semibold text-sm text-white mb-3">Estimated Raise Calculator</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-center">
                   <div>
-                    <p className="text-xs text-miau-rose-brown">Founders ({parsedFounders} x 280)</p>
-                    <p className="font-mono font-bold text-miau-brown">{(parsedFounders * 280).toLocaleString()} MIAU</p>
+                    <p className="text-xs text-miau-muted">Founders ({parsedFounders} x 280)</p>
+                    <p className="font-mono font-bold text-white">{(parsedFounders * 280).toLocaleString()} MIAU</p>
                   </div>
                   <div>
-                    <p className="text-xs text-miau-rose-brown">Limited ({parsedLimited} x 140)</p>
-                    <p className="font-mono font-bold text-miau-brown">{(parsedLimited * 140).toLocaleString()} MIAU</p>
+                    <p className="text-xs text-miau-muted">Limited ({parsedLimited} x 140)</p>
+                    <p className="font-mono font-bold text-white">{(parsedLimited * 140).toLocaleString()} MIAU</p>
                   </div>
                   <div>
-                    <p className="text-xs text-miau-rose-brown">Standard ({Math.max(0, parsedStandard)} x 100)</p>
-                    <p className="font-mono font-bold text-miau-brown">{(Math.max(0, parsedStandard) * 100).toLocaleString()} MIAU</p>
+                    <p className="text-xs text-miau-muted">Standard ({Math.max(0, parsedStandard)} x 100)</p>
+                    <p className="font-mono font-bold text-white">{(Math.max(0, parsedStandard) * 100).toLocaleString()} MIAU</p>
                   </div>
-                  <div className="bg-white rounded-lg p-3">
-                    <p className="text-xs text-miau-rose-brown">Total Estimated</p>
-                    <p className="text-xl font-bold text-miau-dark">{estimatedRaise.toLocaleString()} MIAU</p>
+                  <div className="bg-miau-dark-card rounded-lg p-3">
+                    <p className="text-xs text-miau-muted">Total Estimated</p>
+                    <p className="text-xl font-bold text-miau-pink">{estimatedRaise.toLocaleString()} MIAU</p>
                   </div>
                 </div>
               </div>
@@ -1152,103 +1155,103 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.95, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
+                  className="bg-miau-dark-card rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
                   onClick={e => e.stopPropagation()}
                 >
                   {/* Modal header */}
-                  <div className="px-6 py-5 border-b border-miau-taupe flex items-center justify-between sticky top-0 bg-white rounded-t-3xl z-10">
+                  <div className="px-6 py-5 border-b border-miau-dark-border flex items-center justify-between sticky top-0 bg-miau-dark-card rounded-t-3xl z-10">
                     <div>
-                      <h2 className="font-serif font-semibold text-lg text-miau-brown">
+                      <h2 className="font-bold text-lg text-white">
                         CAT Offering Application
                       </h2>
-                      <p className="text-xs text-miau-rose-brown mt-0.5">
+                      <p className="text-xs text-miau-muted mt-0.5">
                         {creator.name} - New CAT Issuance
                       </p>
                     </div>
                     <button
                       onClick={() => setShowOfferingModal(false)}
-                      className="w-8 h-8 rounded-lg bg-miau-pale flex items-center justify-center hover:bg-miau-taupe transition-colors"
+                      className="w-8 h-8 rounded-lg bg-miau-dark-surface flex items-center justify-center hover:bg-miau-dark-hover transition-colors"
                     >
-                      <X size={16} className="text-miau-brown" />
+                      <X size={16} className="text-white" />
                     </button>
                   </div>
 
                   {!offeringSubmitted ? (
                     <div className="p-6 space-y-5">
                       {/* Round info */}
-                      <div className="bg-miau-pale rounded-xl p-4 flex items-center justify-between">
-                        <span className="text-sm font-medium text-miau-brown">Round</span>
-                        <span className="font-semibold text-miau-dark">Round 2 of 4</span>
+                      <div className="bg-miau-dark-surface rounded-xl p-4 flex items-center justify-between">
+                        <span className="text-sm font-medium text-white">Round</span>
+                        <span className="font-semibold text-miau-pink">Round 2 of 4</span>
                       </div>
 
                       {/* Edition split inputs */}
                       <div className="space-y-3">
-                        <h3 className="text-sm font-semibold text-miau-brown">Edition Split</h3>
+                        <h3 className="text-sm font-semibold text-white">Edition Split</h3>
                         <div className="grid grid-cols-3 gap-3">
                           <div>
-                            <label className="block text-xs text-miau-rose-brown mb-1">Founders (max 10)</label>
+                            <label className="block text-xs text-miau-muted mb-1">Founders (max 10)</label>
                             <input
                               type="number"
                               min="0"
                               max="10"
                               value={offeringFounders}
                               onChange={e => setOfferingFounders(e.target.value)}
-                              className="w-full bg-miau-pale border border-miau-taupe rounded-xl px-3 py-2 font-mono text-sm text-miau-brown focus:outline-none focus:border-miau-pink"
+                              className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-3 py-2 font-mono text-sm text-white focus:outline-none focus:border-miau-pink"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs text-miau-rose-brown mb-1">Limited (max 40)</label>
+                            <label className="block text-xs text-miau-muted mb-1">Limited (max 40)</label>
                             <input
                               type="number"
                               min="0"
                               max="40"
                               value={offeringLimited}
                               onChange={e => setOfferingLimited(e.target.value)}
-                              className="w-full bg-miau-pale border border-miau-taupe rounded-xl px-3 py-2 font-mono text-sm text-miau-brown focus:outline-none focus:border-miau-pink"
+                              className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-3 py-2 font-mono text-sm text-white focus:outline-none focus:border-miau-pink"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs text-miau-rose-brown mb-1">Standard (auto)</label>
+                            <label className="block text-xs text-miau-muted mb-1">Standard (auto)</label>
                             <input
                               type="number"
                               value={Math.max(0, parsedStandard)}
                               readOnly
-                              className="w-full bg-miau-taupe/30 border border-miau-taupe rounded-xl px-3 py-2 font-mono text-sm text-miau-rose-brown cursor-not-allowed"
+                              className="w-full bg-miau-taupe/30 border border-miau-dark-border rounded-xl px-3 py-2 font-mono text-sm text-miau-muted cursor-not-allowed"
                             />
                           </div>
                         </div>
                       </div>
 
                       {/* Suggested pricing */}
-                      <div className="bg-miau-blush rounded-xl p-4 space-y-2">
-                        <h3 className="text-sm font-semibold text-miau-brown">Suggested Pricing</h3>
+                      <div className="bg-miau-dark-card rounded-xl p-4 space-y-2">
+                        <h3 className="text-sm font-semibold text-white">Suggested Pricing</h3>
                         <div className="grid grid-cols-3 gap-3 text-center text-xs">
                           <div>
-                            <span className="text-miau-rose-brown">Founders</span>
-                            <p className="font-mono font-bold text-miau-brown">300 MIAU</p>
+                            <span className="text-miau-muted">Founders</span>
+                            <p className="font-mono font-bold text-white">300 MIAU</p>
                           </div>
                           <div>
-                            <span className="text-miau-rose-brown">Limited</span>
-                            <p className="font-mono font-bold text-miau-brown">150 MIAU</p>
+                            <span className="text-miau-muted">Limited</span>
+                            <p className="font-mono font-bold text-white">150 MIAU</p>
                           </div>
                           <div>
-                            <span className="text-miau-rose-brown">Standard</span>
-                            <p className="font-mono font-bold text-miau-brown">110 MIAU</p>
+                            <span className="text-miau-muted">Standard</span>
+                            <p className="font-mono font-bold text-white">110 MIAU</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Listing tier radio buttons */}
                       <div className="space-y-3">
-                        <h3 className="text-sm font-semibold text-miau-brown">Listing Tier</h3>
+                        <h3 className="text-sm font-semibold text-white">Listing Tier</h3>
                         <div className="space-y-2">
                           {listingTiers.map(tier => (
                             <label
                               key={tier.name}
                               className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                                 listingTier === tier.name
-                                  ? 'border-miau-dark bg-miau-blush'
-                                  : 'border-miau-taupe bg-white hover:border-miau-pink'
+                                  ? 'border-miau-dark bg-miau-dark-card'
+                                  : 'border-miau-dark-border bg-miau-dark-card hover:border-miau-pink'
                               }`}
                             >
                               <input
@@ -1261,10 +1264,10 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                               />
                               <div className="flex-1">
                                 <div className="flex items-center justify-between">
-                                  <span className="text-sm font-medium text-miau-brown">{tier.name}</span>
-                                  <span className="font-mono text-sm font-bold text-miau-dark">{tier.price}</span>
+                                  <span className="text-sm font-medium text-white">{tier.name}</span>
+                                  <span className="font-mono text-sm font-bold text-miau-pink">{tier.price}</span>
                                 </div>
-                                <p className="text-xs text-miau-rose-brown">{tier.description}</p>
+                                <p className="text-xs text-miau-muted">{tier.description}</p>
                               </div>
                             </label>
                           ))}
@@ -1273,32 +1276,32 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
 
                       {/* Capital use textarea */}
                       <div>
-                        <label className="block text-sm font-semibold text-miau-brown mb-1.5">
+                        <label className="block text-sm font-semibold text-white mb-1.5">
                           Intended Use of Capital
                         </label>
                         <textarea
                           value={capitalUse}
                           onChange={e => setCapitalUse(e.target.value)}
                           placeholder="Describe how you plan to use the raised capital to grow your platform and content..."
-                          className="w-full bg-miau-pale border border-miau-taupe rounded-xl px-4 py-3 text-sm text-miau-brown placeholder:text-miau-grey focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
+                          className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 text-sm text-white placeholder:text-miau-muted/60 focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
                         />
                       </div>
 
                       {/* Growth projections textarea */}
                       <div>
-                        <label className="block text-sm font-semibold text-miau-brown mb-1.5">
+                        <label className="block text-sm font-semibold text-white mb-1.5">
                           Growth Projections
                         </label>
                         <textarea
                           value={growthProjections}
                           onChange={e => setGrowthProjections(e.target.value)}
                           placeholder="Outline your subscriber growth and revenue projections for the next 12 months..."
-                          className="w-full bg-miau-pale border border-miau-taupe rounded-xl px-4 py-3 text-sm text-miau-brown placeholder:text-miau-grey focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
+                          className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 text-sm text-white placeholder:text-miau-muted/60 focus:outline-none focus:border-miau-pink transition-colors resize-none h-24"
                         />
                       </div>
 
                       {/* Lock-up confirmation checkbox */}
-                      <label className="flex items-start gap-3 p-3 bg-miau-pale rounded-xl cursor-pointer">
+                      <label className="flex items-start gap-3 p-3 bg-miau-dark-surface rounded-xl cursor-pointer">
                         <input
                           type="checkbox"
                           checked={lockUpConfirmed}
@@ -1306,8 +1309,8 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                           className="mt-0.5 accent-miau-dark"
                         />
                         <div>
-                          <p className="text-sm font-medium text-miau-brown">Lock-up Confirmation</p>
-                          <p className="text-xs text-miau-rose-brown mt-0.5">
+                          <p className="text-sm font-medium text-white">Lock-up Confirmation</p>
+                          <p className="text-xs text-miau-muted mt-0.5">
                             I confirm that I understand the 12-month lock-up period during which structured buyback
                             is not available, and that CAT holders have ongoing revenue distribution rights.
                           </p>
@@ -1315,7 +1318,7 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       </label>
 
                       {/* Declaration checkbox */}
-                      <label className="flex items-start gap-3 p-3 bg-miau-pale rounded-xl cursor-pointer">
+                      <label className="flex items-start gap-3 p-3 bg-miau-dark-surface rounded-xl cursor-pointer">
                         <input
                           type="checkbox"
                           checked={declarationConfirmed}
@@ -1323,8 +1326,8 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                           className="mt-0.5 accent-miau-dark"
                         />
                         <div>
-                          <p className="text-sm font-medium text-miau-brown">Declaration</p>
-                          <p className="text-xs text-miau-rose-brown mt-0.5">
+                          <p className="text-sm font-medium text-white">Declaration</p>
+                          <p className="text-xs text-miau-muted mt-0.5">
                             I declare that all information provided is accurate and complete. I understand that Miauswap
                             reserves the right to reject this application, and that issuance is subject to platform
                             review and community governance approval.
@@ -1355,21 +1358,21 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                         </div>
                       </motion.div>
                       <div>
-                        <h3 className="text-xl font-serif font-bold text-miau-brown">
+                        <h3 className="text-xl font-extrabold text-white">
                           Application Submitted
                         </h3>
-                        <p className="text-sm text-miau-rose-brown mt-2 max-w-md mx-auto leading-relaxed">
+                        <p className="text-sm text-miau-muted mt-2 max-w-md mx-auto leading-relaxed">
                           Your CAT offering application has been submitted for review. Our team will
                           evaluate your application against our listing criteria.
                         </p>
                       </div>
-                      <div className="bg-miau-pale rounded-xl p-4 inline-block">
-                        <p className="text-xs text-miau-rose-brown">Typical review time</p>
-                        <p className="text-lg font-bold text-miau-brown">7 -- 14 days</p>
+                      <div className="bg-miau-dark-surface rounded-xl p-4 inline-block">
+                        <p className="text-xs text-miau-muted">Typical review time</p>
+                        <p className="text-lg font-bold text-white">7 -- 14 days</p>
                       </div>
-                      <div className="space-y-2 text-xs text-miau-rose-brown">
+                      <div className="space-y-2 text-xs text-miau-muted">
                         <p>You will receive an email notification when your application status changes.</p>
-                        <p>Application reference: <span className="font-mono font-medium text-miau-brown">APP-{creator.id}-R2-{Date.now().toString(36).toUpperCase().slice(0, 6)}</span></p>
+                        <p>Application reference: <span className="font-mono font-medium text-white">APP-{creator.id}-R2-{Date.now().toString(36).toUpperCase().slice(0, 6)}</span></p>
                       </div>
                       <button
                         onClick={() => setShowOfferingModal(false)}

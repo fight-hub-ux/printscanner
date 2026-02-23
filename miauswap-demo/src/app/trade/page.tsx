@@ -34,14 +34,10 @@ import {
   recentTrades,
   generatePriceData,
   type Creator,
-  type OrderBookEntry,
   type OpenOrder,
 } from '@/lib/dummyData';
 import { useApp } from '@/context/AppContext';
 
-/* ───────────────────────────────────────────
-   Time-range options for the price chart
-   ─────────────────────────────────────────── */
 const timeRanges = [
   { label: '1H', days: 1 / 24 },
   { label: '6H', days: 0.25 },
@@ -51,23 +47,17 @@ const timeRanges = [
   { label: 'ALL', days: 180 },
 ] as const;
 
-/* ───────────────────────────────────────────
-   Score tier badge colour helper
-   ─────────────────────────────────────────── */
 function tierBadge(tier: Creator['scoreTier']) {
   switch (tier) {
     case 'Platinum':
-      return 'bg-gradient-to-r from-indigo-400 to-purple-500 text-white';
+      return 'bg-gradient-to-r from-violet-500 to-purple-600 text-white';
     case 'Gold':
-      return 'bg-gradient-to-r from-amber-400 to-yellow-500 text-white';
+      return 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black';
     case 'Silver':
-      return 'bg-gradient-to-r from-gray-300 to-gray-400 text-gray-800';
+      return 'bg-gradient-to-r from-gray-400 to-gray-500 text-white';
   }
 }
 
-/* ═══════════════════════════════════════════
-   TRADE PAGE
-   ═══════════════════════════════════════════ */
 export default function TradePage() {
   const {
     walletAddress,
@@ -83,7 +73,6 @@ export default function TradePage() {
     setSelectedCreatorSlug,
   } = useApp();
 
-  /* ── Creator selection ─────────────────── */
   const [selectorOpen, setSelectorOpen] = useState(false);
   const [selectorSearch, setSelectorSearch] = useState('');
 
@@ -102,7 +91,6 @@ export default function TradePage() {
     [selectorSearch],
   );
 
-  /* ── Chart state ───────────────────────── */
   const [activeRange, setActiveRange] = useState<string>('7D');
 
   const chartData = useMemo(() => {
@@ -110,14 +98,12 @@ export default function TradePage() {
     return generatePriceData(selectedCreator.currentPrice, range.days, 0.06);
   }, [selectedCreator, activeRange]);
 
-  /* ── Trade form state ──────────────────── */
   const [tradeSide, setTradeSide] = useState<'buy' | 'sell'>('buy');
   const [orderType, setOrderType] = useState<'limit' | 'market'>('limit');
   const [tradePrice, setTradePrice] = useState(selectedCreator.currentPrice.toString());
   const [tradeQuantity, setTradeQuantity] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  /* Recalculate price when creator changes (if user hasn't manually edited) */
   const handleCreatorSelect = useCallback(
     (slug: string) => {
       setSelectedCreatorSlug(slug);
@@ -129,17 +115,15 @@ export default function TradePage() {
     [setSelectedCreatorSlug],
   );
 
-  /* Pre-fill price from order-book click */
   const handleOrderBookPriceClick = useCallback((price: number) => {
     setTradePrice(price.toString());
     setOrderType('limit');
   }, []);
 
-  /* Derived trade values */
   const parsedPrice = parseFloat(tradePrice) || 0;
   const parsedQuantity = parseFloat(tradeQuantity) || 0;
   const rawTotal = parsedPrice * parsedQuantity;
-  const baseFeeRate = 0.0025; // 0.25 %
+  const baseFeeRate = 0.0025;
   const discountMultiplier = 1 - feeDiscount / 100;
   const effectiveFeeRate = baseFeeRate * discountMultiplier;
   const feeAmount = rawTotal * effectiveFeeRate;
@@ -147,7 +131,6 @@ export default function TradePage() {
 
   const lowBalanceWarning = miauBalance < 1100;
 
-  /* ── Submit order ──────────────────────── */
   const handleSubmitOrder = useCallback(async () => {
     if (parsedQuantity <= 0 || (orderType === 'limit' && parsedPrice <= 0)) return;
     if (tradeSide === 'buy' && totalWithFee > miauBalance) {
@@ -156,8 +139,6 @@ export default function TradePage() {
     }
 
     setIsSubmitting(true);
-
-    // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1200));
 
     const newOrder: OpenOrder = {
@@ -173,7 +154,6 @@ export default function TradePage() {
 
     addOrder(newOrder);
 
-    // Deduct balance for buy orders
     if (tradeSide === 'buy') {
       setMiauBalance(Math.round((miauBalance - totalWithFee) * 100) / 100);
     }
@@ -185,19 +165,10 @@ export default function TradePage() {
     setTradeQuantity('');
     setIsSubmitting(false);
   }, [
-    parsedQuantity,
-    parsedPrice,
-    orderType,
-    tradeSide,
-    totalWithFee,
-    miauBalance,
-    selectedCreator,
-    addOrder,
-    setMiauBalance,
-    showToast,
+    parsedQuantity, parsedPrice, orderType, tradeSide, totalWithFee,
+    miauBalance, selectedCreator, addOrder, setMiauBalance, showToast,
   ]);
 
-  /* ── Cancel confirmation ───────────────── */
   const [cancelConfirmId, setCancelConfirmId] = useState<string | null>(null);
 
   const handleCancelOrder = useCallback(
@@ -209,36 +180,30 @@ export default function TradePage() {
         const refund = order.price * (order.quantity - order.filled);
         setMiauBalance(Math.round((miauBalance + refund) * 100) / 100);
       }
-      showToast('Order cancelled successfully.');
+      showToast('Order cancelled.');
     },
     [cancelOrder, openOrders, miauBalance, setMiauBalance, showToast],
   );
 
-  /* ── Order-book depth helpers ──────────── */
   const maxAskQty = useMemo(() => Math.max(...askOrders.map(o => o.quantity)), []);
   const maxBidQty = useMemo(() => Math.max(...bidOrders.map(o => o.quantity)), []);
 
-  /* Last trade price (spread indicator) */
   const lastTradePrice = recentTrades.length > 0 ? recentTrades[0].price : selectedCreator.currentPrice;
   const spreadAsk = askOrders.length > 0 ? askOrders[askOrders.length - 1].price : lastTradePrice;
   const spreadBid = bidOrders.length > 0 ? bidOrders[0].price : lastTradePrice;
   const spreadValue = Math.round((spreadAsk - spreadBid) * 100) / 100;
   const spreadPercent = Math.round((spreadValue / lastTradePrice) * 10000) / 100;
 
-  /* ═══════════════════════════════════════════
-     RENDER
-     ═══════════════════════════════════════════ */
   return (
     <div className="space-y-4">
-      {/* ─── CAT Selector Dropdown ─────────── */}
+      {/* CAT Selector */}
       <div className="relative">
         <button
           onClick={() => setSelectorOpen(!selectorOpen)}
-          className="w-full md:w-auto flex items-center gap-3 bg-white border border-miau-taupe rounded-2xl px-4 py-3 hover:border-miau-pink transition-colors"
+          className="w-full md:w-auto flex items-center gap-3 glass-card rounded-2xl px-5 py-3.5 hover:border-miau-pink/30 transition-all"
         >
-          {/* Creator avatar */}
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0"
+            className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0"
             style={{
               background: `linear-gradient(135deg, ${selectedCreator.gradientFrom}, ${selectedCreator.gradientTo})`,
             }}
@@ -248,28 +213,24 @@ export default function TradePage() {
 
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2">
-              <span className="font-serif font-semibold text-miau-brown">
+              <span className="font-bold text-white">
                 {selectedCreator.catSymbol}
               </span>
-              <span className="text-xs text-miau-rose-brown">/MIAU</span>
-              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${tierBadge(selectedCreator.scoreTier)}`}>
+              <span className="text-sm text-miau-muted">/MIAU</span>
+              <span className={`text-xs px-2 py-0.5 rounded-lg font-bold ${tierBadge(selectedCreator.scoreTier)}`}>
                 {selectedCreator.score}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-sm font-semibold text-miau-brown">
+              <span className="font-mono text-sm font-bold text-white">
                 {selectedCreator.currentPrice.toFixed(2)} MIAU
               </span>
               <span
-                className={`text-xs font-medium flex items-center gap-0.5 ${
+                className={`text-xs font-semibold flex items-center gap-0.5 ${
                   selectedCreator.priceChange24h >= 0 ? 'text-miau-success' : 'text-miau-error'
                 }`}
               >
-                {selectedCreator.priceChange24h >= 0 ? (
-                  <TrendingUp size={12} />
-                ) : (
-                  <TrendingDown size={12} />
-                )}
+                {selectedCreator.priceChange24h >= 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
                 {selectedCreator.priceChange24h >= 0 ? '+' : ''}
                 {selectedCreator.priceChange24h.toFixed(1)}%
               </span>
@@ -278,11 +239,10 @@ export default function TradePage() {
 
           <ChevronDown
             size={18}
-            className={`ml-auto text-miau-rose-brown transition-transform ${selectorOpen ? 'rotate-180' : ''}`}
+            className={`ml-auto text-miau-muted transition-transform ${selectorOpen ? 'rotate-180' : ''}`}
           />
         </button>
 
-        {/* Dropdown */}
         <AnimatePresence>
           {selectorOpen && (
             <motion.div
@@ -290,39 +250,37 @@ export default function TradePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.15 }}
-              className="absolute z-50 top-full left-0 mt-2 w-full md:w-[480px] bg-white border border-miau-taupe rounded-2xl shadow-xl overflow-hidden"
+              className="absolute z-50 top-full left-0 mt-2 w-full md:w-[480px] bg-miau-dark-card border border-miau-dark-border rounded-2xl shadow-2xl overflow-hidden"
             >
-              {/* Search */}
-              <div className="p-3 border-b border-miau-taupe">
-                <div className="flex items-center gap-2 bg-miau-pale rounded-xl px-3 py-2">
-                  <Search size={16} className="text-miau-rose-brown" />
+              <div className="p-3 border-b border-miau-dark-border">
+                <div className="flex items-center gap-2 bg-miau-dark-surface rounded-xl px-3 py-2.5">
+                  <Search size={16} className="text-miau-muted" />
                   <input
                     type="text"
                     value={selectorSearch}
                     onChange={e => setSelectorSearch(e.target.value)}
-                    placeholder="Search creators or CAT symbols..."
-                    className="bg-transparent text-sm text-miau-brown placeholder-miau-rose-brown outline-none w-full"
+                    placeholder="Search creators..."
+                    className="bg-transparent text-sm text-white placeholder-miau-muted outline-none w-full"
                     autoFocus
                   />
                   {selectorSearch && (
                     <button onClick={() => setSelectorSearch('')}>
-                      <X size={14} className="text-miau-rose-brown" />
+                      <X size={14} className="text-miau-muted" />
                     </button>
                   )}
                 </div>
               </div>
 
-              {/* Creator list */}
               <div className="max-h-80 overflow-y-auto">
                 {filteredCreators.length === 0 ? (
-                  <p className="p-4 text-sm text-miau-rose-brown text-center">No creators found.</p>
+                  <p className="p-4 text-sm text-miau-muted text-center">No creators found.</p>
                 ) : (
                   filteredCreators.map(c => (
                     <button
                       key={c.id}
                       onClick={() => handleCreatorSelect(c.slug)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-miau-pale transition-colors ${
-                        c.slug === selectedCreatorSlug ? 'bg-miau-blush' : ''
+                      className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-miau-dark-hover transition-colors ${
+                        c.slug === selectedCreatorSlug ? 'bg-miau-dark-surface' : ''
                       }`}
                     >
                       <div
@@ -335,19 +293,19 @@ export default function TradePage() {
                       </div>
                       <div className="flex flex-col items-start flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm text-miau-brown">{c.name}</span>
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${tierBadge(c.scoreTier)}`}>
+                          <span className="font-semibold text-sm text-white">{c.name}</span>
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-bold ${tierBadge(c.scoreTier)}`}>
                             {c.score}
                           </span>
                         </div>
-                        <span className="text-xs text-miau-rose-brown">{c.catSymbol}/MIAU</span>
+                        <span className="text-xs text-miau-muted">{c.catSymbol}/MIAU</span>
                       </div>
                       <div className="flex flex-col items-end shrink-0">
-                        <span className="font-mono text-sm font-semibold text-miau-brown">
+                        <span className="font-mono text-sm font-bold text-white">
                           {c.currentPrice.toFixed(2)}
                         </span>
                         <span
-                          className={`text-xs font-medium ${
+                          className={`text-xs font-semibold ${
                             c.priceChange24h >= 0 ? 'text-miau-success' : 'text-miau-error'
                           }`}
                         >
@@ -363,65 +321,59 @@ export default function TradePage() {
           )}
         </AnimatePresence>
 
-        {/* Backdrop for closing */}
         {selectorOpen && (
           <div className="fixed inset-0 z-40" onClick={() => setSelectorOpen(false)} />
         )}
       </div>
 
-      {/* ─── Three-Column Grid ─────────────── */}
+      {/* Three-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* ═══════════════════════════════════════
-           LEFT COLUMN — Order Book
-           ═══════════════════════════════════════ */}
+        {/* LEFT — Order Book */}
         <div className="lg:col-span-3">
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            {/* Header */}
-            <div className="px-4 py-3 border-b border-miau-taupe flex items-center justify-between">
-              <h2 className="font-serif font-semibold text-miau-brown">Order Book</h2>
-              <span className="text-xs text-miau-rose-brown font-mono">
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-miau-dark-border flex items-center justify-between">
+              <h2 className="font-bold text-white">Order Book</h2>
+              <span className="text-xs text-miau-muted font-mono">
                 {selectedCreator.catSymbol}/MIAU
               </span>
             </div>
 
-            {/* Column labels */}
-            <div className="grid grid-cols-3 px-4 py-2 text-[11px] text-miau-rose-brown font-medium border-b border-miau-taupe/50">
-              <span>Price (MIAU)</span>
+            <div className="grid grid-cols-3 px-4 py-2 text-[11px] text-miau-muted font-semibold border-b border-miau-dark-border/50">
+              <span>Price</span>
               <span className="text-right">Qty</span>
               <span className="text-right">Total</span>
             </div>
 
-            {/* ASK side — reversed so lowest price is near the spread */}
+            {/* ASK side */}
             <div className="divide-y divide-transparent">
               {[...askOrders].reverse().map((order, idx) => (
                 <button
                   key={`ask-${idx}`}
                   onClick={() => handleOrderBookPriceClick(order.price)}
-                  className="relative w-full grid grid-cols-3 px-4 py-1.5 text-xs font-mono hover:bg-red-50/80 transition-colors cursor-pointer"
+                  className="relative w-full grid grid-cols-3 px-4 py-1.5 text-xs font-mono hover:bg-miau-error/5 transition-colors cursor-pointer"
                 >
-                  {/* Depth bar */}
                   <div
-                    className="absolute inset-y-0 right-0 bg-red-100/60"
+                    className="absolute inset-y-0 right-0 bg-miau-error/10"
                     style={{ width: `${(order.quantity / maxAskQty) * 100}%` }}
                   />
-                  <span className="relative text-miau-error font-medium">{order.price.toFixed(1)}</span>
-                  <span className="relative text-right text-miau-brown">{order.quantity}</span>
-                  <span className="relative text-right text-miau-rose-brown">
+                  <span className="relative text-miau-error font-semibold">{order.price.toFixed(1)}</span>
+                  <span className="relative text-right text-miau-light">{order.quantity}</span>
+                  <span className="relative text-right text-miau-muted">
                     {order.total.toLocaleString()}
                   </span>
                 </button>
               ))}
             </div>
 
-            {/* Spread indicator */}
-            <div className="px-4 py-2.5 bg-miau-pale/60 border-y border-miau-taupe/50 flex items-center justify-between">
+            {/* Spread */}
+            <div className="px-4 py-2.5 bg-miau-dark-surface/60 border-y border-miau-dark-border/50 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ArrowUpDown size={14} className="text-miau-rose-brown" />
-                <span className="font-mono font-bold text-sm text-miau-brown">
+                <ArrowUpDown size={14} className="text-miau-muted" />
+                <span className="font-mono font-bold text-base text-white">
                   {lastTradePrice.toFixed(2)}
                 </span>
                 <span
-                  className={`text-xs font-medium ${
+                  className={`text-xs font-semibold ${
                     selectedCreator.priceChange24h >= 0 ? 'text-miau-success' : 'text-miau-error'
                   }`}
                 >
@@ -429,10 +381,10 @@ export default function TradePage() {
                   {selectedCreator.priceChange24h.toFixed(1)}%
                 </span>
               </div>
-              <div className="flex items-center gap-1 text-[10px] text-miau-rose-brown">
+              <div className="flex items-center gap-1 text-[10px] text-miau-muted">
                 <span>Spread</span>
-                <span className="font-mono font-medium">{spreadValue.toFixed(2)}</span>
-                <span className="text-miau-grey">({spreadPercent}%)</span>
+                <span className="font-mono font-semibold">{spreadValue.toFixed(2)}</span>
+                <span>({spreadPercent}%)</span>
               </div>
             </div>
 
@@ -442,16 +394,15 @@ export default function TradePage() {
                 <button
                   key={`bid-${idx}`}
                   onClick={() => handleOrderBookPriceClick(order.price)}
-                  className="relative w-full grid grid-cols-3 px-4 py-1.5 text-xs font-mono hover:bg-pink-50/80 transition-colors cursor-pointer"
+                  className="relative w-full grid grid-cols-3 px-4 py-1.5 text-xs font-mono hover:bg-miau-success/5 transition-colors cursor-pointer"
                 >
-                  {/* Depth bar */}
                   <div
-                    className="absolute inset-y-0 right-0 bg-pink-100/60"
+                    className="absolute inset-y-0 right-0 bg-miau-success/10"
                     style={{ width: `${(order.quantity / maxBidQty) * 100}%` }}
                   />
-                  <span className="relative text-miau-success font-medium">{order.price.toFixed(1)}</span>
-                  <span className="relative text-right text-miau-brown">{order.quantity}</span>
-                  <span className="relative text-right text-miau-rose-brown">
+                  <span className="relative text-miau-success font-semibold">{order.price.toFixed(1)}</span>
+                  <span className="relative text-right text-miau-light">{order.quantity}</span>
+                  <span className="relative text-right text-miau-muted">
                     {order.total.toLocaleString()}
                   </span>
                 </button>
@@ -460,27 +411,23 @@ export default function TradePage() {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════
-           CENTRE COLUMN — Chart + Trade Entry
-           ═══════════════════════════════════════ */}
+        {/* CENTRE — Chart + Trade */}
         <div className="lg:col-span-6 space-y-4">
-          {/* ── Price Chart ──────────────────── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-miau-taupe flex items-center justify-between flex-wrap gap-2">
-              <h2 className="font-serif font-semibold text-miau-brown">
+          {/* Price Chart */}
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="px-5 py-3 border-b border-miau-dark-border flex items-center justify-between flex-wrap gap-2">
+              <h2 className="font-bold text-white">
                 {selectedCreator.catSymbol} Price
               </h2>
-
-              {/* Time range buttons */}
               <div className="flex items-center gap-1">
                 {timeRanges.map(r => (
                   <button
                     key={r.label}
                     onClick={() => setActiveRange(r.label)}
-                    className={`px-3 py-1 text-xs font-medium rounded-lg transition-colors ${
+                    className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                       activeRange === r.label
-                        ? 'bg-miau-pink text-white'
-                        : 'text-miau-rose-brown hover:bg-miau-pale'
+                        ? 'bg-miau-pink text-white shadow-glow'
+                        : 'text-miau-muted hover:bg-miau-dark-hover hover:text-white'
                     }`}
                   >
                     {r.label}
@@ -489,20 +436,19 @@ export default function TradePage() {
               </div>
             </div>
 
-            {/* Area chart */}
             <div className="px-2 pt-4 pb-1">
               <ResponsiveContainer width="100%" height={240}>
                 <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#FFB2D0" stopOpacity={0.5} />
-                      <stop offset="100%" stopColor="#FFB2D0" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#FF2D78" stopOpacity={0.3} />
+                      <stop offset="100%" stopColor="#FF2D78" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#F5EDE8" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2A2A4A" vertical={false} />
                   <XAxis
                     dataKey="time"
-                    tick={{ fontSize: 10, fill: '#8B6B61' }}
+                    tick={{ fontSize: 10, fill: '#8888AA' }}
                     tickLine={false}
                     axisLine={false}
                     interval="preserveStartEnd"
@@ -510,7 +456,7 @@ export default function TradePage() {
                   />
                   <YAxis
                     domain={['auto', 'auto']}
-                    tick={{ fontSize: 10, fill: '#8B6B61' }}
+                    tick={{ fontSize: 10, fill: '#8888AA' }}
                     tickLine={false}
                     axisLine={false}
                     width={45}
@@ -518,29 +464,29 @@ export default function TradePage() {
                   />
                   <Tooltip
                     contentStyle={{
-                      background: '#fff',
-                      border: '1px solid #F5EDE8',
+                      background: '#141428',
+                      border: '1px solid #2A2A4A',
                       borderRadius: '12px',
                       fontSize: '12px',
                       fontFamily: 'monospace',
+                      color: '#FFFFFF',
                     }}
-                    labelStyle={{ color: '#8B6B61', fontSize: '11px' }}
+                    labelStyle={{ color: '#8888AA', fontSize: '11px' }}
                     formatter={(value: any) => [`${(value ?? 0).toFixed(2)} MIAU`, 'Price']}
                   />
                   <Area
                     type="monotone"
                     dataKey="price"
-                    stroke="#C4456B"
+                    stroke="#FF2D78"
                     strokeWidth={2}
                     fill="url(#priceGradient)"
                     dot={false}
-                    activeDot={{ r: 4, fill: '#C4456B', strokeWidth: 0 }}
+                    activeDot={{ r: 4, fill: '#FF2D78', strokeWidth: 0 }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
 
-            {/* Volume bars */}
             <div className="px-2 pb-3">
               <ResponsiveContainer width="100%" height={60}>
                 <BarChart data={chartData} margin={{ top: 0, right: 10, left: 0, bottom: 0 }}>
@@ -548,80 +494,81 @@ export default function TradePage() {
                   <YAxis hide />
                   <Tooltip
                     contentStyle={{
-                      background: '#fff',
-                      border: '1px solid #F5EDE8',
+                      background: '#141428',
+                      border: '1px solid #2A2A4A',
                       borderRadius: '12px',
                       fontSize: '12px',
                       fontFamily: 'monospace',
+                      color: '#FFFFFF',
                     }}
                     formatter={(value: any) => [value ?? 0, 'Volume']}
-                    labelStyle={{ color: '#8B6B61', fontSize: '11px' }}
+                    labelStyle={{ color: '#8888AA', fontSize: '11px' }}
                   />
-                  <Bar dataKey="volume" fill="#FFB2D0" opacity={0.45} radius={[2, 2, 0, 0]} />
+                  <Bar dataKey="volume" fill="#FF2D78" opacity={0.3} radius={[2, 2, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-          {/* ── Trade Entry Panel ────────────── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-miau-taupe">
-              <h2 className="font-serif font-semibold text-miau-brown">Place Order</h2>
+          {/* Trade Entry Panel */}
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="px-5 py-3 border-b border-miau-dark-border">
+              <h2 className="font-bold text-white">Place Order</h2>
             </div>
 
-            <div className="p-4 space-y-4">
-              {/* BUY / SELL toggle */}
+            <div className="p-5 space-y-4">
+              {/* BUY / SELL */}
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => setTradeSide('buy')}
-                  className={`py-2.5 rounded-xl font-semibold text-sm transition-colors ${
+                  className={`py-3 rounded-xl font-bold text-sm transition-all ${
                     tradeSide === 'buy'
-                      ? 'bg-miau-success text-white'
-                      : 'bg-miau-pale text-miau-rose-brown hover:bg-miau-blush'
+                      ? 'bg-miau-success text-black shadow-glow-green'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
                   }`}
                 >
                   BUY
                 </button>
                 <button
                   onClick={() => setTradeSide('sell')}
-                  className={`py-2.5 rounded-xl font-semibold text-sm transition-colors ${
+                  className={`py-3 rounded-xl font-bold text-sm transition-all ${
                     tradeSide === 'sell'
                       ? 'bg-miau-error text-white'
-                      : 'bg-miau-pale text-miau-rose-brown hover:bg-miau-blush'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
                   }`}
                 >
                   SELL
                 </button>
               </div>
 
-              {/* LIMIT / MARKET toggle */}
+              {/* LIMIT / MARKET */}
               <div className="flex gap-2">
                 <button
                   onClick={() => setOrderType('limit')}
-                  className={`flex-1 py-2 rounded-xl text-xs font-semibold transition-colors ${
+                  className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     orderType === 'limit'
-                      ? 'bg-miau-brown text-white'
-                      : 'bg-miau-pale text-miau-rose-brown hover:bg-miau-blush'
+                      ? 'bg-white text-miau-dark'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
                   }`}
                 >
                   LIMIT
                 </button>
                 <button
                   onClick={() => setOrderType('market')}
-                  className={`flex-1 py-2 rounded-xl text-xs font-semibold transition-colors ${
+                  className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     orderType === 'market'
-                      ? 'bg-miau-brown text-white'
-                      : 'bg-miau-pale text-miau-rose-brown hover:bg-miau-blush'
+                      ? 'bg-white text-miau-dark'
+                      : 'bg-miau-dark-surface text-miau-muted hover:bg-miau-dark-hover hover:text-white'
                   }`}
                 >
                   MARKET
                 </button>
               </div>
 
-              {/* Price field (only for limit orders) */}
+              {/* Price field */}
               {orderType === 'limit' && (
                 <div>
-                  <label className="block text-xs text-miau-rose-brown mb-1.5 font-medium">
+                  <label className="block text-xs text-miau-muted mb-2 font-semibold">
                     Price (MIAU)
                   </label>
                   <input
@@ -630,24 +577,24 @@ export default function TradePage() {
                     min="0"
                     value={tradePrice}
                     onChange={e => setTradePrice(e.target.value)}
-                    className="w-full bg-miau-pale border border-miau-taupe rounded-xl px-4 py-2.5 font-mono text-sm text-miau-brown focus:outline-none focus:border-miau-pink transition-colors"
+                    className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-miau-pink/50 focus:ring-1 focus:ring-miau-pink/30 transition-all"
                     placeholder="0.00"
                   />
                 </div>
               )}
 
               {orderType === 'market' && (
-                <div className="bg-miau-pale rounded-xl px-4 py-2.5 flex items-center justify-between">
-                  <span className="text-xs text-miau-rose-brown font-medium">Market Price</span>
-                  <span className="font-mono text-sm font-semibold text-miau-brown">
+                <div className="bg-miau-dark-surface rounded-xl px-4 py-3 flex items-center justify-between border border-miau-dark-border">
+                  <span className="text-xs text-miau-muted font-semibold">Market Price</span>
+                  <span className="font-mono text-sm font-bold text-white">
                     {selectedCreator.currentPrice.toFixed(2)} MIAU
                   </span>
                 </div>
               )}
 
-              {/* Quantity field */}
+              {/* Quantity */}
               <div>
-                <label className="block text-xs text-miau-rose-brown mb-1.5 font-medium">
+                <label className="block text-xs text-miau-muted mb-2 font-semibold">
                   Quantity ({selectedCreator.catSymbol})
                 </label>
                 <input
@@ -656,28 +603,28 @@ export default function TradePage() {
                   min="0"
                   value={tradeQuantity}
                   onChange={e => setTradeQuantity(e.target.value)}
-                  className="w-full bg-miau-pale border border-miau-taupe rounded-xl px-4 py-2.5 font-mono text-sm text-miau-brown focus:outline-none focus:border-miau-pink transition-colors"
+                  className="w-full bg-miau-dark-surface border border-miau-dark-border rounded-xl px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-miau-pink/50 focus:ring-1 focus:ring-miau-pink/30 transition-all"
                   placeholder="0"
                 />
               </div>
 
-              {/* Auto-calculated total + fee breakdown */}
+              {/* Fee breakdown */}
               {parsedQuantity > 0 && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="bg-miau-pale/60 rounded-xl p-3 space-y-2 text-xs"
+                  className="bg-miau-dark-surface/60 rounded-xl p-4 space-y-2 text-xs border border-miau-dark-border"
                 >
                   <div className="flex justify-between">
-                    <span className="text-miau-rose-brown">Subtotal</span>
-                    <span className="font-mono text-miau-brown font-medium">
+                    <span className="text-miau-muted">Subtotal</span>
+                    <span className="font-mono text-white font-semibold">
                       {rawTotal.toFixed(2)} MIAU
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-miau-rose-brown flex items-center gap-1">
-                      Fee (0.25% secondary)
+                    <span className="text-miau-muted flex items-center gap-1">
+                      Fee (0.25%)
                       {feeDiscount > 0 && (
                         <span className="inline-flex items-center gap-0.5 text-[10px] text-miau-success">
                           <Shield size={10} />
@@ -685,45 +632,43 @@ export default function TradePage() {
                         </span>
                       )}
                     </span>
-                    <span className="font-mono text-miau-brown font-medium">
+                    <span className="font-mono text-white font-semibold">
                       {feeAmount.toFixed(2)} MIAU
                     </span>
                   </div>
-                  <div className="border-t border-miau-taupe pt-2 flex justify-between font-semibold">
-                    <span className="text-miau-brown">
+                  <div className="border-t border-miau-dark-border pt-2 flex justify-between font-bold">
+                    <span className="text-white">
                       {tradeSide === 'buy' ? 'Total Cost' : 'You Receive'}
                     </span>
-                    <span className="font-mono text-miau-brown">{totalWithFee.toFixed(2)} MIAU</span>
+                    <span className="font-mono text-white">{totalWithFee.toFixed(2)} MIAU</span>
                   </div>
                 </motion.div>
               )}
 
-              {/* Balance display */}
+              {/* Balance */}
               <div className="flex items-center justify-between text-xs">
-                <span className="text-miau-rose-brown">Available Balance</span>
-                <span className="font-mono font-semibold text-miau-brown">
+                <span className="text-miau-muted font-semibold">Available</span>
+                <span className="font-mono font-bold text-white">
                   {miauBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MIAU
                 </span>
               </div>
 
-              {/* Low balance warning */}
               {lowBalanceWarning && (
-                <div className="flex items-start gap-2 bg-miau-warning/10 border border-miau-warning/30 rounded-xl px-3 py-2.5">
+                <div className="flex items-start gap-2 bg-miau-warning/10 border border-miau-warning/30 rounded-xl px-4 py-3">
                   <AlertTriangle size={16} className="text-miau-warning shrink-0 mt-0.5" />
-                  <p className="text-xs text-miau-warning font-medium leading-relaxed">
-                    Your MIAU balance is below 1,100. If it drops below 1,000 you will lose CDEX trading
-                    access. Consider topping up soon.
+                  <p className="text-xs text-miau-warning font-semibold leading-relaxed">
+                    Low balance — below 1,000 MIAU will disable trading access.
                   </p>
                 </div>
               )}
 
-              {/* Submit button */}
+              {/* Submit */}
               <button
                 onClick={handleSubmitOrder}
                 disabled={isSubmitting || parsedQuantity <= 0 || (orderType === 'limit' && parsedPrice <= 0)}
-                className={`w-full py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed ${
+                className={`w-full py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed ${
                   tradeSide === 'buy'
-                    ? 'bg-miau-success hover:bg-miau-success/90 text-white'
+                    ? 'bg-miau-success hover:bg-miau-success/90 text-black shadow-glow-green'
                     : 'bg-miau-error hover:bg-miau-error/90 text-white'
                 }`}
               >
@@ -742,45 +687,42 @@ export default function TradePage() {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════
-           RIGHT COLUMN — Recent Trades + Open Orders
-           ═══════════════════════════════════════ */}
+        {/* RIGHT — Recent Trades + Open Orders */}
         <div className="lg:col-span-3 space-y-4">
-          {/* ── Recent Trades ────────────────── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-miau-taupe">
-              <h2 className="font-serif font-semibold text-miau-brown">Recent Trades</h2>
+          {/* Recent Trades */}
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-miau-dark-border">
+              <h2 className="font-bold text-white">Recent Trades</h2>
             </div>
 
-            {/* Column labels */}
-            <div className="grid grid-cols-4 px-4 py-2 text-[11px] text-miau-rose-brown font-medium border-b border-miau-taupe/50">
+            <div className="grid grid-cols-4 px-4 py-2 text-[11px] text-miau-muted font-semibold border-b border-miau-dark-border/50">
               <span>Time</span>
               <span className="text-right">Price</span>
               <span className="text-right">Qty</span>
               <span className="text-right">Side</span>
             </div>
 
-            <div className="divide-y divide-miau-taupe/30">
+            <div className="divide-y divide-miau-dark-border/30">
               {recentTrades.slice(0, 15).map(trade => (
                 <div
                   key={trade.id}
-                  className="grid grid-cols-4 px-4 py-1.5 text-xs font-mono hover:bg-miau-pale/40 transition-colors"
+                  className="grid grid-cols-4 px-4 py-1.5 text-xs font-mono hover:bg-miau-dark-hover/40 transition-colors"
                 >
-                  <span className="text-miau-rose-brown">{trade.time}</span>
+                  <span className="text-miau-muted">{trade.time}</span>
                   <span
-                    className={`text-right font-medium ${
+                    className={`text-right font-semibold ${
                       trade.side === 'buy' ? 'text-miau-success' : 'text-miau-error'
                     }`}
                   >
                     {trade.price.toFixed(1)}
                   </span>
-                  <span className="text-right text-miau-brown">{trade.quantity}</span>
+                  <span className="text-right text-miau-light">{trade.quantity}</span>
                   <span className="text-right">
                     <span
-                      className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${
+                      className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-bold uppercase ${
                         trade.side === 'buy'
-                          ? 'bg-miau-success/10 text-miau-success'
-                          : 'bg-miau-error/10 text-miau-error'
+                          ? 'bg-miau-success/15 text-miau-success'
+                          : 'bg-miau-error/15 text-miau-error'
                       }`}
                     >
                       {trade.side}
@@ -791,48 +733,46 @@ export default function TradePage() {
             </div>
           </div>
 
-          {/* ── My Open Orders ───────────────── */}
-          <div className="bg-white border border-miau-taupe rounded-2xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-miau-taupe flex items-center justify-between">
-              <h2 className="font-serif font-semibold text-miau-brown">My Open Orders</h2>
-              <span className="text-xs text-miau-rose-brown font-mono">{openOrders.length} active</span>
+          {/* Open Orders */}
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-miau-dark-border flex items-center justify-between">
+              <h2 className="font-bold text-white">My Orders</h2>
+              <span className="text-xs text-miau-muted font-mono">{openOrders.length} active</span>
             </div>
 
             {openOrders.length === 0 ? (
               <div className="px-4 py-8 text-center">
-                <p className="text-sm text-miau-rose-brown">No open orders.</p>
-                <p className="text-xs text-miau-grey mt-1">Place an order to get started.</p>
+                <p className="text-sm text-miau-muted">No open orders.</p>
+                <p className="text-xs text-miau-muted/60 mt-1">Place an order to get started.</p>
               </div>
             ) : (
-              <div className="divide-y divide-miau-taupe/30">
+              <div className="divide-y divide-miau-dark-border/30">
                 {openOrders.map(order => (
                   <div key={order.id} className="px-4 py-3 space-y-2">
-                    {/* Order header row */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span
-                          className={`text-xs font-semibold px-2 py-0.5 rounded-lg ${
+                          className={`text-xs font-bold px-2 py-0.5 rounded-lg ${
                             order.side === 'Buy'
-                              ? 'bg-miau-success/10 text-miau-success'
-                              : 'bg-miau-error/10 text-miau-error'
+                              ? 'bg-miau-success/15 text-miau-success'
+                              : 'bg-miau-error/15 text-miau-error'
                           }`}
                         >
                           {order.side}
                         </span>
-                        <span className="text-xs font-medium text-miau-brown">{order.pair}</span>
-                        <span className="text-[10px] text-miau-rose-brown bg-miau-pale px-1.5 py-0.5 rounded">
+                        <span className="text-xs font-semibold text-white">{order.pair}</span>
+                        <span className="text-[10px] text-miau-muted bg-miau-dark-surface px-1.5 py-0.5 rounded">
                           {order.type}
                         </span>
                       </div>
 
-                      {/* Status badge */}
                       <span
-                        className={`text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
                           order.status === 'Pending'
-                            ? 'bg-amber-100 text-amber-700'
+                            ? 'bg-miau-warning/15 text-miau-warning'
                             : order.status === 'Partial'
-                              ? 'bg-blue-100 text-blue-700'
-                              : 'bg-green-100 text-green-700'
+                              ? 'bg-blue-500/15 text-blue-400'
+                              : 'bg-miau-success/15 text-miau-success'
                         }`}
                       >
                         {order.status === 'Pending' && <Clock size={10} />}
@@ -842,66 +782,63 @@ export default function TradePage() {
                       </span>
                     </div>
 
-                    {/* Order details */}
                     <div className="grid grid-cols-3 gap-2 text-xs">
                       <div>
-                        <span className="text-miau-rose-brown block text-[10px]">Price</span>
-                        <span className="font-mono font-medium text-miau-brown">
+                        <span className="text-miau-muted block text-[10px]">Price</span>
+                        <span className="font-mono font-semibold text-white">
                           {order.price.toFixed(2)}
                         </span>
                       </div>
                       <div>
-                        <span className="text-miau-rose-brown block text-[10px]">Qty</span>
-                        <span className="font-mono font-medium text-miau-brown">{order.quantity}</span>
+                        <span className="text-miau-muted block text-[10px]">Qty</span>
+                        <span className="font-mono font-semibold text-white">{order.quantity}</span>
                       </div>
                       <div>
-                        <span className="text-miau-rose-brown block text-[10px]">Filled</span>
-                        <span className="font-mono font-medium text-miau-brown">
+                        <span className="text-miau-muted block text-[10px]">Filled</span>
+                        <span className="font-mono font-semibold text-white">
                           {order.filled}/{order.quantity}
                         </span>
                       </div>
                     </div>
 
-                    {/* Fill progress bar */}
-                    <div className="w-full bg-miau-taupe/40 rounded-full h-1.5">
+                    <div className="w-full bg-miau-dark-border/40 rounded-full h-1.5">
                       <div
                         className={`h-1.5 rounded-full transition-all ${
                           order.status === 'Filled'
                             ? 'bg-miau-success'
                             : order.status === 'Partial'
                               ? 'bg-blue-400'
-                              : 'bg-miau-taupe'
+                              : 'bg-miau-dark-border'
                         }`}
                         style={{ width: `${(order.filled / order.quantity) * 100}%` }}
                       />
                     </div>
 
-                    {/* Cancel button */}
                     {order.status !== 'Filled' && (
                       <>
                         {cancelConfirmId === order.id ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-miau-error font-medium">Cancel this order?</span>
+                            <span className="text-xs text-miau-error font-semibold">Cancel?</span>
                             <button
                               onClick={() => handleCancelOrder(order.id)}
-                              className="text-xs bg-miau-error text-white px-3 py-1 rounded-lg font-medium hover:bg-miau-error/90 transition-colors"
+                              className="text-xs bg-miau-error text-white px-3 py-1 rounded-lg font-bold hover:bg-miau-error/90 transition-colors"
                             >
-                              Confirm
+                              Yes
                             </button>
                             <button
                               onClick={() => setCancelConfirmId(null)}
-                              className="text-xs bg-miau-pale text-miau-rose-brown px-3 py-1 rounded-lg font-medium hover:bg-miau-taupe transition-colors"
+                              className="text-xs bg-miau-dark-surface text-miau-muted px-3 py-1 rounded-lg font-semibold hover:bg-miau-dark-hover transition-colors"
                             >
-                              Keep
+                              No
                             </button>
                           </div>
                         ) : (
                           <button
                             onClick={() => setCancelConfirmId(order.id)}
-                            className="flex items-center gap-1 text-xs text-miau-error/70 hover:text-miau-error font-medium transition-colors"
+                            className="flex items-center gap-1 text-xs text-miau-error/70 hover:text-miau-error font-semibold transition-colors"
                           >
                             <XCircle size={12} />
-                            Cancel Order
+                            Cancel
                           </button>
                         )}
                       </>
