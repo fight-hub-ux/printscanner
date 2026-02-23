@@ -10,25 +10,52 @@ const config: Config = {
     extend: {
       colors: {
         miau: {
-          pink: '#FFB2D0',
+          // Core neon accent
+          pink: '#FF2D78',
+          'pink-soft': '#FF6B9D',
           rose: '#E8739A',
-          dark: '#C4456B',
-          cream: '#FDF6F0',
-          blush: '#FEE8EF',
-          pale: '#FFF0F5',
-          taupe: '#F5EDE8',
-          brown: '#2C1810',
-          'rose-brown': '#8B6B61',
-          grey: '#6B7280',
-          success: '#10B981',
-          warning: '#F59E0B',
-          error: '#EF4444',
+          // Dark backgrounds
+          dark: '#0B0B1A',
+          'dark-card': '#141428',
+          'dark-surface': '#1A1A35',
+          'dark-border': '#2A2A4A',
+          'dark-hover': '#22223E',
+          // Text
+          white: '#FFFFFF',
+          'light': '#E0E0F0',
+          'muted': '#8888AA',
+          'dim': '#555577',
+          // Legacy light colors (kept for gradients/accents)
+          cream: '#0B0B1A',
+          blush: '#141428',
+          pale: '#1A1A35',
+          taupe: '#2A2A4A',
+          brown: '#FFFFFF',
+          'rose-brown': '#8888AA',
+          grey: '#666688',
+          // Semantic
+          success: '#00F5A0',
+          warning: '#FFB800',
+          error: '#FF4466',
+          // Neon glow
+          'glow-pink': '#FF2D7840',
+          'glow-green': '#00F5A040',
         },
       },
       fontFamily: {
-        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
         sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
+      borderRadius: {
+        '3xl': '1.5rem',
+        '4xl': '2rem',
+      },
+      boxShadow: {
+        'glow': '0 0 20px rgba(255, 45, 120, 0.15)',
+        'glow-lg': '0 0 40px rgba(255, 45, 120, 0.2)',
+        'glow-green': '0 0 20px rgba(0, 245, 160, 0.15)',
+        'card': '0 4px 24px rgba(0, 0, 0, 0.3)',
+        'card-hover': '0 8px 40px rgba(0, 0, 0, 0.4)',
       },
     },
   },

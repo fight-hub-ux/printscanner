@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #FDF6F0;
-  --foreground: #2C1810;
+  --background: #0B0B1A;
+  --foreground: #FFFFFF;
 }
 
 body {
@@ -19,23 +19,23 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #FDF6F0;
+  background: #0B0B1A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #F5EDE8;
+  background: #2A2A4A;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #E8739A;
+  background: #FF2D78;
 }
 
 /* Custom animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -44,7 +44,7 @@ body {
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.3s ease-out;
+  animation: fadeInUp 0.4s ease-out;
 }
 
 @keyframes pulse-soft {
@@ -54,4 +54,34 @@ body {
 
 .animate-pulse-soft {
   animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 45, 120, 0.15); }
+  50% { box-shadow: 0 0 30px rgba(255, 45, 120, 0.25); }
+}
+
+.animate-glow {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Neon text glow */
+.text-glow {
+  text-shadow: 0 0 10px rgba(255, 45, 120, 0.5), 0 0 20px rgba(255, 45, 120, 0.3);
+}
+
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(0, 245, 160, 0.5), 0 0 20px rgba(0, 245, 160, 0.3);
+}
+
+/* Glass card effect */
+.glass-card {
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(26, 26, 53, 0.8));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(42, 42, 74, 0.6);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 45, 120, 0.3);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 45, 120, 0.1);
 }
