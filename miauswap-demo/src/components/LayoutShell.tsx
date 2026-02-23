@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { BarChart3, Search, Briefcase, Coins, Bell, Wallet, Menu, X, Sun, Moon } from 'lucide-react';
+import { BarChart3, Search, Briefcase, Coins, Bell, Wallet, Menu, X, Sun, Moon, Rocket } from 'lucide-react';
 import Image from 'next/image';
 import { useApp } from '@/context/AppContext';
 import NotificationDrawer from './NotificationDrawer';
@@ -11,6 +11,7 @@ import NotificationDrawer from './NotificationDrawer';
 const navItems = [
   { href: '/trade', label: 'Trade', icon: BarChart3 },
   { href: '/discover', label: 'Discover', icon: Search },
+  { href: '/launches', label: 'Launches', icon: Rocket },
   { href: '/portfolio', label: 'Portfolio', icon: Briefcase },
   { href: '/wallet', label: 'Wallet', icon: Coins },
 ];
