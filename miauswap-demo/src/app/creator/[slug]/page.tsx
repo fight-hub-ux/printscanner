@@ -28,9 +28,7 @@ import {
   Eye,
   Bookmark,
   ExternalLink,
-  ChevronRight,
   X,
-  Lock,
   DollarSign,
   BarChart3,
   Coins,
@@ -140,7 +138,6 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
   /* ── Creator View: Offering form state ──── */
   const [offeringFounders, setOfferingFounders] = useState('5');
   const [offeringLimited, setOfferingLimited] = useState('25');
-  const [offeringStandard, setOfferingStandard] = useState('50');
   const [listingTier, setListingTier] = useState('Standard');
   const [capitalUse, setCapitalUse] = useState('');
   const [growthProjections, setGrowthProjections] = useState('');
