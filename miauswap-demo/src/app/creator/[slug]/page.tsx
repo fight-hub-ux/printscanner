@@ -380,7 +380,6 @@ export default function CreatorProfilePage({ params }: { params: { slug: string 
                       fontSize: '12px',
                       color: '#FFFFFF',
                       fontFamily: 'monospace',
-                      color: '#FFFFFF',
                     }}
                     labelStyle={{ color: '#8888AA', fontSize: '11px' }}
                     formatter={(value: any) => [`${(value ?? 0).toFixed(2)} MIAU`, 'Price']}
