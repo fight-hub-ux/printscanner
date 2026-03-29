@@ -26,6 +26,7 @@ export interface Creator {
   gradientFrom: string;
   gradientTo: string;
   tagline: string;
+  thumbnail: string;
 }
 
 export const creators: Creator[] = [
@@ -55,6 +56,7 @@ export const creators: Creator[] = [
     gradientFrom: '#FFB2D0',
     gradientTo: '#E8739A',
     tagline: 'Lifestyle & Wellness Creator | 3,200 active subscribers | $12,400 avg monthly revenue',
+    thumbnail: '/Nella Rose.png',
   },
   {
     id: '2',
@@ -82,6 +84,7 @@ export const creators: Creator[] = [
     gradientFrom: '#C4456B',
     gradientTo: '#8B6B61',
     tagline: 'Fashion & Beauty Creator | 1,800 active subscribers | $8,200 avg monthly revenue',
+    thumbnail: '/Jade Valentine.png',
   },
   {
     id: '3',
@@ -109,6 +112,7 @@ export const creators: Creator[] = [
     gradientFrom: '#E8739A',
     gradientTo: '#C4456B',
     tagline: 'Fitness & Lifestyle Creator | 5,400 active subscribers | $21,000 avg monthly revenue',
+    thumbnail: '/Mia Storm.png',
   },
   {
     id: '4',
@@ -136,6 +140,7 @@ export const creators: Creator[] = [
     gradientFrom: '#F5EDE8',
     gradientTo: '#FFB2D0',
     tagline: 'Art & Photography Creator | 920 active subscribers | $4,100 avg monthly revenue',
+    thumbnail: '/Luna Skye.png',
   },
   {
     id: '5',
@@ -163,6 +168,7 @@ export const creators: Creator[] = [
     gradientFrom: '#C4456B',
     gradientTo: '#FFB2D0',
     tagline: 'Entertainment & Lifestyle Creator | 8,200 active subscribers | $32,000 avg monthly revenue',
+    thumbnail: '/Coco Blaze.png',
   },
   {
     id: '6',
@@ -190,6 +196,7 @@ export const creators: Creator[] = [
     gradientFrom: '#E8739A',
     gradientTo: '#F5EDE8',
     tagline: 'Music & Dance Creator | 1,400 active subscribers | $6,800 avg monthly revenue',
+    thumbnail: '/Ivy Monroe.png',
   },
   {
     id: '7',
@@ -217,6 +224,7 @@ export const creators: Creator[] = [
     gradientFrom: '#FFB2D0',
     gradientTo: '#C4456B',
     tagline: 'Travel & Adventure Creator | 2,100 active subscribers | $9,500 avg monthly revenue',
+    thumbnail: '/Nova Reign.png',
   },
   {
     id: '8',
@@ -244,6 +252,7 @@ export const creators: Creator[] = [
     gradientFrom: '#FEE8EF',
     gradientTo: '#E8739A',
     tagline: 'Cooking & Food Creator | 620 active subscribers | $2,800 avg monthly revenue',
+    thumbnail: '/Aria Voss.png',
   },
 ];
 
@@ -395,6 +404,40 @@ export const nellaDistributions: WeeklyDistribution[] = [
   { id: 'nd8', weekOf: 'Dec 30', creatorName: 'Nella Rose', catSymbol: 'NellaCAT', edition: 'All', grossRevenue: 9800, netRevenue: 8682, distributionPerCAT: 0.00217, totalETH: 0.260, status: 'Paid' },
 ];
 
+// Deterministic pseudo-random based on a seed (so values are stable across re-renders)
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+// Generate distribution data for any creator based on their metrics
+export function getCreatorDistributions(creator: Creator): WeeklyDistribution[] {
+  const weeks = ['Feb 17', 'Feb 10', 'Feb 3', 'Jan 27', 'Jan 20', 'Jan 13', 'Jan 6', 'Dec 30'];
+  const creatorSeed = parseInt(creator.id, 10) || 1;
+
+  return weeks.map((weekOf, i) => {
+    const variance = 0.85 + seededRandom(creatorSeed * 100 + i) * 0.3; // ±15% variance, deterministic
+    const grossRevenue = Math.round(creator.monthlyRevenue * variance * 0.25); // weekly ≈ 25% of monthly
+    const netRevenue = Math.round(grossRevenue * 0.886); // ~11.4% platform fee
+    const distributionPerCAT =
+      Math.round((netRevenue / creator.catsIssued / 3600) * 100000) / 100000; // convert to ETH-scale
+    const totalETH = Math.round(distributionPerCAT * creator.catsIssued * 1000) / 1000;
+
+    return {
+      id: `${creator.slug}-d${i + 1}`,
+      weekOf,
+      creatorName: creator.name,
+      catSymbol: creator.catSymbol,
+      edition: 'All',
+      grossRevenue,
+      netRevenue,
+      distributionPerCAT,
+      totalETH,
+      status: 'Paid' as const,
+    };
+  });
+}
+
 export const portfolioDistributions: WeeklyDistribution[] = [
   { id: 'pd1', weekOf: 'Mon 17 Feb', creatorName: 'Nella Rose', catSymbol: 'NellaCAT', edition: 'Standard', grossRevenue: 14200, netRevenue: 12586, distributionPerCAT: 0.00315, totalETH: 0.01575, status: 'Paid' },
   { id: 'pd2', weekOf: 'Mon 17 Feb', creatorName: 'Nella Rose', catSymbol: 'NellaCAT', edition: 'Limited', grossRevenue: 14200, netRevenue: 12586, distributionPerCAT: 0.00315, totalETH: 0.00945, status: 'Paid' },
@@ -458,6 +501,252 @@ export const initialNotifications: Notification[] = [
   { id: 'n1', type: 'success', message: 'Weekly distribution received: 0.014 ETH from NellaCAT', time: '2 hours ago', read: false },
   { id: 'n2', type: 'info', message: 'Your limit order partially filled: 3/8 NellaCATs at 98 MIAU', time: '5 hours ago', read: false },
   { id: 'n3', type: 'warning', message: 'New CAT listing: CocoCAT Limited Edition — 12 remaining', time: '1 day ago', read: false },
+];
+
+// Upcoming CAT launches
+export interface CATLaunch {
+  id: string;
+  name: string;
+  slug: string;
+  catSymbol: string;
+  tagline: string;
+  bio: string;
+  initials: string;
+  gradientFrom: string;
+  gradientTo: string;
+  launchDate: string;
+  closeDate?: string;
+  tab: 'upcoming' | 'open' | 'closed';
+  listingTier: 'Standard' | 'Featured' | 'Managed';
+  score: number;
+  scoreTier: 'Platinum' | 'Gold' | 'Silver';
+  estimatedYieldLow: number;
+  estimatedYieldHigh: number;
+  revenueSharePercent: number;
+  monthlyRevenue: number;
+  subscribers: number;
+  foundersTotal: number;
+  foundersPrice: number;
+  limitedTotal: number;
+  limitedPrice: number;
+  standardTotal: number;
+  standardPrice: number;
+  totalCATs: number;
+  catsSold: number;
+  useOfFunds: string;
+  vipEarlyAccess: boolean;
+  // Score breakdown
+  revenueStability: number;
+  growthTrajectory: number;
+  audienceSize: number;
+  tenure: number;
+  // 3 months of revenue history
+  revenueHistory: { month: string; revenue: number }[];
+}
+
+export const catLaunches: CATLaunch[] = [
+  {
+    id: 'launch-1',
+    name: 'Stella Vance',
+    slug: 'stella-vance',
+    catSymbol: 'StellaCAT',
+    tagline: 'Lifestyle & Interior Design Creator',
+    bio: 'Stella Vance has built a loyal 4,800-subscriber community around luxury interior design, home styling, and aspirational lifestyle content. Her audience has a high purchasing intent, with brand partnerships generating consistent monthly income.',
+    initials: 'SV',
+    gradientFrom: '#D4AF37',
+    gradientTo: '#FFD700',
+    launchDate: '2026-03-03',
+    tab: 'upcoming',
+    listingTier: 'Managed',
+    score: 88,
+    scoreTier: 'Gold',
+    estimatedYieldLow: 14.2,
+    estimatedYieldHigh: 17.4,
+    revenueSharePercent: 10,
+    monthlyRevenue: 16800,
+    subscribers: 4800,
+    foundersTotal: 10,
+    foundersPrice: 350,
+    limitedTotal: 40,
+    limitedPrice: 180,
+    standardTotal: 50,
+    standardPrice: 120,
+    totalCATs: 100,
+    catsSold: 0,
+    useOfFunds: 'Production team hire, studio upgrade, second content vertical in home renovation.',
+    vipEarlyAccess: true,
+    revenueStability: 90,
+    growthTrajectory: 85,
+    audienceSize: 88,
+    tenure: 89,
+    revenueHistory: [
+      { month: 'Dec 2025', revenue: 14200 },
+      { month: 'Jan 2026', revenue: 16100 },
+      { month: 'Feb 2026', revenue: 16800 },
+    ],
+  },
+  {
+    id: 'launch-2',
+    name: 'Remi Holt',
+    slug: 'remi-holt',
+    catSymbol: 'RemiCAT',
+    tagline: 'Fitness & Nutrition Coach',
+    bio: 'Remi Holt is a certified personal trainer and nutrition coach with 2,400 active subscribers. His 12-week transformation programs and supplement partnerships drive a stable, growing revenue stream.',
+    initials: 'RH',
+    gradientFrom: '#7B68EE',
+    gradientTo: '#9370DB',
+    launchDate: '2026-03-10',
+    tab: 'upcoming',
+    listingTier: 'Featured',
+    score: 72,
+    scoreTier: 'Gold',
+    estimatedYieldLow: 9.8,
+    estimatedYieldHigh: 12.6,
+    revenueSharePercent: 8,
+    monthlyRevenue: 9400,
+    subscribers: 2400,
+    foundersTotal: 10,
+    foundersPrice: 280,
+    limitedTotal: 30,
+    limitedPrice: 150,
+    standardTotal: 40,
+    standardPrice: 95,
+    totalCATs: 80,
+    catsSold: 0,
+    useOfFunds: 'Video production equipment, app development for custom workout tracking, paid social ads.',
+    vipEarlyAccess: true,
+    revenueStability: 70,
+    growthTrajectory: 74,
+    audienceSize: 68,
+    tenure: 76,
+    revenueHistory: [
+      { month: 'Dec 2025', revenue: 8100 },
+      { month: 'Jan 2026', revenue: 8800 },
+      { month: 'Feb 2026', revenue: 9400 },
+    ],
+  },
+  {
+    id: 'launch-3',
+    name: 'Zara Nyx',
+    slug: 'zara-nyx',
+    catSymbol: 'ZaraCAT',
+    tagline: 'Digital Art & NFT Creator',
+    bio: 'Zara Nyx is a rising digital artist with 1,100 subscribers and a growing secondary-market presence. Her hand-drawn character series has built a niche but engaged following.',
+    initials: 'ZN',
+    gradientFrom: '#FF69B4',
+    gradientTo: '#DA70D6',
+    launchDate: '2026-03-18',
+    tab: 'upcoming',
+    listingTier: 'Standard',
+    score: 57,
+    scoreTier: 'Silver',
+    estimatedYieldLow: 7.0,
+    estimatedYieldHigh: 9.8,
+    revenueSharePercent: 5,
+    monthlyRevenue: 3800,
+    subscribers: 1100,
+    foundersTotal: 10,
+    foundersPrice: 200,
+    limitedTotal: 20,
+    limitedPrice: 110,
+    standardTotal: 30,
+    standardPrice: 65,
+    totalCATs: 60,
+    catsSold: 0,
+    useOfFunds: 'Tablet upgrade, online art course production, convention booth for audience growth.',
+    vipEarlyAccess: false,
+    revenueStability: 52,
+    growthTrajectory: 62,
+    audienceSize: 48,
+    tenure: 66,
+    revenueHistory: [
+      { month: 'Dec 2025', revenue: 2900 },
+      { month: 'Jan 2026', revenue: 3400 },
+      { month: 'Feb 2026', revenue: 3800 },
+    ],
+  },
+  {
+    id: 'launch-4',
+    name: 'Cleo Marsh',
+    slug: 'cleo-marsh',
+    catSymbol: 'CleoCAT',
+    tagline: 'Fashion & Streetwear Influencer',
+    bio: 'Cleo Marsh is a streetwear influencer with 3,600 active subscribers. Her brand collaborations and exclusive drops have fuelled consistent revenue growth. This offering is live now — 68 of 120 CATs already sold.',
+    initials: 'CM',
+    gradientFrom: '#E8739A',
+    gradientTo: '#FF2D78',
+    launchDate: '2026-02-20',
+    closeDate: '2026-02-27',
+    tab: 'open',
+    listingTier: 'Featured',
+    score: 79,
+    scoreTier: 'Gold',
+    estimatedYieldLow: 12.0,
+    estimatedYieldHigh: 15.2,
+    revenueSharePercent: 12,
+    monthlyRevenue: 14200,
+    subscribers: 3600,
+    foundersTotal: 10,
+    foundersPrice: 320,
+    limitedTotal: 40,
+    limitedPrice: 165,
+    standardTotal: 70,
+    standardPrice: 100,
+    totalCATs: 120,
+    catsSold: 68,
+    useOfFunds: 'Exclusive merch line production, pop-up event series, photographer and videographer retainer.',
+    vipEarlyAccess: true,
+    revenueStability: 78,
+    growthTrajectory: 82,
+    audienceSize: 76,
+    tenure: 80,
+    revenueHistory: [
+      { month: 'Dec 2025', revenue: 11800 },
+      { month: 'Jan 2026', revenue: 13100 },
+      { month: 'Feb 2026', revenue: 14200 },
+    ],
+  },
+  {
+    id: 'launch-5',
+    name: 'Ivy Monroe',
+    slug: 'ivy-monroe',
+    catSymbol: 'IvyCAT',
+    tagline: 'Music & Dance Creator',
+    bio: 'Ivy Monroe launched her IvyCAT offering on Feb 11 and reached full subscription within 3 days — one of the fastest closes on miauswap to date. IvyCAT is now actively trading on the secondary market.',
+    initials: 'IM',
+    gradientFrom: '#E8739A',
+    gradientTo: '#F5EDE8',
+    launchDate: '2026-02-11',
+    closeDate: '2026-02-14',
+    tab: 'closed',
+    listingTier: 'Standard',
+    score: 71,
+    scoreTier: 'Gold',
+    estimatedYieldLow: 9.0,
+    estimatedYieldHigh: 11.8,
+    revenueSharePercent: 8,
+    monthlyRevenue: 6800,
+    subscribers: 1400,
+    foundersTotal: 10,
+    foundersPrice: 240,
+    limitedTotal: 30,
+    limitedPrice: 130,
+    standardTotal: 50,
+    standardPrice: 67,
+    totalCATs: 90,
+    catsSold: 90,
+    useOfFunds: 'Music video production, dance workshop series, streaming equipment upgrade.',
+    vipEarlyAccess: false,
+    revenueStability: 68,
+    growthTrajectory: 72,
+    audienceSize: 64,
+    tenure: 80,
+    revenueHistory: [
+      { month: 'Dec 2025', revenue: 5600 },
+      { month: 'Jan 2026', revenue: 6200 },
+      { month: 'Feb 2026', revenue: 6800 },
+    ],
+  },
 ];
 
 // Market stats for Discover page

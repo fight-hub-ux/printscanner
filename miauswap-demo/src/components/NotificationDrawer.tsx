@@ -14,7 +14,7 @@ export default function NotificationDrawer() {
       <div className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" onClick={() => setShowNotifications(false)} />
       <div className="fixed right-0 top-16 w-96 max-w-[90vw] bg-miau-dark-card border-l border-miau-dark-border shadow-2xl z-50 h-[calc(100vh-4rem)] overflow-y-auto animate-fade-in-up">
         <div className="p-4 border-b border-miau-dark-border flex items-center justify-between">
-          <h3 className="text-lg font-bold text-white">Notifications</h3>
+          <h3 className="text-lg font-bold text-miau-white">Notifications</h3>
           <div className="flex items-center gap-2">
             {unreadCount > 0 && (
               <button

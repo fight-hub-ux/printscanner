@@ -41,6 +41,10 @@ interface AppContextType {
   // Selected CAT for trading
   selectedCreatorSlug: string;
   setSelectedCreatorSlug: (slug: string) => void;
+
+  // Theme
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -55,6 +59,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [showAccessWarning, setShowAccessWarning] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedCreatorSlug, setSelectedCreatorSlug] = useState('nella-rose');
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  // Persist theme and apply to DOM
+  useEffect(() => {
+    const saved = localStorage.getItem('miau-theme') as 'dark' | 'light' | null;
+    if (saved) setTheme(saved);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('miau-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  }, []);
 
   // Calculate staking tier
   const stakingTier = stakedAmount >= 250000 ? 'Gold' : stakedAmount >= 50000 ? 'Silver' : stakedAmount >= 10000 ? 'Bronze' : 'None';
@@ -126,11 +146,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
         showToast,
         selectedCreatorSlug,
         setSelectedCreatorSlug,
+        theme,
+        toggleTheme,
       }}
     >
       {children}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-miau-dark-card border border-miau-dark-border text-white px-6 py-3 rounded-xl shadow-2xl animate-fade-in-up font-semibold text-sm">
+        <div className="fixed bottom-6 right-6 z-50 bg-miau-dark-card border border-miau-dark-border text-miau-white px-6 py-3 rounded-xl shadow-2xl animate-fade-in-up font-semibold text-sm">
           {toastMessage}
         </div>
       )}
@@ -139,7 +161,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           <span className="text-miau-warning font-semibold text-sm">
             Your MIAU balance is low. Below 1,000 MIAU will disable trading. Top up soon.
           </span>
-          <button onClick={() => setShowAccessWarning(false)} className="ml-4 text-miau-warning hover:text-white font-bold text-lg">×</button>
+          <button onClick={() => setShowAccessWarning(false)} className="ml-4 text-miau-warning hover:text-miau-white font-bold text-lg">×</button>
         </div>
       )}
     </AppContext.Provider>
